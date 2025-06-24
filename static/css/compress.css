@@ -1,0 +1,132 @@
+@import url(global.css);  
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f4f8;
+    color: #333;
+}
+
+main {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#progress-bar {
+    height: 10px;
+    width: 0;
+    background-color: #4caf50;
+    border-radius: 5px;
+}
+
+.compression-menu h3 {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.compression-option {
+    color: white;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #008cff;
+    border-radius: 8px;
+    width: 70%;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease, border 0.3s ease, padding 0.3s ease;
+}
+
+.compression-option:hover {
+    background-color: #115cce;
+    transition: border 0.2s ease;
+    padding: 14px;
+    transition: padding 0.3s ease;
+}
+
+.compression-option.selected {
+    background-color: #115cce; 
+    font-weight: bold;
+    transition: border 0.2s ease; 
+    padding: 14px;
+    transition: padding 0.3s ease;
+}
+
+.compression-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 340px;
+    padding: 0 40px;
+  }
+  
+  .info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .info-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  
+  .info-desc {
+    width: 180px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.9rem;
+    box-sizing: border-box; 
+}
+  
+
+#start-compression {
+    background: #198754;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#start-compression:hover {
+    background: #146c43;
+}
+
+#start-compression:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#pdf-preview-container {
+  max-width: 400px;   /* ou 100% para responsivo */
+  margin: 0 auto;
+}
+
+#pdf-canvas {
+  width: 100%;         /* canvas ocupa toda a largura da div */
+  height: auto;        /* altura automática proporcional */
+  display: block;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+

@@ -1,0 +1,42 @@
+@import url(global.css);
+
+body {
+    /* Estilos básicos do corpo da página */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f4f8;
+    color: #333;
+}
+
+main {
+    /* Estilos da área de conteúdo principal */
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* --- Pré-visualizações de Arquivos --- */
+#preview-container-grid {
+  background-color: #f0f0f0; /* cinza claro */
+  border: 1px solid #ccc;    /* borda cinza clara */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;        /* margem superior adicionada */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+
+#preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}

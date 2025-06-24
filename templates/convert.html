@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZG Converter</title>
+    <link rel="shortcut icon" href="http://10.1.3.113/intranet/wp-content/themes/zavagnagralha/assets/img/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/convert.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
+            <h1 class="title">ZG Converter</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="upload-box">
+            <div id="drop-zone">
+                <div class="rotating-border"></div>
+                <p>Arraste ou clique para selecionar um arquivo</p>
+                <input type="file" id="fileInput" hidden multiple />
+            </div>
+
+            <div id="preview-container-grid" class="preview-grid" style="display: none;">
+                <p class="text-sm text-gray-600 mb-1">Pré-visualização:</p>
+                <div id="preview-grid"></div>
+            </div>
+        </div>
+
+
+        <div id="error-message" class="error-message"></div>
+        <div id="error-message2" class="error-message2" style="display: none;"></div>
+        <div id="error-message3" class="error-message3" style="display: none;"></div>
+        
+        <div id="main-function-buttons">
+            <button id="convert-btn" class="function-btn">Converter</button>
+        </div>
+
+        <div class="side-menu" id="convertMenu">
+            <button class="close-btn" onclick="closeMergeMenu()">×</button>
+            <h3>Converter arquivos <br>para PDF</h3>
+            <button class="start-function" id="start-convert" onclick="startMerge()">Iniciar conversão</button>
+            <div id="loading-spinner" class="spinner hidden"></div>
+        </div>
+        </main>
+            
+    <footer id="footer">
+        <span>&copy;TI Zavagna Gralha - 2025</span> 
+        <span>|</span>
+        <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
+    </footer>
+    <script>const iconPath = "{{ url_for('static', filename='assets/documento.png') }}";</script>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/converter.js') }}"></script>
+</body>
+</html>

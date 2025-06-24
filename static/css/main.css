@@ -1,0 +1,429 @@
+@import url(global.css);
+
+/* Regular */
+@font-face {
+  font-family: 'Brandon';
+  src: url('/static/fonts/Brandon_reg.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'Brandon';
+  src: url('/static/fonts/Brandon_bld.otf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Light */
+@font-face {
+  font-family: 'Brandon';
+  src: url('/static/fonts/Brandon_light.otf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* --- Base e Tipografia --- */
+:root {
+    /* Define a fonte padrão para todo o documento */
+    font-family: 'Brandon', sans-serif;
+}
+
+body {
+    /* Estilos básicos do corpo da página */
+    margin: 0;
+    font-family: 'Brandon', sans-serif;
+    background: #f2f4f8;
+    color: #333;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 19px;
+    font-weight: 300;
+}
+
+--
+
+/* Nova classe para o header quando ele for "reduzido" */
+.header-scrolled {
+    background: #1a1a1a; /* Uma cor um pouco diferente ao rolar */
+    padding: 10px 40px; /* Padding menor */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-scrolled .navbar {
+    height: 60px; /* Altura menor para a navbar */
+}
+
+.header-scrolled .logo {
+    height: 60px; /* Altura menor para a logo */
+}
+
+.header-scrolled .title {
+    font-size: 28px; /* Tamanho menor para o título */
+}
+
+.footer-logo {
+    top: 0;
+    left: 0;
+    height: 150px;
+    margin: 0;
+}
+#slogan {
+    display: flex;
+    max-width: 1920px;
+    height: 510px;
+    background: white;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#slogan .text h1,
+#slogan .text h2 {
+    margin: 0;
+}
+
+#slogan .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 200px;
+    gap: 10px; /* Esta propriedade define o espaçamento entre h1 e h2 */
+}
+
+/* Estilos base para que as seções comecem ocultas */
+.hidden-section {
+    opacity: 0;
+    /* Pode manter um pequeno transform para um efeito mais suave */
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estilo quando a seção está visível */
+.show-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Novo estilo para o slogan-title: fade-in */
+#slogan-title {
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco abaixo da posição final */
+    transition: opacity 1s ease-out, transform 1s ease-out; /* Transição suave */
+}
+
+/* Quando a seção do slogan estiver visível, o título aparece */
+#slogan.show-section #slogan-title {
+    opacity: 1; /* Torna-se totalmente visível */
+    transform: translateY(0); /* Vai para a posição final */
+}
+
+.main-img {
+    display: block;
+    margin-left: auto;
+    margin-right: 300px; 
+}
+
+#tools {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1920px;
+    min-height: 345px;
+    background: rgb(48, 48, 48);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+}
+
+
+#tools h1 {
+    text-align: center;
+    margin-top: 10px;
+    color: white;
+    margin-bottom: 0;
+}
+
+.tools-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px;
+    margin-top: 15px; 
+}
+
+.tool {
+    background-color: white;
+    width: 200px;
+    height: 220px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Adicionada transição em transform */
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tool:hover {
+    transform: scale(1.05); /* Leve aumento de escala no hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.tool:active {
+    transform: scale(0.98); /* Levemente menor ao clicar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes subtle-swing {
+    0% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+    100% { transform: rotate(-2deg); }
+}
+
+.tool:hover .tool-icon {
+    animation: subtle-swing 0.5s infinite alternate; 
+}
+
+.tool img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.tool h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: 400;
+}
+
+#benefits {
+  display: flex;
+  flex-direction: column;
+  max-width: 1920px;
+  background: rgb(0, 0, 0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 40px 20px; /* Padding em vez de altura fixa */
+}
+
+#benefits > h1 {
+    color: white;
+    text-align: left;
+    margin-left: 200px;
+    margin-bottom: 5px;
+}
+
+.benefits-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}              
+
+.benefit {
+  display: flex;
+  align-items: center; 
+  margin-bottom: 20px;
+}
+
+.benefit img {
+    max-width: 150px;
+    height: auto;
+    max-height: 175px;
+    margin-top: 40px;
+    margin-right: 10px;
+}
+
+
+.benefit-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.benefit-text h1 {
+    text-align: left;
+    font-size: 27px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0px;
+}
+
+
+.benefit-text h2 {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: left;
+  margin: 5px 0 0 0;
+  line-height: 1.4;
+  color: aliceblue;
+}
+
+
+#forms {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100vw;          /* largura da viewport */
+  max-width: 1920px;     /* limite máximo */
+  margin: 0;
+  padding-left: 0px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  overflow-x: hidden;    /* evita que filhos "vazem" para fora */
+}
+
+.content-left {
+  flex: 1;
+  margin-left: 200px;
+  box-sizing: border-box;
+}
+
+.content-left h1 {
+  margin-bottom: 0.5em;
+}
+
+.content-left h2 {
+  margin-bottom: 2em;
+  font-weight: normal;
+  color: #555;
+}
+
+.content-right {
+  flex-shrink: 0;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-right: 200px;
+  align-items: center;
+  margin-top: 45px;
+}
+
+.form-container {
+  /* já tem estilo para o form, pode manter */
+  max-width: 600px;
+}
+
+.forms-right {
+  flex: 0 0 400px; /* largura fixa para a imagem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#feedback-form {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+#feedback-form label {
+    font-weight: 600;
+}
+
+#feedback-form input[type="text"],
+#feedback-form input[type="email"],
+#feedback-form select,
+#feedback-form textarea {
+    width: 100%;        /* preenche todo o container pai */
+    max-width: 650px;   /* limita pra não esticar demais */
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Brandon', sans-serif;
+    resize: vertical;
+    box-sizing: border-box;
+    margin: 0; /* sem margem extra */
+    margin-bottom: 20px;
+}
+
+#feedback-form textarea {
+    height: 120px;
+}
+
+#feedback-form button {
+    width: fit-content;
+    padding: 10px 25px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#feedback-form button:hover {
+    background-color: #444;
+}
+
+.form-image {
+  width: 100%;        /* Preenche o container, mas respeita max-width */
+  max-width: auto;   /* Limita largura máxima */
+  height: auto;       /* Mantém proporção */
+  display: block;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+footer#main-footer {
+    display: flex;
+    align-items: flex-start !important;
+    padding: 30px;
+    height: 150px;
+    background: rgb(0, 0, 0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    color: white;
+    justify-content: left !important;
+}
+
+.footer-text h1 {
+    margin: 0 0 10px 0;
+    font-size: 23px;
+}
+
+.footer-text h2,
+.footer-text a {
+    margin: 0;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 1.4;
+
+}
+
+.clickable {
+    /* Estilos para elementos clicáveis */
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.clickable:hover {
+    text-decoration: underline;
+}
+
+.clickable:visited {
+    /* Estilos para links visitados */
+    color: white
+}
+
+

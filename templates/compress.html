@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressor de PDF</title>
+    <link rel="shortcut icon" href="http://10.1.3.113/intranet/wp-content/themes/zavagnagralha/assets/img/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compress.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
+            <h1 class="title">Compressor de PDF</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="upload-box">
+            <div id="drop-zone">
+                <div class="rotating-border"></div>
+                <p>Arraste ou clique para selecionar um arquivo PDF</p>
+                <input type="file" id="fileInput" accept="application/pdf" hidden/>
+            </div>
+            <div id="pdf-preview-container" style="display: none; margin-top: 1rem;">
+                <p class="text-sm text-gray-600 mb-1">Pré-visualização:</p>
+                <canvas id="pdf-canvas" style="width: 100%; border-radius: 0.5rem; box-shadow: 0 0 10px rgba(0,0,0,0.1);"></canvas>
+                <div id="pdf-info" class="text-sm text-gray-700 mt-2"></div>
+            </div>
+        </div>
+        
+        <div id="error-message" class="error-message"></div>
+        
+        <div class="progress-container" id="progress-container" style="display: none;">
+            <div class="progress-bar" id="progress-bar"></div>
+            <p id="status-message" style="display: none;"></p>
+        </div>
+
+        <div id="status-message" style="display: none;"></div>
+        <div id="error-message2" class="error-message2" style="display: none;">
+            Nenhum arquivo selecionado! Por favor, selecione um arquivo antes de escolher o modo de compressão.
+        </div>
+        <button class="function-btn" id="compress-btn">Selecionar modo de compressão</button>
+       
+
+        <!-- Menu lateral para selecionar modo de compressão -->
+        <div class="side-menu" id="compressionMenu">
+            <button class="close-btn" onclick="closeCompressionMenu()">×</button>
+            <h3>Escolha o modo de compressão</h3>
+            <div class="compression-option" data-type="screen" onclick="selectCompression(this)">
+                <p>Compressão Alta</p>
+            </div>
+            <div class="compression-option" data-type="ebook" onclick="selectCompression(this)">
+                <p>Compressão Baixa</p>
+            </div>
+            <button id="start-compression" onclick="startCompression()" disabled>Iniciar Compressão</button>
+            <div class="compression-info">
+                <div class="info-box">
+                  <p class="info-title">Compressão Alta</p>
+                  <div class="info-desc">Menor qualidade e maior compressão</div>
+                </div>
+                <div class="info-box">
+                  <p class="info-title">Compressão Baixa</p>
+                  <div class="info-desc">Maior qualidade e menor compressão</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <span>&copy;TI Zavagna Gralha - 2025</span> 
+        <span>|</span>
+        <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
+    </footer>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/compressor.js') }}"></script>
+</body>
+</html>

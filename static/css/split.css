@@ -1,0 +1,280 @@
+@import url(global.css);
+
+body {
+    /* Estilos básicos do corpo da página */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f4f8;
+    color: #333;
+}
+
+main {
+    /* Estilos da área de conteúdo principal */
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* --- Pré-visualizações de Arquivos --- */
+.preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px; /* aplica o espaço corretamente entre os wrappers */
+    margin-top: 1rem;
+    padding: 10px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sortable-preview {
+    /* Estilos do contêiner para pré-visualizações arrastáveis */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.sortable-preview canvas {
+    /* Estilos dos canvas de pré-visualização */
+    width: 160px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: move;
+    transition: transform 0.2s ease;
+}
+
+.sortable-preview canvas:hover {
+    /* Estilos do canvas de pré-visualização ao passar o mouse */
+    transform: scale(1.03);
+}
+
+.preview-wrapper {
+    position: relative;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    width: 160px; /* largura fixa para consistência no grid */
+    flex-shrink: 0;
+}
+
+.preview-wrapper:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.preview-wrapper canvas {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: move;
+    transition: transform 0.2s ease;
+}
+
+.preview-wrapper.selected {
+    /* Estilos para pré-visualizações selecionadas */
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.page-number {
+    /* Estilos do número da página na pré-visualização */
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 2;
+}
+
+#splitMenu h3 {
+    /* Estilo específico para o título do menu de split */
+    font-size: 18px;
+}
+
+#organizeMenu h3 {
+    /* Estilo específico para o título do menu de organize */
+    font-size: 24px;
+}
+
+#start-split:hover:not(:disabled) {
+    /* Estilos do botão de iniciar split ao passar o mouse (se não estiver desabilitado) */
+    background-color: #115cce;
+    transform: translateX(-50%) scale(1.1);
+    max-width: 740px;
+}
+
+#start-split:disabled {
+    /* Estilos do botão de iniciar split quando desabilitado */
+    background-color: #888888;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+    max-width: 700px;
+}
+
+#start-organize {
+    /* Estilos específicos do botão iniciar organização */
+    min-width: 250px;
+}
+
+/* --- Opções de Divisão (Split) --- */
+.split-option {
+    /* Estilos para opções de divisão */
+    margin: 30px 0 100px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    font-family: 'Poppins', sans-serif;
+}
+
+.split-option p {
+    /* Estilos do parágrafo nas opções de divisão */
+    margin-bottom: 12px;
+}
+
+#split-parts-input,
+#split-size-input {
+    /* Estilos dos inputs de número de partes/tamanho */
+    width: 80px;
+    padding: 8px 10px;
+    font-size: 18px;
+    border: 2px solid #008cff;
+    border-radius: 8px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+    outline-offset: 2px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#split-parts-input.active,
+#split-size-input.active {
+    /* Estilos dos inputs ativos de divisão */
+    background-color: #115cce;
+    font-weight: bold;
+    transition: border 0.2s ease;
+    padding: 14px;
+    transition: padding 0.3s ease;
+}
+
+#parts-option,
+#size-option {
+    /* Visibilidade inicial das opções de divisão */
+    display: none;
+}
+
+.mode-btn {
+    /* Estilos dos botões de modo de divisão */
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #008cff;
+    border-radius: 8px;
+    width: 95%;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease, border 0.3s ease, padding 0.3s ease;
+    border: none;
+    user-select: none;
+}
+
+.mode-btn:hover {
+    /* Estilos dos botões de modo ao passar o mouse */
+    background-color: #115cce;
+    transition: border 0.2s ease;
+    padding: 14px;
+    transition: padding 0.3s ease;
+}
+
+.mode-btn.active {
+    /* Estilos dos botões de modo ativos */
+    background-color: #115cce;
+    font-weight: bold;
+    transition: border 0.2s ease;
+    padding: 14px;
+    transition: padding 0.3s ease;
+}
+
+/* --- Funções de Organização (Girar Páginas) --- */
+
+#organize-function-buttons {
+    /* Contêiner dos botões específicos de organização */
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.rotate-btn {
+    /* Estilos do botão de girar página individualmente */
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #198754;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.rotate-btn:hover {
+    /* Estilos do botão de girar ao passar o mouse */
+    background-color: #145c32;
+}
+
+#rotate-all-btn {
+    /* Estilos do botão para girar todas as páginas */
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 0 0 15px 0;
+    padding: 12px 30px;
+    background-color: #198754;
+    border-radius: 8px;
+    width: auto;
+    min-width: 200px;
+    max-width: 700px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+    border: none;
+}
+
+#rotate-all-btn:hover {
+    /* Estilos do botão girar todas as páginas ao passar o mouse */
+    background-color: #145c32;
+    transform: scale(1.05);
+}
+
+/* --- Outros Elementos --- */
+
+
+#pdf-canvas {
+    /* Canvas de pré-visualização de PDF */
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,377 @@
+
+header {
+    background: #000000;
+    padding: 20px 40px; /* Padding inicial */
+    color: white;
+    position: sticky; /* ou fixed, dependendo do comportamento desejado */
+    top: 0; /* Essencial para sticky/fixed */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out; /* Adicionando transição para todas as propriedades */
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100px; /* Altura inicial */
+    transition: all 0.3s ease-in-out; /* Transição para as propriedades da navbar */
+}
+
+.logo {
+    position: absolute;
+    left: 0;
+    height: 100px; /* Altura inicial da logo */
+    transition: height 0.3s ease-in-out; /* Transição para a altura da logo */
+}
+
+.title {
+    margin: 0;
+    font-size: 38px; /* Tamanho inicial do título */
+    transition: font-size 0.3s ease-in-out; /* Transição para o tamanho da fonte */
+}
+
+.upload-box {
+    margin-bottom: 20px;
+}
+
+#drop-zone {
+    /* Estilos da zona de arrastar e soltar */
+    position: relative;
+    padding: 40px;
+    text-align: center;
+    min-height: 40px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    align-items: center;
+    overflow: hidden;
+}
+
+#drop-zone.disabled-upload {
+    /* Estilos para a zona de drop quando desabilitada */
+    background-color: rgba(200, 200, 200, 0.5);
+    cursor: not-allowed;
+    position: relative;
+}
+
+#drop-zone.disabled-upload::after {
+    /* Camada de bloqueio visual para zona de drop desabilitada */
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.4);
+    pointer-events: all;
+    z-index: 2;
+}
+
+#drop-zone::before {
+    /* Efeito de borda tracejada animada na zona de drop */
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px dashed transparent;
+    border-radius: 10px;
+    background:
+        linear-gradient(90deg, #4a90e2 50%, transparent 50%) repeat-x,
+        linear-gradient(90deg, #4a90e2 50%, transparent 50%) repeat-x,
+        linear-gradient(0deg, #4a90e2 50%, transparent 50%) repeat-y,
+        linear-gradient(0deg, #4a90e2 50%, transparent 50%) repeat-y;
+    background-size: 10px 2px, 10px 2px, 2px 10px, 2px 10px;
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+    animation: borderMove 0.3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes borderMove {
+    /* Animação da borda da zona de drop */
+    0% {
+        background-position:
+            0 0, 0 100%, 0 0, 100% 0;
+    }
+    100% {
+        background-position:
+            10px 0, -10px 100%, 0 -10px, 100% 10px;
+    }
+}
+
+#drop-zone:hover {
+    /* Estilos da zona de drop ao passar o mouse */
+    background-color: #e4eaee;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.file-name {
+    /* Estilos para o nome do arquivo na pré-visualização */
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    box-sizing: border-box;
+    text-align: center;
+    max-width: 200px;
+}
+
+#status-message {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#error-message {
+    display: none;
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    animation: slide-in 0.5s ease-out;
+}
+
+#error-message,
+#error-message2,
+#error-message3 {
+    /* Estilos para mensagens de erro */
+    display: none;
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    animation: slide-in 0.5s ease-out;
+}
+
+@keyframes slide-in {
+    /* Animação para mensagens de erro */
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+#file-name {
+    margin-top: 10px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.close-btn:hover {
+    color: #ff0000;
+}
+
+.remove-btn {
+    /* Estilos do botão de remover na pré-visualização */
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 0;
+}
+
+#preview-container-grid {
+    position: relative;
+}
+
+.clickable {
+    /* Estilos para elementos clicáveis */
+    cursor: pointer;
+    text-decoration: none;
+    color: #666;
+}
+
+.clickable:visited {
+    /* Estilos para links visitados */
+    color: #666;
+}
+
+.function-btn {
+    font-family: 'Poppins', sans-serif;
+    background: #198754;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.function-btn:hover {
+    background: #146c43;
+}
+
+.side-menu h3 {
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -600px; /* Esconde o menu inicialmente */
+    width: 400px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-function {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 15px 40px;
+    background-color: #008cff;
+    border-radius: 8px;
+    width: auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease, border 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+    border: none;
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center center;
+    z-index: 10;
+    white-space: nowrap;  /* Impede quebra de linha */
+}
+
+.start-function:hover {
+    /* Estilos dos botões de iniciar (merge, organize) ao passar o mouse */
+    background-color: #115cce;
+    transform: translateX(-50%) scale(1.1);
+    max-width: 740px;
+}
+
+/* --- Elementos de Carregamento (Spinner) --- */
+.spinner {
+    /* Estilos do spinner de carregamento */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    /* Animação de rotação do spinner */
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.spinner.hidden {
+    /* Esconde o spinner */
+    display: none;
+}
+
+/* --- Ordenação de Arquivos --- */
+#sort-icon {
+    /* Estilos do ícone de ordenação */
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s ease;
+}
+
+#sort-icon:hover {
+    /* Estilos do ícone de ordenação ao passar o mouse */
+    transform: scale(1.1);
+}
+
+#sort-menu {
+    /* Estilos do menu de ordenação */
+    display: none;
+    position: absolute;
+    top: 54px;
+    left: 93%;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 999;
+    border-radius: 6px;
+    min-width: 180px;
+}
+
+#sort-menu button {
+    /* Estilos dos botões dentro do menu de ordenação */
+    border: none;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+
+
+footer#footer {
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+    font-size: 14px;
+    gap: 10px;
+}

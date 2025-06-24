@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" href="http://10.1.3.113/intranet/wp-content/themes/zavagnagralha/assets/img/favicon.ico">
+    <title>ZG PDF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
+            <h1 class="title">ZG PDF</h1>
+        </div>
+    </header>
+    <main>
+        <section id="slogan" class="slogan">
+            <div class="text">
+                <h1 id="slogan-title">PDF, simples e seguro.</h1>
+                <h2>Uma solução simples e segura para o <br>dia a dia jurídico, com mais agilidade <br>e eficiência para você focar no que <br>realmente importa.</h2>
+            </div>
+            <img src="{{ url_for('static', filename='assets/document.png') }}" alt="Documentos" class="main-img">
+        </section>
+        <section id="tools">
+            <h1>Ferramentas</h1>
+            <div class="tools-box">
+                <a href="http://10.1.39.126:5000/compress" target="_blank" class="tool">
+                    <img src="{{ url_for('static', filename='assets/compress.png') }}" class="tool-icon" alt="Comprimir">
+                     <h2>Comprimir</h2>
+                </a>
+                <a href="http://10.1.39.126:5000/convert" target="_blank" class="tool">
+                    <img src="{{ url_for('static', filename='assets/convert.png') }}" class="tool-icon" alt="Converter">
+                     <h2>Converter</h2>
+                </a>
+                <a href="http://10.1.39.126:5000/split" target="_blank" class="tool">
+                    <img src="{{ url_for('static', filename='assets/split.png') }}" class="tool-icon" alt="Dividir">
+                     <h2>Dividir</h2>
+                </a>
+                <a href="http://10.1.39.126:5000/split" target="_blank" class="tool">
+                    <img src="{{ url_for('static', filename='assets/organize.png') }}" class="tool-icon" alt="Organizar">
+                     <h2>Organizar</h2>
+                </a>
+                <a href="http://10.1.39.126:5000/split" target="_blank" class="tool">
+                    <img src="{{ url_for('static', filename='assets/merge.png') }}" class="tool-icon" alt="Unir">
+                     <h2>Unir</h2>
+                </a>
+            </div>
+        </section>
+        <section id="benefits">
+            <h1>O software de PDF que a nossa<br>equipe jurídica confia.</h1>
+            <div class="benefits-box">
+                <div class="benefit">
+                    <img src="{{ url_for('static', filename='assets/security.png') }}" alt="Cadeado seguro">
+                    <div class="benefit-text">
+                        <h1>Segurança de dados garantida</h1>
+                        <h2>Trabalhamos com protocolos e padrões rígidos <br> para proteger todas as informações e documentos <br> tratados pelo sistema, respeitando as melhores <br>práticas e normas internas do nosso escritório.</h2>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <img src="{{ url_for('static', filename='assets/support.png') }}" alt="ícone 'Suporte'">
+                    <div class="benefit-text">
+                        <h1>Suporte interno dedicado</h1>
+                        <h2>Precisa de ajuda? Conte com o suporte do nosso  <br>time de TI, disponível para resolver dúvidas e <br>garantir o funcionamento perfeito da ferramenta, <br>sempre que necessário.</h2>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <img src="{{ url_for('static', filename='assets/ok.png') }}" alt="ícone 'Certo'">
+                    <div class="benefit-text">
+                        <h1>Facilidade de uso</h1>
+                        <h2>Uma interface moderna e descomplicada, pensada para <br>simplificar o dia a dia do setor jurídico. Cada um encontra <br> o que precisa de forma clara e objetiva, sem necessidade <br>de conhecimentos técnicos avançados.</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="forms">
+            <div class="content-left">
+                <h1>Sua opinião faz a diferença.</h1>
+                <h2>Ajude a melhorar nossa ferramenta enviando sugestões, críticas ou dúvidas. <br>Estamos sempre atentos para tornar seu dia a dia mais fácil e produtivo.</h2>
+
+                <form id="feedback-form" action="{{ url_for('enviar_feedback') }}" method="POST">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" placeholder="Seu nome" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="nome@zavagnagralha.com.br" required>
+
+                <label for="sector">Setor:</label>
+                <select id="sector" name="sector" required>
+                    <option value="" disabled selected>Selecione o setor</option>
+                    <option value="Jurídico">Jurídico</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="RH">RH</option>
+                    <option value="Outros">Outros</option>
+                </select>
+
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+
+                <button type="submit">Enviar</button>
+                </form>
+            </div>
+
+            <div class="content-right">
+                <img src="{{ url_for('static', filename='assets/form-image.png') }}" alt="Form Image" class="form-image">
+            </div>
+        </section>
+    </main>
+    <footer id="main-footer">
+            <img class="footer-logo" src="{{ url_for('static', filename='assets/zg.png') }}" alt="Logo da Empresa">
+
+            <div class="footer-text">
+                <h1>Soluções digitais para o seu trabalho jurídico.</h1>
+                <p>
+                    Contato: 
+                    <a href="mailto:ti@zavagnagralha.com.br" style="color: #ccc; text-decoration: underline;">
+                        ti@zavagnagralha.com.br
+                    </a>
+                </p>
+                <p>
+                    <a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a>
+                </p>
+                <h2>
+                    Desenvolvido por TI Zavagna Gralha
+                    &copy; Zavagna Gralha Advogados - Todos os direitos reservados
+                </h2>
+            </div>
+    </footer>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
