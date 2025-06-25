@@ -14,33 +14,33 @@ async function renderModulePreviews() {
     const pdfInfo = document.getElementById("pdf-info");
 
     if (selectedFile && selectedFile.type === "application/pdf") {
-        hideAllErrors(); // Oculta mensagens de erro
+        hideAllErrors(); // Oculta mensagens de erro anteriores
         if (pdfPreviewContainer) pdfPreviewContainer.style.display = "block";
 
         const fileSizeMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
         if (pdfInfo) pdfInfo.textContent = ` 📦 Tamanho: ${fileSizeMB} MB • 📄 Lendo número de páginas...`;
 
         const reader = new FileReader();
-        reader.onload = function() {
+        reader.onload = function () {
             const typedarray = new Uint8Array(this.result);
             pdfjsLib.getDocument(typedarray).promise.then(pdf => {
                 const totalPages = pdf.numPages;
+
+                // ⚠️ Alerta visual usando errorMessage
+                if (totalPages > 1000 && errorMessage) {
+                    errorMessage.textContent = "⚠️ Este arquivo possui muitas páginas e pode demorar mais para ser processado. Recomendamos aguardar com paciência.";
+                    errorMessage.style.display = "block";
+                }
+
                 if (pdfInfo) pdfInfo.textContent = ` 📦 Tamanho: ${fileSizeMB} MB 📄 Páginas: ${totalPages}`;
 
+                // Renderiza só a primeira página
                 pdf.getPage(1).then(page => {
-                    const viewport = page.getViewport({
-                        scale: 1.5
-                    });
-                    if (pdfCanvas) {
-                        const ctx = pdfCanvas.getContext("2d");
-                        pdfCanvas.height = viewport.height;
-                        pdfCanvas.width = viewport.width;
-                        const renderContext = {
-                            canvasContext: ctx,
-                            viewport: viewport
-                        };
-                        page.render(renderContext);
-                    }
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const ctx = pdfCanvas.getContext("2d");
+                    pdfCanvas.height = viewport.height;
+                    pdfCanvas.width = viewport.width;
+                    page.render({ canvasContext: ctx, viewport });
                 });
             }).catch(err => {
                 if (pdfInfo) pdfInfo.textContent = `Erro ao ler número de páginas.`;
@@ -61,7 +61,6 @@ async function renderModulePreviews() {
         if (pdfInfo) pdfInfo.textContent = "";
     }
 }
-
 
 /**
  * Seleciona o tipo de compressão e atualiza a interface.
@@ -84,9 +83,15 @@ function selectCompression(element) {
  */
 function startCompression() {
     if (!selectedFile || !selectedCompression) {
-        alert("Selecione um arquivo e o modo de compressão.");
+        if (errorMessage) {
+            errorMessage.textContent = "Por favor, selecione um arquivo e o tipo de compressão.";
+            errorMessage.style.display = "block";
+        }
         return;
     }
+
+    startButton.disabled = true;
+
     if (progressContainer) progressContainer.style.display = 'block';
     if (statusMessage) {
         statusMessage.style.display = 'block';
@@ -98,19 +103,20 @@ function startCompression() {
     formData.append('compression', selectedCompression);
 
     fetch('/compress', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            const taskId = data.task_id;
-            pollProgress(taskId);
-        })
-        .catch(error => {
-            console.error('Erro ao iniciar compressão:', error);
-            if (statusMessage) statusMessage.textContent = 'Erro ao iniciar compressão.';
-        });
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        const taskId = data.task_id;
+        pollProgress(taskId);
+    })
+    .catch(error => {
+        console.error('Erro ao iniciar compressão:', error);
+        if (statusMessage) statusMessage.textContent = 'Erro ao iniciar compressão.';
+    });
 }
+
 
 /**
  * Verifica o progresso da tarefa de compressão com o backend.

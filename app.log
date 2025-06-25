@@ -1685,3 +1685,882 @@
 [2025-06-24 17:42:52,233] INFO in _internal: 10.1.39.126 - - [24/Jun/2025 17:42:52] "GET /static/js/global.js HTTP/1.1" 200 -
 [2025-06-24 17:42:52,235] INFO in _internal: 10.1.39.126 - - [24/Jun/2025 17:42:52] "GET /static/js/converter.js HTTP/1.1" 200 -
 [2025-06-24 17:42:52,236] INFO in _internal: 10.1.39.126 - - [24/Jun/2025 17:42:52] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:05:50,376] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.1.39.126:5000
+[2025-06-25 15:05:50,377] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-06-25 15:05:50,383] INFO in _internal:  * Restarting with stat
+[2025-06-25 15:05:51,624] WARNING in _internal:  * Debugger is active!
+[2025-06-25 15:05:51,632] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 15:05:57,268] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:57] "GET / HTTP/1.1" 200 -
+[2025-06-25 15:05:58,021] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/css/main.css HTTP/1.1" 200 -
+[2025-06-25 15:05:58,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/convert.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,106] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/compress.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,232] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/document.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,283] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:05:58,341] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,378] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/js/main.js HTTP/1.1" 200 -
+[2025-06-25 15:05:58,464] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/organize.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,518] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/merge.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,522] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/security.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,523] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/split.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,532] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/fonts/Brandon_reg.otf HTTP/1.1" 200 -
+[2025-06-25 15:05:58,606] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/fonts/Brandon_bld.otf HTTP/1.1" 200 -
+[2025-06-25 15:05:58,614] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/fonts/Brandon_light.otf HTTP/1.1" 200 -
+[2025-06-25 15:05:58,664] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/support.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,688] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/ok.png HTTP/1.1" 200 -
+[2025-06-25 15:05:58,722] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:05:58] "GET /static/assets/form-image.png HTTP/1.1" 200 -
+[2025-06-25 15:06:08,653] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /convert HTTP/1.1" 200 -
+[2025-06-25 15:06:08,734] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-06-25 15:06:08,878] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 15:06:08,907] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 15:06:08,941] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:06:08,944] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:08] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-06-25 15:06:41,703] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:41] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-06-25 15:06:41,706] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:06:41] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:08:43,875] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:43] "GET /convert HTTP/1.1" 200 -
+[2025-06-25 15:08:43,986] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:43] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-06-25 15:08:44,011] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:44] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 15:08:44,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:44] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 15:08:44,074] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:44] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:08:44,116] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:08:44] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-06-25 15:11:31,329] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /convert HTTP/1.1" 200 -
+[2025-06-25 15:11:31,417] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-06-25 15:11:31,461] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 15:11:31,516] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 15:11:31,522] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 15:11:31,582] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:31] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-06-25 15:11:35,138] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:35] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-06-25 15:11:57,083] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 15:11:57] "POST /convert_all HTTP/1.1" 200 -
+[2025-06-25 16:24:09,844] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 16:24:10,130] INFO in _internal:  * Restarting with stat
+[2025-06-25 16:24:11,362] WARNING in _internal:  * Debugger is active!
+[2025-06-25 16:24:11,369] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 16:24:46,967] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 16:24:47,207] INFO in _internal:  * Restarting with stat
+[2025-06-25 16:24:48,713] WARNING in _internal:  * Debugger is active!
+[2025-06-25 16:24:48,722] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 16:25:01,669] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:01] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:25:02,062] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:02] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:25:02,069] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:02] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:25:02,070] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:02] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:25:02,090] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:02] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:25:02,253] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:25:02] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:26:37,665] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:26:37,716] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:26:37,740] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:26:37,749] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:26:37,755] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:26:37,759] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:37] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:26:43,926] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:43] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:26:43,995] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:43] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:26:44,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:44] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:26:44,042] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:44] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:26:44,055] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:44] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:26:44,060] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:44] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:26:54,534] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:26:54,566] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:26:54,597] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:26:54,615] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:26:54,619] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:26:54,627] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:26:54] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:27:04,085] INFO in app: Thread de compressão iniciada para a tarefa: f3a7f27f-ff0a-48b9-a60f-80c3339e7e68
+[2025-06-25 16:27:04,088] INFO in app: Executando subprocesso para a tarefa: f3a7f27f-ff0a-48b9-a60f-80c3339e7e68. Input: uploads\f3a7f27f-ff0a-48b9-a60f-80c3339e7e68_Processo.pdf, Output: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:27:04,110] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:04] "POST /compress HTTP/1.1" 200 -
+[2025-06-25 16:27:04,141] INFO in app: Thread de compressão iniciada para a tarefa: 936d4969-1e82-4ecf-95fd-0751cbc53adb
+[2025-06-25 16:27:04,144] INFO in app: Executando subprocesso para a tarefa: 936d4969-1e82-4ecf-95fd-0751cbc53adb. Input: uploads\936d4969-1e82-4ecf-95fd-0751cbc53adb_Processo.pdf, Output: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:27:04,167] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:04] "POST /compress HTTP/1.1" 200 -
+[2025-06-25 16:27:05,134] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:05] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:05,205] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:05] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:06,132] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:06] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:06,220] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:06] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:07,149] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:07] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:07,197] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:07] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:08,142] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:08] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:08,194] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:08] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:09,165] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:09] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:09,264] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:09] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:10,136] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:10] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:10,427] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:10] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:11,134] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:11] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:11,203] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:11] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:12,133] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:12] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:12,199] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:12] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:13,150] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:13] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:13,197] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:13] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:14,130] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:14] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:14,195] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:14] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:15,141] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:15] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:15,193] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:15] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:16,137] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:16] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:16,207] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:16] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:17,135] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:17] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:17,269] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:17] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:18,136] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:18] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:18,195] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:18] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:19,144] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:19] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:19,196] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:19] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:20,144] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:20] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:20,194] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:20] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:21,140] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:21] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:21,193] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:21] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:22,143] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:22] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:22,200] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:22] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:23,132] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:23] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:23,192] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:23] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:24,200] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:24] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:24,220] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:24] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:25,131] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:25] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:25,201] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:25] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:26,140] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:26] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:26,194] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:26] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:27,157] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:27] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:27,215] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:27] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:28,139] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:28] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:28,199] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:28] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:29,176] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:29] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:29,236] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:29] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:30,133] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:30] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:30,201] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:30] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:31,132] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:31] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:31,199] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:31] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:32,144] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:32] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:32,194] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:32] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:33,145] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:33] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:33,194] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:33] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:34,252] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:34] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:34,314] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:34] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:35,139] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:35] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:35,210] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:35] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:36,150] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:36] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:36,204] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:36] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:37,131] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:37] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:37,200] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:37] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:38,133] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:38] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:38,196] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:38] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:39,180] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:39] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:39,236] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:39] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:40,140] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:40] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:40,193] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:40] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:41,141] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:41] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:41,205] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:41] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:42,135] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:42] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:42,202] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:42] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:43,135] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:43] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:43,199] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:43] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:44,146] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:44] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:44,197] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:44] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:45,146] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:45] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:45,368] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:45] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:46,163] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:46] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:46,245] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:46] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:47,137] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:47] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:47,195] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:47] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:48,165] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:48] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:48,225] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:48] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:49,258] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:49] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:49,318] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:49] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:51,146] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:51] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:51,151] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:51] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:52,183] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:52] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:52,191] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:52] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:54,888] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:54] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:54,893] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:54] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:56,039] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:56] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:56,049] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:56] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:57,028] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:57] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:57,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:57] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:58,079] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:58] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:58,085] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:58] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:27:59,060] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:59] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:27:59,068] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:27:59] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:00,278] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:00] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:00,284] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:00] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:01,138] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:01] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:03,324] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:03] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:03,410] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:03] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:03,417] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:03] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:06,510] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:06] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:06,528] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:06] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:08,048] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:08] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:08,056] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:08] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:10,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:10] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:10,496] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:10] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:13,656] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:13] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:13,787] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:13] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:16,553] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:16] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:16,564] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:16] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:19,627] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:19] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:19,632] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:19] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:19,662] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:19] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:20,420] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:20] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:20,448] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:20] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:21,206] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:21] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:21,214] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:21] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:23,245] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:23] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:23,250] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:23] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:24,368] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:24] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:24,410] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:24] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:26,257] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:26] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:26,308] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:26] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:29,888] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:29] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:29,963] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:29] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:32,608] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:32] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:32,617] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:32] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:33,033] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:33] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:33,041] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:33] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:38,419] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:38] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:38,464] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:38] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:38,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:38] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:38,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:38] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:40,288] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:40] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:40,420] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:40] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:41,027] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:41] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:41,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:41] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:42,050] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:42] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:42,056] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:42] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:43,030] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:43] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:43,031] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:43] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:44,667] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:44] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:44,673] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:44] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:46,051] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:46] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:46,057] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:46] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:47,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:47] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:47,036] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:47] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:48,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:48] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:48,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:48] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:28:49,854] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:49] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:28:49,861] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:28:49] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:15,058] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:15] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:15,077] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:15] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:15,139] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:15] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:15,204] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:15] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:16,138] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:16] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:16,206] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:16] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:18,065] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:18] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:18,066] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:18] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:19,049] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:19] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:19,576] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:19] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:20,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:20] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:20,023] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:20] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:21,429] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:21] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:21,437] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:21] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:23,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:23] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:23,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:23] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:24,305] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:24] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:24,318] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:24] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:26,231] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:26] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:26,237] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:26] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:28,068] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:28] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:28,075] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:28] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:29,447] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:29] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:29,455] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:29] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:30,425] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:30] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:30,430] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:30] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:31,950] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:31] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:31,951] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:31] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:33,055] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:33] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:33,070] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:33] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:34,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:34] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:34,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:34] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:35,648] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:35] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:35,655] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:35] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:37,049] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:37] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:38,793] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:38] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:38,806] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:38] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:38,822] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:38] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:40,397] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:40] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:40,420] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:40] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:42,021] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:42] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:42,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:42] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:43,075] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:43] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:43,083] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:43] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:44,051] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:44] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:44,065] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:44] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:47,017] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:47] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:47,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:47] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:48,082] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:48] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:48,087] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:48] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:49,063] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:49] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:49,074] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:49] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:50,405] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:50] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:50,416] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:50] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:53,289] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:53] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:53,381] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:53] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:54,091] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:54] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:54,104] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:54] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:55,296] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:55] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:55,305] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:55] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:56,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:56] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:57,141] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:57] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:57,154] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:57] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:58,036] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:58] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:29:59,136] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:59] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:29:59,142] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:29:59] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:00,336] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:00] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:00,346] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:00] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:02,866] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:02] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:02,874] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:02] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:04,998] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:04] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:05,007] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:05] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:06,107] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:06] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:06,114] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:06] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:07,083] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:07] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:07,089] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:07] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:08,051] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:08] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:08,064] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:08] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:10,030] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:10] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:10,046] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:10] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:11,165] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:11] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:11,197] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:11] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:12,061] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:12] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:12,062] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:12] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:13,039] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:13] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:13,048] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:13] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:14,572] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:14] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:14,662] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:14] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:15,143] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:15] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:15,155] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:15] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:16,281] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:16] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:30:45,294] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:45] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:30:45,295] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:30:45] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:31:45,175] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:31:45] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:31:45,211] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:31:45] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:32:14,407] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:14] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:32:14,496] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:14] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:32:15,177] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /progress/f3a7f27f-ff0a-48b9-a60f-80c3339e7e68 HTTP/1.1" 200 -
+[2025-06-25 16:32:15,256] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /progress/936d4969-1e82-4ecf-95fd-0751cbc53adb HTTP/1.1" 200 -
+[2025-06-25 16:32:15,605] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:32:15,663] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:32:15,730] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:32:15,806] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:32:15,844] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:32:15,880] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:15] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:32:41,139] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:32:41,189] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:32:41,228] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:32:41,233] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:32:41,247] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:32:41,285] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:32:41] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:33:50,410] INFO in app: Ghostscript stdout: 
+[2025-06-25 16:33:50,411] INFO in app: Ghostscript stderr: **** Warning: A Widget annotation dictionary lacks either the FT or T key.
+              Acrobat ignores such annoataions, annotation will not be rendered.
+              Output may not be as expected.
+
+[2025-06-25 16:33:50,412] INFO in app: Arquivo de saída gerado com sucesso: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:33:50,413] INFO in app: Compressão concluída para a tarefa: 936d4969-1e82-4ecf-95fd-0751cbc53adb
+[2025-06-25 16:33:50,431] INFO in app: Ghostscript stdout: 
+[2025-06-25 16:33:50,433] INFO in app: Arquivo de entrada removido: uploads\936d4969-1e82-4ecf-95fd-0751cbc53adb_Processo.pdf
+[2025-06-25 16:33:50,434] INFO in app: Ghostscript stderr: **** Warning: A Widget annotation dictionary lacks either the FT or T key.
+              Acrobat ignores such annoataions, annotation will not be rendered.
+              Output may not be as expected.
+
+[2025-06-25 16:33:50,435] INFO in app: Arquivo de saída gerado com sucesso: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:33:50,436] INFO in app: Compressão concluída para a tarefa: f3a7f27f-ff0a-48b9-a60f-80c3339e7e68
+[2025-06-25 16:33:50,462] INFO in app: Arquivo de entrada removido: uploads\f3a7f27f-ff0a-48b9-a60f-80c3339e7e68_Processo.pdf
+[2025-06-25 16:34:06,428] INFO in app: Thread de compressão iniciada para a tarefa: 484f14af-9938-479c-a71d-8d66bf6f50a5
+[2025-06-25 16:34:06,429] INFO in app: Executando subprocesso para a tarefa: 484f14af-9938-479c-a71d-8d66bf6f50a5. Input: uploads\484f14af-9938-479c-a71d-8d66bf6f50a5_Processo.pdf, Output: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:34:06,450] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:06] "POST /compress HTTP/1.1" 200 -
+[2025-06-25 16:34:07,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:07] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:08,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:08] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:09,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:09] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:10,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:10] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:11,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:11] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:12,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:12] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:13,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:13] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:14,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:14] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:15,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:15] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:16,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:16] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:17,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:17] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:18,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:18] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:19,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:19] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:20,535] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:20] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:21,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:21] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:22,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:22] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:23,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:23] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:24,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:24] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:25,489] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:25] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:26,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:26] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:27,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:27] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:28,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:28] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:29,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:29] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:30,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:30] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:31,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:31] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:32,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:32] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:33,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:33] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:34,493] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:34] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:35,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:35] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:36,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:36] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:37,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:37] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:38,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:38] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:39,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:39] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:40,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:40] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:41,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:41] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:42,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:42] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:43,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:43] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:44,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:44] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:45,523] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:45] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:46,501] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:46] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:47,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:47] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:48,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:48] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:49,756] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:49] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:51,021] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:51] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:52,036] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:52] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:53,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:53] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:54,050] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:54] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:55,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:55] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:56,181] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:56] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:57,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:57] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:58,027] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:58] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:34:59,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:34:59] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:00,128] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:00] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:01,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:01] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:02,130] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:02] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:03,017] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:03] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:04,027] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:04] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:05,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:05] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:06,041] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:06] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:07,024] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:07] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:08,017] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:08] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:09,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:09] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:10,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:10] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:11,379] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:11] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:12,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:12] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:13,053] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:13] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:14,027] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:14] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:15,123] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:15] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:16,250] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:16] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:17,034] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:17] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:18,048] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:18] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:19,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:19] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:20,034] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:20] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:21,072] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:21] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:22,080] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:22] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:23,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:23] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:24,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:24] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:25,030] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:25] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:26,027] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:26] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:27,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:27] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:28,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:28] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:29,057] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:29] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:30,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:30] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:31,030] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:31] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:32,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:32] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:33,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:33] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:34,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:34] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:35,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:35] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:36,121] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:36] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:37,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:37] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:38,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:38] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:39,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:39] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:40,034] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:40] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:41,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:41] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:42,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:42] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:43,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:43] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:44,031] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:44] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:45,028] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:45] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:46,055] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:46] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:47,030] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:47] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:48,028] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:48] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:35:49,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:35:49] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:12,553] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:12] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:14,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:14] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:15,024] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:15] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:16,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:16] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:17,060] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:17] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:18,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:18] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:19,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:19] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:20,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:20] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:21,072] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:21] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:22,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:22] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:23,028] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:23] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:24,038] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:24] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:25,042] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:25] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:26,376] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:26] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:27,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:27] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:28,036] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:28] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:29,023] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:29] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:30,127] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:30] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:31,465] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:31] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:33,039] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:33] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:34,036] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:34] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:35,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:35] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:37,020] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:37] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:38,035] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:38] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:39,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:39] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:40,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:40] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:41,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:41] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:42,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:42] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:43,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:43] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:44,019] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:44] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:45,055] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:45] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:46,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:46] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:47,031] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:47] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:48,031] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:48] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:49,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:49] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:50,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:50] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:51,063] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:51] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:52,017] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:52] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:53,029] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:53] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:54,017] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:54] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:55,031] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:55] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:56,026] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:56] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:57,023] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:57] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:58,022] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:58] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:36:59,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:36:59] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:00,047] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:00] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:01,033] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:01] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:02,024] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:02] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:03,032] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:03] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:03,971] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:03] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:04,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:04] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:05,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:05] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:06,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:06] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:07,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:07] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:08,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:08] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:09,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:09] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:10,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:10] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:11,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:11] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:12,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:12] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:13,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:13] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:14,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:14] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:15,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:15] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:16,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:16] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:17,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:17] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:18,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:18] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:19,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:19] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:20,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:20] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:21,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:21] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:22,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:22] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:23,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:23] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:24,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:24] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:25,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:25] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:26,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:26] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:27,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:27] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:28,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:28] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:29,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:29] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:30,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:30] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:31,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:31] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:32,486] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:32] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:33,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:33] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:34,489] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:34] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:35,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:35] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:36,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:36] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:37,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:37] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:38,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:38] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:39,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:39] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:40,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:40] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:41,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:41] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:42,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:42] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:43,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:43] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:44,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:44] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:45,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:45] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:46,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:46] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:47,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:47] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:48,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:48] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:49,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:49] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:50,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:50] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:51,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:51] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:52,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:52] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:53,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:53] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:54,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:54] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:55,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:55] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:56,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:56] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:57,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:57] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:58,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:58] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:37:59,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:37:59] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:00,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:00] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:01,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:01] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:02,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:02] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:03,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:03] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:04,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:04] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:05,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:05] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:06,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:06] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:07,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:07] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:08,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:08] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:09,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:09] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:10,590] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:10] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:11,488] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:11] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:12,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:12] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:13,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:13] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:14,664] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:14] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:15,497] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:15] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:16,491] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:16] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:17,526] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:17] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:18,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:18] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:19,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:19] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:20,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:20] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:21,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:21] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:22,491] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:22] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:23,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:23] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:24,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:24] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:25,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:25] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:26,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:26] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:27,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:27] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:28,491] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:28] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:29,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:29] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:30,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:30] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:31,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:31] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:32,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:32] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:33,478] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:33] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:34,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:34] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:35,494] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:35] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:36,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:36] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:37,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:37] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:38,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:38] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:39,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:39] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:40,483] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:40] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:41,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:41] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:42,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:42] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:43,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:43] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:44,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:44] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:45,477] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:45] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:46,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:46] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:47,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:47] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:48,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:48] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:49,485] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:49] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:50,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:50] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:51,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:51] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:52,475] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:52] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:53,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:53] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:54,480] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:54] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:55,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:55] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:56,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:56] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:57,476] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:57] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:58,479] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:58] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:38:59,482] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:38:59] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:00,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:00] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:01,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:01] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:02,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:02] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:03,520] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:03] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:03,527] INFO in app: Ghostscript stdout: 
+[2025-06-25 16:39:03,528] INFO in app: Ghostscript stderr: **** Warning: A Widget annotation dictionary lacks either the FT or T key.
+              Acrobat ignores such annoataions, annotation will not be rendered.
+              Output may not be as expected.
+
+[2025-06-25 16:39:03,531] INFO in app: Arquivo de saída gerado com sucesso: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:39:03,531] INFO in app: Compressão concluída para a tarefa: 484f14af-9938-479c-a71d-8d66bf6f50a5
+[2025-06-25 16:39:03,555] INFO in app: Arquivo de entrada removido: uploads\484f14af-9938-479c-a71d-8d66bf6f50a5_Processo.pdf
+[2025-06-25 16:39:04,481] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:04] "GET /progress/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:05,505] INFO in app: Requisição de download recebida para task_id: 484f14af-9938-479c-a71d-8d66bf6f50a5
+[2025-06-25 16:39:05,507] INFO in app: Servindo arquivo: processed\comprimidoZG_Processo.pdf para download da tarefa: 484f14af-9938-479c-a71d-8d66bf6f50a5
+[2025-06-25 16:39:05,510] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:05] "GET /download/484f14af-9938-479c-a71d-8d66bf6f50a5 HTTP/1.1" 200 -
+[2025-06-25 16:39:07,512] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:39:07,595] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:39:07,603] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:39:07,608] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:39:07,614] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:39:07,619] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:39:07] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 16:39:10,510] INFO in app: Tentando limpar arquivo para tarefa 484f14af-9938-479c-a71d-8d66bf6f50a5: processed\comprimidoZG_Processo.pdf
+[2025-06-25 16:39:10,537] INFO in app: Arquivo 'processed\comprimidoZG_Processo.pdf' (tarefa 484f14af-9938-479c-a71d-8d66bf6f50a5) removido com sucesso.
+[2025-06-25 16:39:10,554] INFO in app: Tarefa 484f14af-9938-479c-a71d-8d66bf6f50a5 removida do dicionário de tarefas.
+[2025-06-25 16:40:07,655] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:40:07,694] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:40:07,927] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:40:07,965] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:40:07,973] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:40:07,976] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:40:07,999] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:40:07] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:45:10,185] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:10] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:45:11,240] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:11] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:45:11,279] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:11] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:45:11,676] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:11] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:45:12,143] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:12] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:45:12,315] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:12] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:45:12,706] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:12] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:45:28,847] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:28] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:45:28,864] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:45:28] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:49:12,228] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:12] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:49:13,871] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:13] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:49:13,917] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:13] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:49:14,166] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:14] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:49:15,044] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:15] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:49:15,121] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:15] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:49:15,405] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:15] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:49:26,934] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:26] "[31m[1mPOST /split HTTP/1.1[0m" 400 -
+[2025-06-25 16:49:31,771] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:31] "[31m[1mPOST /split HTTP/1.1[0m" 400 -
+[2025-06-25 16:49:35,274] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:49:35] "[31m[1mPOST /split HTTP/1.1[0m" 400 -
+[2025-06-25 16:54:15,829] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:15] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:54:16,455] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:16] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:54:17,294] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:17] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:54:17,978] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:17] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:54:18,025] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:18] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:54:19,766] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:19] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:54:20,369] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:20] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:54:50,842] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:50] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:54:52,132] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:52] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:54:52,454] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:52] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:54:52,546] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:52] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:54:53,292] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:53] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:54:54,390] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:54] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:54:55,903] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:54:55] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:55:51,370] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:55:51] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:55:51,820] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:55:51] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:55:51,821] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:55:51] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:55:51,855] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:55:51] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:55:52,206] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:55:52] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:55:59,067] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.1.39.126:5000
+[2025-06-25 16:55:59,068] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-06-25 16:55:59,072] INFO in _internal:  * Restarting with stat
+[2025-06-25 16:56:00,335] WARNING in _internal:  * Debugger is active!
+[2025-06-25 16:56:00,343] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 16:56:01,646] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:01] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:56:01,934] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:01] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:56:01,943] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:01] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:56:01,987] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:01] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:56:02,018] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:02] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:56:02,061] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:02] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:56:02,144] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:02] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:56:27,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:27] "POST /split HTTP/1.1" 200 -
+[2025-06-25 16:56:30,558] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /split HTTP/1.1" 200 -
+[2025-06-25 16:56:30,639] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 16:56:30,644] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:56:30,653] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 16:56:30,659] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:56:30,661] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:56:30,665] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:56:30] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 16:58:42,284] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /compress HTTP/1.1" 200 -
+[2025-06-25 16:58:42,508] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-06-25 16:58:42,524] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 16:58:42,531] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 16:58:42,676] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 16:58:42,684] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 16:58:42] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-06-25 17:02:29,785] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:02:30,024] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:02:31,320] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:02:31,326] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:03:21,533] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:21] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:03:21,850] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:21] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:03:21,955] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:21] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:03:21,972] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:21] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:03:22,044] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:22] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:03:34,101] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:03:34] "[35m[1mPOST /split HTTP/1.1[0m" 500 -
+[2025-06-25 17:05:03,046] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:05:03,272] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:05:04,811] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:05:04,821] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:05:07,645] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:07] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:05:08,062] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:05:08,078] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:05:08,096] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:05:08,164] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:05:08,169] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:05:08,228] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:05:08] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:15:14,517] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.1.39.126:5000
+[2025-06-25 17:15:14,517] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-06-25 17:15:14,520] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:15:15,747] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:15:15,753] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:15:16,886] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:16] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:15:17,197] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:15:17,246] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:15:17,345] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:15:17,369] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:15:17,424] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:15:17,535] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:17] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:15:24,967] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:24] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:15:24,977] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:15:24] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:18:48,576] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:48] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:18:48,949] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:48] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:18:48,958] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:48] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:18:48,991] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:48] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:18:49,098] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:49] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:18:49,182] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:49] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:18:49,374] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:49] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:18:56,853] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:56] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:18:56,908] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:18:56] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:22:18,564] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:18] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:22:18,757] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:18] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:22:19,185] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:19] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:22:19,215] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:19] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:22:19,261] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:19] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:22:19,462] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:19] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:22:19,602] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:22:19] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:22:30,213] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:22:30,917] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:22:32,076] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:22:32,082] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:23:08,506] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:23:08] "[35m[1mPOST /split HTTP/1.1[0m" 500 -
+[2025-06-25 17:24:39,744] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:24:40,008] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:24:41,908] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:24:41,916] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:24:43,384] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:43] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:24:43,753] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:43] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:24:43,797] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:43] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:24:43,899] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:43] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:24:43,961] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:43] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:24:44,014] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:44] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:24:44,015] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:24:44] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:35:03,487] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:03] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:35:03,771] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:03] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:35:03,835] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:03] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:35:03,868] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:03] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:35:04,445] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:04] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:35:04,504] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:04] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:35:04,578] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:04] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:35:04,638] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:35:04] "[31m[1mPOST /split HTTP/1.1[0m" 400 -
+[2025-06-25 17:36:03,271] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:36:04,212] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:36:05,601] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:36:05,608] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:37:43,224] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:37:43,377] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:37:45,029] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:37:45,044] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:37:46,627] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:46] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:37:46,976] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:46] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:37:46,988] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:46] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:37:47,118] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:47] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:37:47,148] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:47] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:37:47,178] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:47] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:37:47,258] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:37:47] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:38:37,174] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:37] "POST /split HTTP/1.1" 200 -
+[2025-06-25 17:38:40,958] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:40] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:38:41,091] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:38:41,104] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:38:41,116] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:38:41,123] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:38:41,130] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:38:41,139] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:38:41] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:43:30,025] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-06-25 17:43:30,368] INFO in _internal:  * Restarting with stat
+[2025-06-25 17:43:31,964] WARNING in _internal:  * Debugger is active!
+[2025-06-25 17:43:31,970] INFO in _internal:  * Debugger PIN: 954-143-909
+[2025-06-25 17:43:33,121] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:43:33,448] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:43:33,484] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:43:33,542] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:43:33,597] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:43:33,616] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:43:33,648] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:43:33] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:44:24,175] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:24] "POST /split HTTP/1.1" 200 -
+[2025-06-25 17:44:27,961] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:27] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:44:28,151] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:44:28,154] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:44:28,181] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:44:28,187] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:44:28,189] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:44:28,213] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:44:28] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:45:58,415] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:45:58,495] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:45:58,557] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:45:58,574] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:45:58,581] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:45:58,674] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:45:58,721] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:45:58] "GET /static/js/split.js HTTP/1.1" 200 -
+[2025-06-25 17:46:48,390] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:48] "POST /split HTTP/1.1" 200 -
+[2025-06-25 17:46:52,078] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /split HTTP/1.1" 200 -
+[2025-06-25 17:46:52,157] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-06-25 17:46:52,160] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-06-25 17:46:52,162] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/assets/sorting.png HTTP/1.1" 200 -
+[2025-06-25 17:46:52,175] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-06-25 17:46:52,178] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-06-25 17:46:52,179] INFO in _internal: 10.1.39.126 - - [25/Jun/2025 17:46:52] "GET /static/js/split.js HTTP/1.1" 200 -

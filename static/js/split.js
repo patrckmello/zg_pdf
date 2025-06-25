@@ -404,10 +404,10 @@ if (startMergeBtn) {
 
 // --- Funcionalidade de Divisão (Split) ---
 
-// --- Funcionalidade de Divisão (Split) ---
-
 if (startSplitBtn) {
     startSplitBtn.addEventListener('click', async () => {
+        // Espião 1: Confirma que o evento de clique foi registrado.
+        console.log("1. Botão 'Dividir PDF' clicado.");
         hideAllErrors();
         showSpinner();
 
@@ -416,7 +416,6 @@ if (startSplitBtn) {
             showError(' ⚠️ Por favor, selecione pelo menos um arquivo para dividir.');
             return;
         }
-        // Adicionada validação: Apenas UM arquivo pode ser dividido por vez
         if (selectedFiles.length > 1) {
             hideSpinner();
             showError(' ⚠️ Por favor, selecione apenas UM arquivo para dividir.');
@@ -430,16 +429,16 @@ if (startSplitBtn) {
             return;
         }
 
+        // Espião 2: Confirma que as validações iniciais de interface passaram.
+        console.log("2. Validações iniciais passaram.");
         const mode = selectedModeBtn.dataset.mode;
         const formData = new FormData();
-        formData.append('pdfs', selectedFiles[0]); // selectedFiles[0] é o PDF a ser dividido
+        formData.append('pdfs', selectedFiles[0]);
         formData.append('mode', mode);
 
         if (mode === 'parts') {
             const partsInput = document.getElementById('split-parts-input');
             const parts = parseInt(partsInput.value);
-            // Ajuste na validação mínima para o frontend: partes > 0
-            // A validação de 'parts > numPages' será feita no backend.
             if (isNaN(parts) || parts <= 0) {
                 hideSpinner();
                 showError(' ⚠️ Número de partes inválido. Informe um valor numérico maior que 0.');
@@ -450,7 +449,6 @@ if (startSplitBtn) {
         } else if (mode === 'size') {
             const sizeInput = document.getElementById('split-size-input');
             const sizeMB = parseFloat(sizeInput.value);
-            // Ajuste na validação mínima para o frontend: sizeMB > 0
             if (isNaN(sizeMB) || sizeMB <= 0) {
                 hideSpinner();
                 showError(' ⚠️ Tamanho inválido. Informe um valor em MB (maior que 0).');
@@ -458,47 +456,27 @@ if (startSplitBtn) {
             }
             formData.append('max_size_mb', sizeMB);
         }
-
-        // --- ATENÇÃO: O BLOCO ABAIXO FOI REMOVIDO PARA EVITAR O TRAVAMENTO NO FRONTEND ---
-        // Este é o bloco que lia o PDF inteiro no navegador para verificar o número de páginas.
-        // Essa validação agora será feita no backend.
-        /*
-        try {
-            const buffer = await new Promise(resolve => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.readAsArrayBuffer(selectedFiles[0]);
-            });
-            const pdf = await pdfjsLib.getDocument(new Uint8Array(buffer)).promise;
-            const numPages = pdf.numPages;
-
-            if (parts > numPages) {
-                hideSpinner();
-                showError(` ⚠️ O arquivo "${selectedFiles[0].name}" tem apenas ${numPages} página(s). Não é possível dividir em ${parts} partes.`);
-                return;
-            }
-        } catch (e) {
-            hideSpinner();
-            console.error(`Erro ao processar o arquivo "${selectedFiles[0].name}":`, e);
-            showError(` ⚠️ Erro ao processar o arquivo "${selectedFiles[0].name}".`);
-            return;
-        }
-        */
-        // --- FIM DO BLOCO REMOVIDO ---
-
-
+        
+        // Espião 3: Confirma que o código está prestes a fazer a chamada de rede.
+        console.log("3. Enviando requisição para o backend...");
         try {
             const response = await fetch('/split', {
                 method: 'POST',
                 body: formData
             });
 
-            // Se a resposta não for OK (erro do servidor), tenta ler a mensagem de erro do backend
+            // Espião 4: Mostra o status da resposta recebida. Este é um dos mais importantes!
+            console.log("4. Resposta recebida do backend. Status:", response.status);
+
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ message: 'Erro desconhecido do servidor.' })); // Tenta ler JSON, se falhar, usa mensagem padrão
+                // Espião 5: Indica que o servidor retornou um erro (status 4xx ou 5xx).
+                console.log("5. Resposta NÃO foi OK. Tentando ler erro...");
+                const errorData = await response.json().catch(() => ({ message: 'Erro desconhecido do servidor.' }));
                 throw new Error(errorData.message || 'Erro na resposta do servidor.');
             }
-
+            
+            // Espião 6: Indica que a requisição foi um sucesso e o download vai começar.
+            console.log("6. Resposta foi OK. Processando download...");
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -514,13 +492,13 @@ if (startSplitBtn) {
             }, 3000);
 
         } catch (error) {
-            console.error('Erro ao dividir PDF:', error);
-            // Exibe a mensagem de erro vinda do backend ou a mensagem genérica
+            // Espião de ERRO: Captura e exibe qualquer erro que ocorrer no bloco 'try'.
+            console.error("ERRO CAPTURADO:", error);
             showError(` ⚠️ Ocorreu um erro ao dividir o PDF: ${error.message}`);
         } finally {
+            // Espião 7: Confirma que o bloco 'finally' foi executado, limpando a interface.
+            console.log("7. Bloco 'finally' executado.");
             hideSpinner();
-            // Assumindo que 'splitMenu' está definido e é uma função para fechar o menu
-            // Se não for uma função, apenas remova a linha ou ajuste conforme sua implementação
             if (typeof closeMenu === 'function' && typeof splitMenu !== 'undefined') {
                 closeMenu(splitMenu);
             }

@@ -3,8 +3,6 @@ const convertBtn = document.getElementById('convert-btn');
 const convertStartBtn = document.getElementById('start-convert');
 const previewGrid = document.getElementById('preview-grid');
 
-const iconPath = 'caminho/para/seu/icone-arquivo.svg';
-
 /**
  * Função de renderização de previews específica para o módulo de conversão.
  * Ela usa `selectedFiles` (plural) e exibe ícones genéricos.

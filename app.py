@@ -22,6 +22,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "chave-padrao-fallback")
+app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 
 # ---------------------------- CONFIGURAÇÕES ----------------------------
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
@@ -156,13 +157,10 @@ def compress():
         logging.info(f"Thread de compressão iniciada para a tarefa: {current_task_id}")
         try:
             # Simular o progresso e executar a compressão
-            for i in range(current_estimated_time * 10):
-                percent = int((i / (current_estimated_time * 10)) * 90)
-                with tasks_lock:
-                    if current_task_id in tasks:
-                        tasks[current_task_id]['percent'] = percent
-                        tasks[current_task_id]['status'] = f"Comprimindo... {percent}%"
-                time.sleep(0.05) # Reduzi para 0.05s para um progresso mais rápido na simulação
+            with tasks_lock:
+                if current_task_id in tasks:
+                    tasks[current_task_id]['percent'] = 10
+                    tasks[current_task_id]['status'] = "Preparando compressão..."
 
             logging.info(f"Executando subprocesso para a tarefa: {current_task_id}. Input: {current_input_path}, Output: {current_output_path}") # Log do caminho
 
@@ -171,6 +169,11 @@ def compress():
                 f'-dPDFSETTINGS=/{current_compression_type}', '-dNOPAUSE', '-dBATCH',
                 '-dQUIET', f'-sOutputFile={current_output_path}', current_input_path
             ], check=True, capture_output=True, text=True)
+
+            with tasks_lock:
+                if current_task_id in tasks:
+                    tasks[current_task_id]['percent'] = 90
+                    tasks[current_task_id]['status'] = "Finalizando compressão..."
 
             logging.info(f"Ghostscript stdout: {result.stdout}")
             logging.info(f"Ghostscript stderr: {result.stderr}")
@@ -350,59 +353,144 @@ def merge_pdfs():
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='unido.pdf')
 
+# Garanta que estes imports estejam no topo do seu arquivo app.py
+import io
+import math
+import zipfile
+import fitz  # PyMuPDF
+from flask import request, send_file, jsonify
+from datetime import datetime # <--- ESTA É A LINHA DA CORREÇÃO!
+
+# ... (seu código da app Flask e outras rotas) ...
+
 @app.route('/split', methods=['POST'])
 def split_pdfs():
-    files = request.files.getlist('pdfs')
+    print(f"[{datetime.now()}] REQUISIÇÃO /split recebida.")
+    
+    if 'pdfs' not in request.files:
+        return jsonify({"message": "Nenhum arquivo enviado."}), 400
+
+    f = request.files.getlist('pdfs')[0]
     mode = request.form.get('mode')
+    
+    # --- MUDANÇA #1: LÓGICA DE REPARO OPCIONAL ---
+    # Verifica se o frontend enviou a flag para reparar o PDF
+    repair_needed = request.form.get('repair_pdf') == 'true'
+    
+    try:
+        pdf_bytes = f.read()
+
+        if repair_needed:
+            print(f"[{datetime.now()}] Reparo solicitado. Iniciando limpeza do PDF em memória...")
+            # Abre o PDF original
+            original_doc = fitz.open(stream=pdf_bytes, filetype='pdf')
+            # Cria um buffer em memória para salvar a versão reparada
+            repaired_buffer = io.BytesIO()
+            # Salva no buffer com a opção 'clean=True', que repara a estrutura do PDF
+            original_doc.save(repaired_buffer, garbage=4, deflate=True, clean=True)
+            original_doc.close()
+            # O 'pdf_bytes' agora será o do PDF reparado para o resto da função
+            pdf_bytes = repaired_buffer.getvalue()
+            print(f"[{datetime.now()}] PDF reparado com sucesso.")
+
+        # O resto da função continua igual, mas usando 'pdf_bytes' (que pode ter sido reparado)
+        pdf_doc = fitz.open(stream=pdf_bytes, filetype='pdf')
+        print(f"[{datetime.now()}] PDF aberto com sucesso. {pdf_doc.page_count} páginas.")
+    except Exception as e:
+        print(f"[{datetime.now()}] Erro ao abrir ou reparar PDF: {e}")
+        return jsonify({"message": f"Arquivo PDF inválido ou corrompido demais para reparar: {e}"}), 400
+    # ----------------------------------------------------
+        
+    filename = f.filename.rsplit('.', 1)[0]
     zip_buffer = io.BytesIO()
+
+    # O resto da sua função continua exatamente como estava antes
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for f in files:
-            pdf_doc = fitz.open(stream=f.read(), filetype='pdf')
-            filename = f.filename.rsplit('.', 1)[0]
-            if mode == 'parts':
+        if mode == 'parts':
+            # ... (código do modo 'parts' sem alterações) ...
+            try:
                 parts = int(request.form.get('parts'))
-                ppp = math.ceil(pdf_doc.page_count / parts)
-                for i in range(parts):
-                    new_pdf = fitz.open()
-                    for p in range(i * ppp, min((i + 1) * ppp, pdf_doc.page_count)):
-                        new_pdf.insert_pdf(pdf_doc, from_page=p, to_page=p)
-                    buffer = io.BytesIO()
-                    new_pdf.save(buffer)
-                    buffer.seek(0)
-                    zipf.writestr(f"{filename}_parte_{i+1}_de_{parts}.pdf", buffer.read())
-            elif mode == 'size':
-                max_size = float(request.form.get('max_size_mb')) - 0.1
-                pages = []
-                part_number = 1
-                for i in range(pdf_doc.page_count):
-                    pages.append(i)
-                    new_pdf = fitz.open()
-                    for p in pages:
-                        new_pdf.insert_pdf(pdf_doc, from_page=p, to_page=p)
-                    buffer = io.BytesIO()
-                    new_pdf.save(buffer)
-                    size_mb = buffer.tell() / (1024 * 1024)
-                    if size_mb > max_size:
-                        pages.pop()
-                        final_pdf = fitz.open()
-                        for p in pages:
-                            final_pdf.insert_pdf(pdf_doc, from_page=p, to_page=p)
-                        final_buffer = io.BytesIO()
-                        final_pdf.save(final_buffer)
-                        final_buffer.seek(0)
-                        zipf.writestr(f"{filename}_parte_{part_number}.pdf", final_buffer.read())
-                        part_number += 1
-                        pages = [i]
-                if pages:
-                    final_pdf = fitz.open()
-                    for p in pages:
-                        final_pdf.insert_pdf(pdf_doc, from_page=p, to_page=p)
-                    final_buffer = io.BytesIO()
-                    final_pdf.save(final_buffer)
-                    final_buffer.seek(0)
-                    zipf.writestr(f"{filename}_parte_{part_number}.pdf", final_buffer.read())
+                if parts <= 0: return jsonify({"message": "O número de partes deve ser maior que 0."}), 400
+                if parts > pdf_doc.page_count: return jsonify({"message": f"O número de partes ({parts}) não pode ser maior que o número de páginas ({pdf_doc.page_count})."}), 400
+            except (ValueError, TypeError): return jsonify({"message": "Número de partes inválido."}), 400
+
+            pages_per_part = math.ceil(pdf_doc.page_count / parts)
+            for i in range(parts):
+                start_page = i * pages_per_part
+                end_page = min(start_page + pages_per_part - 1, pdf_doc.page_count - 1)
+                if start_page > end_page: continue
+                new_pdf = fitz.open()
+                new_pdf.insert_pdf(pdf_doc, from_page=start_page, to_page=end_page)
+                output_buffer = io.BytesIO()
+                new_pdf.save(output_buffer, garbage=4, deflate=True) 
+                output_buffer.seek(0)
+                zipf.writestr(f"{filename}_parte_{i+1}_de_{parts}.pdf", output_buffer.read())
+                new_pdf.close()
+
+        elif mode == 'size':
+            # ... (código do modo 'size' com busca binária sem alterações) ...
+            try:
+                max_size_mb = float(request.form.get('max_size_mb'))
+                if max_size_mb <= 0: return jsonify({"message": "O tamanho máximo deve ser maior que 0 MB."}), 400
+            except (ValueError, TypeError): return jsonify({"message": "Tamanho máximo inválido."}), 400
+
+            max_size_bytes = max_size_mb * 1024 * 1024
+            part_number = 1
+            chunk_start_page = 0
+            
+            print(f"[{datetime.now()}] Iniciando divisão por tamanho com BUSCA BINÁRIA. Limite: {max_size_mb}MB.")
+
+            while chunk_start_page < pdf_doc.page_count:
+                print(f"[{datetime.now()}] ===== Processando Bloco #{part_number} (começando da pág. {chunk_start_page + 1}) =====")
+                
+                single_page_doc = fitz.open()
+                single_page_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=chunk_start_page)
+                single_page_buffer = io.BytesIO()
+                single_page_doc.save(single_page_buffer)
+                if single_page_buffer.tell() > max_size_bytes:
+                     print(f"[{datetime.now()}] ERRO: Página única maior que o limite.")
+                     return jsonify({"message": f"A página {chunk_start_page + 1} sozinha ({single_page_buffer.tell() / (1024*1024):.2f}MB) já é maior que o limite de {max_size_mb} MB."}), 400
+                
+                low = chunk_start_page
+                high = pdf_doc.page_count - 1
+                best_end_page = chunk_start_page
+
+                while low <= high:
+                    mid = (low + high) // 2
+                    test_doc = fitz.open()
+                    test_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=mid)
+                    test_buffer = io.BytesIO()
+                    test_doc.save(test_buffer)
+                    test_doc.close()
+                    
+                    if test_buffer.tell() <= max_size_bytes:
+                        best_end_page = mid
+                        low = mid + 1
+                    else:
+                        high = mid - 1
+                
+                chunk_end_page = best_end_page
+                print(f"[{datetime.now()}] Bloco #{part_number} definido via busca: páginas {chunk_start_page + 1} a {chunk_end_page + 1}. Criando PDF final...")
+
+                final_chunk_doc = fitz.open()
+                final_chunk_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=chunk_end_page)
+                output_buffer = io.BytesIO()
+                final_chunk_doc.save(output_buffer, garbage=4, deflate=True)
+                output_buffer.seek(0)
+                zipf.writestr(f"{filename}_parte_{part_number}.pdf", output_buffer.read())
+                
+                print(f"[{datetime.now()}] Bloco #{part_number} salvo no ZIP. Total de {final_chunk_doc.page_count} páginas.")
+                
+                final_chunk_doc.close()
+                part_number += 1
+                chunk_start_page = chunk_end_page + 1
+                
+    pdf_doc.close()
     zip_buffer.seek(0)
-    return send_file(zip_buffer, as_attachment=True, download_name='divididos.zip')
+    
+    print(f"[{datetime.now()}] Processo finalizado. Enviando ZIP para o cliente.")
+    return send_file(zip_buffer, as_attachment=True, download_name=f'{filename}_dividido.zip', mimetype='application/zip')
+
 
 @app.route('/organize', methods=['POST'])
 def organize_pdf():
