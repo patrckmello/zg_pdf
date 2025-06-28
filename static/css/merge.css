@@ -1,0 +1,20 @@
+@import url(global.css);
+
+body {
+    /* Estilos básicos do corpo da página */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f4f8;
+    color: #333;
+}
+
+main {
+    /* Estilos da área de conteúdo principal */
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}

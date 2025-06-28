@@ -62,6 +62,13 @@ def split_form():
 def convert_form():
     return render_template('convert.html')
 
+@app.route('/merge', methods=['GET'])
+def merge_form():
+    return render_template('merge.html')
+
+@app.route('/organize', methods=['GET'])
+def organize_form():
+    return render_template('organize.html')
 
 # ---------------------------- ENVIO DE FEEDBACK ----------------------------
 @app.route('/enviar-feedback', methods=['POST'])

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dividir PDF</title>
+    <title>Unir PDF</title>
     <link rel="shortcut icon" href="http://10.1.3.113/intranet/wp-content/themes/zavagnagralha/assets/img/favicon.ico">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/split.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/merge.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <header>
         <div class="navbar">
             <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
-            <h1 class="title">Dividir PDF</h1>
+            <h1 class="title">Unir PDF</h1>
         </div>
     </header>
 
@@ -23,45 +23,35 @@
             <div id="drop-zone">
                 <div class="rotating-border"></div>
                 <p>Arraste ou clique para selecionar um arquivo PDF</p>
-                <input type="file" id="fileInput" accept="application/pdf" hidden/>
+                <input type="file" id="fileInput" accept="application/pdf" hidden multiple/>
             </div>
+
+            <div id="main-function-buttons">
+                <button id="merge-btn" class="function-btn">Unir</button>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="error-message2" class="error-message2" style="display: none;"></div>
+            <div id="error-message3" class="error-message3" style="display: none;"></div>
 
             <div id="preview-container-grid" class="preview-grid" style="display: none;">
+                <img src="{{ url_for('static', filename='assets/sorting.png') }}" alt="Ordernar itens" class="ordenar-icon" id="sort-icon">
                 <p id="preview-title" class="text-sm text-gray-600 mb-1">Pré-visualização (arraste para ordenar):</p>
                 <div id="sortable-preview" class="sortable-preview"></div>
+                
+                <div id="sort-menu">
+                <button id="sort-asc-btn" class="function-btn">Ordem Crescente ↑</button>
+                <button id="sort-desc-btn" class="function-btn">Ordem Decrescente ↓</button>
+                </div>
             </div>
         </div>
         
-        <div id="error-message" class="error-message"></div>
-        <div id="error-message2" class="error-message2" style="display: none;"></div>
-        <div id="error-message3" class="error-message3" style="display: none;"></div>
-        
-        <div id="main-function-buttons">
-            <button id="split-btn" class="function-btn">Dividir</button>
-        </div>
-
-        <div class="side-menu" id="splitMenu">
-            <button class="close-btn" onclick="closeSplitMenu()">×</button>
-            <h3>Escolha o modo de divisão</h3>
-
-            <div class="split-mode">
-                <button type="button" class="mode-btn" data-mode="parts">Por número de partes</button>
-                <button type="button" class="mode-btn" data-mode="size">Por tamanho (MB)</button>
-            </div>
-
-            <div class="split-option" id="parts-option">
-                <p>Em quantas partes você gostaria de dividir?</p>
-                <input type="number" id="split-parts-input" min="1" value="2"/>
-            </div>
-
-            <div class="split-option" id="size-option">
-                <p>Qual o tamanho máximo de cada parte (em MB)?</p>
-                <input type="number" id="split-size-input" min="1" value="2"/>
-            </div>
-
-            <button id="start-split" class="start-function">Dividir PDF</button>
+        <div class="side-menu" id="mergeMenu">
+            <button class="close-btn" onclick="closeMergeMenu()">×</button>
+            <h3>Unir PDFs na <br>ordem selecionada</h3>
+            <button id="start-merge" class="start-function" onclick="startMerge()">Unir PDFs</button>
             <div id="loading-spinner" class="spinner hidden"></div>
-        </div> 
+        </div>
         </main>
             
     <footer id="footer">
@@ -70,6 +60,6 @@
         <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
     </footer>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/split.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/merge.js')}}"></script>
 </body>
 </html>

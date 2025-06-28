@@ -307,6 +307,7 @@ header {
     border-top: 6px solid #3498db;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    display: block;
 }
 
 @keyframes spin {
@@ -314,6 +315,58 @@ header {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+.preview-grid,
+.sortable-preview {
+    /* Contêiner principal para as pré-visualizações */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1rem;
+    padding: 10px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: flex-start;
+}
+
+.preview-wrapper {
+    /* Estilos para os cards que envolvem cada preview (seja de arquivo ou de página) */
+    position: relative;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    width: 160px; /* Largura fixa para consistência no grid */
+    flex-shrink: 0;
+}
+
+.preview-wrapper:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.preview-wrapper canvas {
+    /* Estilos para o canvas dentro do wrapper */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: move;
+    transition: transform 0.2s ease;
+}
+
+#pdf-canvas {
+    /* Canvas genérico de pré-visualização de PDF (pode ser de outra funcionalidade) */
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 
 .spinner.hidden {
     /* Esconde o spinner */

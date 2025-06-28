@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizar PDF</title>
+    <link rel="shortcut icon" href="http://10.1.3.113/intranet/wp-content/themes/zavagnagralha/assets/img/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/organize.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
+            <h1 class="title">Organizar PDF</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="upload-box">
+            <div id="drop-zone">
+                <div class="rotating-border"></div>
+                <p>Arraste ou clique para selecionar um arquivo PDF</p>
+                <input type="file" id="fileInput" accept="application/pdf" hidden/>
+            </div>
+
+            <div id="organize-function-buttons" style="display: none;">
+                <button id="select-all-btn" class="function-btn">Selecionar Todas</button>
+                <button id="rotate-selected-btn" class="function-btn">Girar Selecionadas</button>
+                <button id="deselect-all-btn" class="function-btn">Desselecionar Todas</button>
+                <button id="back-btn" class="function-btn">Voltar</button>
+            </div>
+            
+            <div id="main-function-buttons">
+                <button id="organize-btn" class="function-btn">Organizar</button>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="error-message2" class="error-message2" style="display: none;"></div>
+            <div id="error-message3" class="error-message3" style="display: none;"></div>
+
+            <div id="preview-container-grid" class="preview-grid" style="display: none;">
+                <p id="preview-title" class="text-sm text-gray-600 mb-1">Pré-visualização (arraste para ordenar):</p>
+                <div id="sortable-preview" class="sortable-preview"></div>
+            </div>
+        </div>
+
+        <div class="side-menu" id="organizeMenu">
+            <button class="close-btn" onclick="closeOrganizeMenu()">×</button>
+            <h3>Organizar Páginas do PDF</h3>
+            <button id="start-organize" class="start-function">Aplicar Ordem</button>
+            <div id="loading-spinner" class="spinner hidden"></div>
+        </div>
+        </main>
+            
+    <footer id="footer">
+        <span>&copy;TI Zavagna Gralha - 2025</span> 
+        <span>|</span>
+        <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
+    </footer>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/split.js')}}"></script>
+</body>
+</html>

@@ -225,3 +225,129 @@ if (globalCloseBtn) {
         resetApp(); // Resetar a página ao fechar o menu principal pode ser uma boa UX
     });
 }
+
+// =================================================================================
+// GLOBAIS
+// =================================================================================
+
+// --- CONSTS & VARS GLOBAIS ---
+const previewContainer = document.getElementById('sortable-preview');
+const previewTitle = document.getElementById('preview-title');
+const mainButtons = document.getElementById('main-function-buttons');
+const backBtn = document.getElementById('back-btn');
+const PREVIEW_BATCH_SIZE = 20;
+
+let selectedWrappers = [];
+let intersectionObserver = null;
+let pdfDocument = null; // Usado principalmente em Organize, mas pode ser global se reutilizado
+
+// --- FUNÇÕES GLOBAIS ---
+
+/**
+ * Renderiza as pré-visualizações com base no contexto atual (Merge, Split ou Organize).
+ * Delega a tarefa para a função apropriada.
+ */
+async function renderModulePreviews() {
+    // Para merge/split, rebuildPreviews já faz o trabalho.
+    // Para organize, a chamada é feita diretamente no listener do botão.
+    await rebuildPreviews();
+}
+
+/**
+ * Verifica se um nome de arquivo é composto apenas por dígitos (numérico).
+ * @param {string} name - O nome do arquivo (sem extensão).
+ * @returns {boolean} - Verdadeiro se o nome for numérico, falso caso contrário.
+ */
+function isNumericName(name) {
+    return /^\d+$/.test(name.split('.').shift());
+}
+
+/**
+ * Atualiza os índices visuais das pré-visualizações.
+ * Útil após reordenar ou remover itens.
+ */
+function updatePreviewIndices() {
+    const previews = previewContainer.querySelectorAll('.preview-wrapper');
+    previews.forEach((prev, newIndex) => {
+        // Para previews de organização de página, o data-pageNum original é mantido.
+        // Apenas para previews de arquivos (Merge/Split) o data-index é atualizado.
+        if (!prev.dataset.pageNum) {
+            prev.setAttribute('data-index', newIndex);
+        }
+    });
+}
+
+/**
+ * Cria uma pré-visualização de um arquivo PDF.
+ * Usado para os previews de arquivos (Merge/Split).
+ * @param {File} file - O arquivo PDF.
+ * @param {number} index - O índice do arquivo na lista de selectedFiles.
+ * @returns {Promise<void>} Uma promessa que resolve quando a pré-visualização é criada.
+ */
+function createPreview(file, index) {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = async function() {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            const page = await pdf.getPage(1);
+            const MAX_PREVIEW_WIDTH = 150;
+            const originalViewport = page.getViewport({ scale: 1 });
+            let scale = (originalViewport.width > MAX_PREVIEW_WIDTH) ? MAX_PREVIEW_WIDTH / originalViewport.width : 1;
+            const viewport = page.getViewport({ scale: scale });
+
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('preview-wrapper');
+            wrapper.setAttribute('data-index', index);
+            wrapper.setAttribute('data-filename', file.name);
+
+            const canvas = document.createElement('canvas');
+            canvas.classList.add('preview-canvas');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            const context = canvas.getContext('2d');
+            await page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = '×';
+            removeBtn.classList.add('remove-btn');
+            removeBtn.title = 'Remover arquivo';
+            removeBtn.addEventListener('click', () => {
+                if (previewContainer) previewContainer.removeChild(wrapper);
+                const idx = selectedFiles.findIndex(f => f.name === file.name);
+                if (idx !== -1) {
+                    selectedFiles.splice(idx, 1);
+                }
+                if (selectedFiles.length === 0) {
+                    resetApp();
+                } else {
+                    rebuildPreviews();
+                }
+            });
+
+            const fileNameElement = document.createElement('p');
+            fileNameElement.textContent = file.name;
+            fileNameElement.classList.add('file-name');
+
+            wrapper.appendChild(fileNameElement);
+            wrapper.appendChild(canvas);
+            wrapper.appendChild(removeBtn);
+            if (previewContainer) previewContainer.appendChild(wrapper);
+            resolve();
+        };
+        fileReader.readAsArrayBuffer(file);
+    });
+}
+
+// --- LISTENERS GLOBAIS ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Listener para o botão Voltar (usado principalmente na função Organize, mas pode ser global)
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            resetApp(); // A função resetApp() é assumida como global
+        });
+    }
+});
