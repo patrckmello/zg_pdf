@@ -222,7 +222,6 @@ if (globalCloseBtn) {
         closeMenu(organizeMenu);
         closeMenu(convertMenu);
         hideAllErrors();
-        resetApp(); // Resetar a página ao fechar o menu principal pode ser uma boa UX
     });
 }
 
@@ -249,7 +248,6 @@ let pdfDocument = null; // Usado principalmente em Organize, mas pode ser global
  */
 async function renderModulePreviews() {
     // Para merge/split, rebuildPreviews já faz o trabalho.
-    // Para organize, a chamada é feita diretamente no listener do botão.
     await rebuildPreviews();
 }
 

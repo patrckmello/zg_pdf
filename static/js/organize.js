@@ -13,6 +13,67 @@ const deselectAllBtn = document.getElementById('deselect-all-btn');
 
 // --- FUNÇÕES DO ORGANIZE ---
 
+function disableFileInputAndDropZone() {
+    if (fileInput) fileInput.disabled = true;
+    if (dropZone) dropZone.classList.add('disabled-upload');
+}
+
+function enableFileInputAndDropZone() {
+    if (fileInput) fileInput.disabled = false;
+    if (dropZone) dropZone.classList.remove('disabled-upload');
+}
+
+async function renderModulePreviews() {
+    await rebuildPreviews();
+}
+
+/**
+ * Reconstrói e atualiza as pré-visualizações para o modo Split.
+ */
+async function rebuildPreviews() {
+    if (!previewContainer) {
+        console.error("Elemento 'sortable-preview' não foi encontrado no DOM. Verifique o HTML.");
+        return;
+    }
+
+    previewContainer.innerHTML = ''; // limpa previews antigos
+
+    if (selectedFiles.length === 0) {
+        showError('⚠️ Nenhum arquivo selecionado para organizar.', errorMessage);
+        if (fileInput) fileInput.disabled = false;
+        if (dropZone) dropZone.classList.remove('disabled-upload');
+        return;
+    }
+
+    if (selectedFiles.length > 1) {
+        showError('⚠️ Apenas um arquivo pode ser organizado por vez.', errorMessage);
+        
+        // Mantém só o primeiro arquivo, removendo os extras
+        selectedFiles = [selectedFiles[0]];
+
+        // Atualiza o input para só ter o primeiro arquivo
+        if (fileInput) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(selectedFiles[0]);
+            fileInput.files = dataTransfer.files;
+        }
+    } else {
+        // Limpa erro se só tiver 1 arquivo
+        hideError();
+    }
+
+    // Bloqueia novos uploads
+    if (fileInput) fileInput.disabled = true;
+    if (dropZone) dropZone.classList.add('disabled-upload');
+
+    // Cria preview do arquivo único
+    await createPreview(selectedFiles[0], 0);
+
+    checkPreviewVisibility();
+}
+
+
+
 /**
  * Gera pré-visualizações das páginas de um PDF para organização, com lazy loading.
  */
@@ -151,23 +212,27 @@ function clearPageSelections() {
 
 // Listener principal para iniciar a funcionalidade de organização
 document.addEventListener('DOMContentLoaded', () => {
+    
     if (organizeBtn) {
         organizeBtn.addEventListener('click', async () => {
             hideAllErrors();
+            openMenu(organizeMenu);
             if (typeof fileInput !== 'undefined' && fileInput) fileInput.disabled = true;
             if (typeof dropZone !== 'undefined' && dropZone) dropZone.classList.add('disabled-upload');
 
             if (selectedFiles.length !== 1) {
                 showError(' ⚠️ Por favor, selecione um arquivo por vez para organizar.', errorMessage2);
-            } else {
-                if (mainButtons) mainButtons.style.display = 'none';
-                if (organizeButtons) organizeButtons.style.display = 'flex';
-                await generateOrganizePreviews();
-                openMenu(organizeMenu, [compressionMenu, mergeMenu, splitMenu, convertMenu]);
-                if (document.getElementById('sort-icon')) document.getElementById('sort-icon').style.display = 'none';
-                if (document.getElementById('sort-menu')) document.getElementById('sort-menu').style.display = 'none';
-                if (previewTitle) previewTitle.textContent = 'Organize as páginas na ordem desejada:';
+                return;
             }
+
+            if (mainButtons) mainButtons.style.display = 'none';
+            if (organizeButtons) organizeButtons.style.display = 'flex';
+
+            previewContainer.innerHTML = ''; // limpa container antes de gerar preview completo
+
+            await generateOrganizePreviews();
+
+            previewTitle.textContent = 'Organize as páginas na ordem desejada:';
         });
     }
 });

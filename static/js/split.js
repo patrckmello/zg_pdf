@@ -12,43 +12,55 @@ let selectedSplitMode = null; // Variável específica do Split
 
 // --- FUNÇÕES DO SPLIT ---
 
-/**
- * Função "ponte" que é chamada pelo global.js quando um arquivo é selecionado.
- */
+function disableFileInputAndDropZone() {
+    if (fileInput) fileInput.disabled = true;
+    if (dropZone) dropZone.classList.add('disabled-upload');
+}
+
+function enableFileInputAndDropZone() {
+    if (fileInput) fileInput.disabled = false;
+    if (dropZone) dropZone.classList.remove('disabled-upload');
+}
+
 async function renderModulePreviews() {
     await rebuildPreviews();
 }
 
-/**
- * Reconstrói e atualiza as pré-visualizações para o modo Split.
- */
 async function rebuildPreviews() {
-    // A constante 'previewContainer' vem do seu script global.
-    // Garante que ela foi encontrada.
     if (!previewContainer) {
         console.error("Elemento 'sortable-preview' não foi encontrado no DOM. Verifique o HTML.");
         return;
     }
-    
+
     previewContainer.innerHTML = ''; // Limpa previews antigos
 
-    // No modo Split, trabalhamos com apenas o primeiro arquivo de selectedFiles
-    if (selectedFiles.length > 0) {
-        const file = selectedFiles[0];
-        
-        // A função createPreview (do seu global.js) será chamada para este único arquivo
-        await createPreview(file, 0); 
-
-        // Se você permitir soltar mais de um arquivo, mas só quiser mostrar o primeiro:
-        if (selectedFiles.length > 1) {
-             showError('⚠️ Apenas um arquivo pode ser dividido. Apenas o primeiro será usado.', errorMessage);
-        }
-
+    if (selectedFiles.length === 0) {
+        showError('⚠️ Nenhum arquivo selecionado para dividir.', errorMessage);
+        enableFileInputAndDropZone(); // libera input e dropzone para novo arquivo
+        return;
     }
-    
-    // Atualiza a visibilidade do contêiner de preview
-    // A função checkPreviewVisibility do global.js já deve cuidar disso.
-    checkPreviewVisibility(); 
+
+    if (selectedFiles.length > 1) {
+        showError('⚠️ Apenas um arquivo pode ser dividido. Apenas o primeiro será usado.', errorMessage);
+        // Mantém só o primeiro arquivo
+        selectedFiles = [selectedFiles[0]];
+        // Atualiza input para ter só o primeiro arquivo
+        if (fileInput) {
+            const dt = new DataTransfer();
+            dt.items.add(selectedFiles[0]);
+            fileInput.files = dt.files;
+        }
+    } else {
+        hideError();
+    }
+
+    // Bloqueia novos uploads após 1 arquivo
+    disableFileInputAndDropZone();
+
+    // Cria preview para o arquivo único
+    await createPreview(selectedFiles[0], 0);
+
+    checkPreviewVisibility();
 }
 
 // --- LISTENERS DO SPLIT ---
@@ -58,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (splitBtn) {
         splitBtn.addEventListener('click', () => { 
             hideAllErrors();
-            showSpinner();
             if (selectedFiles.length === 0) {
                 showError(' ⚠️ Por favor, selecione um arquivo para dividir.', errorMessage2);
             } else if (selectedFiles.length > 1) {

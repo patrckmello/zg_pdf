@@ -48,10 +48,9 @@
         </div>
 
         <div class="side-menu" id="organizeMenu">
-            <button class="close-btn" onclick="closeOrganizeMenu()">×</button>
             <h3>Organizar Páginas do PDF</h3>
             <button id="start-organize" class="start-function">Aplicar Ordem</button>
-            <div id="loading-spinner" class="spinner hidden"></div>
+            <div id="loading-spinner" class="spinner loading-spinner hidden"></div>
         </div>
         </main>
             
@@ -61,6 +60,6 @@
         <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
     </footer>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/split.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/organize.js')}}"></script>
 </body>
 </html>
