@@ -1,6 +1,8 @@
 
 const compressBtn = document.querySelector('.function-btn'); // Botão principal do compressor
 const startButton = document.getElementById('start-compression'); // Botão "Iniciar Compressão"
+const progressBar = document.getElementById('progress-bar');
+
 
 let selectedCompression = null; // Tipo de compressão selecionado
 
@@ -132,22 +134,33 @@ function pollProgress(taskId) {
             .then(data => {
                 const percent = data.percent;
                 const status = data.status;
-                if (progressBar) progressBar.style.width = percent + '%';
-                if (statusMessage) statusMessage.textContent = status;
 
-                // --- LÓGICA DE FINALIZAÇÃO (APENAS UMA VEZ) ---
-                if (percent >= 100) {
-                    clearInterval(interval); // Para de verificar o progresso
-                    if (statusMessage) statusMessage.textContent = 'Compressão concluída';
+                if (progressBar) {
+                    const currentWidth = parseFloat(progressBar.style.width) || 0;
+                    const newWidth = currentWidth + (percent - currentWidth) * 0.3; // suaviza o movimento
+                    progressBar.style.width = newWidth + '%';
 
-                    // Opção 1: Iniciar Download e depois recarregar/resetar (com um pequeno delay)
+                    // Liga/desliga a animação shimmer
+                    if (percent > 0 && percent < 100) {
+                        progressBar.classList.add('animated');
+                    } else {
+                        progressBar.classList.remove('animated');
+                    }
+                }
+
+                if (percent < 100) {
+                    statusMessage.textContent = `🛠️ ${status}`;
+                } else {
+                    statusMessage.textContent = '✅ Compressão concluída!';
+                    clearInterval(interval);
+
                     setTimeout(() => {
-                        window.location.href = `/download/${taskId}`; // Inicia o download
-                    
+                        window.location.href = `/download/${taskId}`; // Inicia download
+
                         setTimeout(() => {
-                            resetApp(); 
-                        }, 2000); 
-                    }, 1000); 
+                            resetApp();
+                        }, 2000);
+                    }, 1000);
                 }
             })
             .catch(err => {
@@ -157,7 +170,6 @@ function pollProgress(taskId) {
             });
     }, 1000);
 }
-
 
 // --- Listeners de Eventos do Compressor ---
 

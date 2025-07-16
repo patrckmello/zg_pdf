@@ -1,0 +1,35 @@
+[
+    {
+        "task_id": "4370be63-fdc0-42f3-9ef9-ba847efb3e9b",
+        "input_file": "4370be63-fdc0-42f3-9ef9-ba847efb3e9b_Processo.pdf",
+        "output_file": "comprimidoZG_Processo.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 297.99,
+        "pages": 2781,
+        "input_file_size_mb": 117.57,
+        "output_file_size_mb": 91.03,
+        "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "02d0abb1-fa30-4793-a829-eac0ce9f4541",
+        "input_file": "02d0abb1-fa30-4793-a829-eac0ce9f4541_exemplo.pdf",
+        "output_file": "comprimidoZG_exemplo.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 6.04,
+        "pages": 23,
+        "input_file_size_mb": 23.64,
+        "output_file_size_mb": 3.11,
+        "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "4148ce0e-03bf-4777-9c1a-a4b14973a1e9",
+        "input_file": "4148ce0e-03bf-4777-9c1a-a4b14973a1e9_exemplo.pdf",
+        "output_file": "comprimidoZG_exemplo.pdf",
+        "compression_type": "ebook",
+        "time_taken_seconds": 7.04,
+        "pages": 23,
+        "input_file_size_mb": 23.64,
+        "output_file_size_mb": 3.14,
+        "status": "Conclu\u00eddo!"
+    }
+]

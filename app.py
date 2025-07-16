@@ -3,26 +3,31 @@ import uuid
 import time
 import subprocess
 import threading
+import json
 import datetime
 import zipfile
 import math
+import sys
+import tempfile
 import io
 import json
 import logging
 from PIL import Image
 from fpdf import FPDF
 import fitz  # PyMuPDF
-import aspose.slides as slides
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, send_file, abort
+from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, send_file, after_this_request
 from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
+import platform
+import comtypes.client
+from PyPDF2 import PdfReader
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "chave-padrao-fallback")
-app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024
 
 # ---------------------------- CONFIGURAÇÕES ----------------------------
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
@@ -33,10 +38,23 @@ app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 app.config['MAIL_DEFAULT_SENDER'] = (os.getenv("MAIL_DEFAULT_SENDER_NAME"), os.getenv("MAIL_DEFAULT_SENDER_EMAIL"))
 mail = Mail(app)
 
-UPLOAD_FOLDER = 'uploads'
-PROCESSED_FOLDER = 'processed'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(PROCESSED_FOLDER, exist_ok=True)
+# Diretórios
+if getattr(sys, 'frozen', False):
+    BASE_DIR = tempfile.gettempdir()  # PyInstaller --onefile
+else:
+    BASE_DIR = os.getcwd()
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+PROCESSED_FOLDER = os.path.join(BASE_DIR, 'processed')
+
+# Criação dos diretórios
+for folder in [UPLOAD_FOLDER, PROCESSED_FOLDER]:
+    os.makedirs(folder, exist_ok=True)
+
+LOGS_FILE = 'compression_logs.json'
+log_lock = threading.Lock()
+
+# Locks e tarefas
 tasks_lock = threading.Lock()
 tasks = {}
 
@@ -45,6 +63,30 @@ logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s in %
                     handlers=[logging.FileHandler("app.log", encoding='utf-8'), logging.StreamHandler()])
 
 
+def save_compression_log(log_data):
+    with log_lock:
+        try:
+            # Tenta abrir o arquivo existente e carregar dados
+            try:
+                with open(LOGS_FILE, 'r', encoding='utf-8') as f:
+                    logs = json.load(f)
+            except FileNotFoundError:
+                logs = []
+
+            logs.append(log_data)  # Adiciona o novo log
+
+            with open(LOGS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(logs, f, indent=4, ensure_ascii=False)
+        except Exception as e:
+            logging.error(f"Erro ao salvar log de compressão: {e}")
+
+def get_pdf_page_count(file_path):
+    try:
+        reader = PdfReader(file_path)
+        return len(reader.pages)
+    except Exception as e:
+        logging.warning(f"Não foi possível obter número de páginas: {e}")
+        return None
 # ---------------------------- ROTAS DE TEMPLATES ----------------------------
 @app.route('/')
 def index():
@@ -135,7 +177,7 @@ def enviar_feedback():
 
 
 # ---------------------------- COMPRESSÃO DE PDF ----------------------------
-@app.route('/compress', methods=['POST'])
+@app.route("/compress", methods=["POST"])
 def compress():
     file = request.files.get('file')
     if not file:
@@ -156,81 +198,129 @@ def compress():
             'error': None # Para capturar erros na thread
         }
 
-    file_size_mb = os.path.getsize(input_path) / (1024 * 1024)
-    estimated_time = min(max(2, int(file_size_mb * 1.5)), 15)
 
-
-    def compress_task_thread(current_task_id, current_input_path, current_output_path, current_compression_type, current_estimated_time):
+    def compress_task_thread(current_task_id, current_input_path, current_output_path, current_compression_type):
+        start_time = time.time()
         logging.info(f"Thread de compressão iniciada para a tarefa: {current_task_id}")
         try:
-            # Simular o progresso e executar a compressão
+            initial_file_size = os.path.getsize(current_input_path)
+            compression_ratio = get_estimated_compression_ratio(current_compression_type)
+            estimated_final_size = initial_file_size * compression_ratio
+            if estimated_final_size == 0: estimated_final_size = 1
+
             with tasks_lock:
                 if current_task_id in tasks:
-                    tasks[current_task_id]['percent'] = 10
-                    tasks[current_task_id]['status'] = "Preparando compressão..."
+                    tasks[current_task_id]['status'] = 'Iniciando processo de compressão...'
+                    tasks[current_task_id]['percent'] = 2 # Começa em 2% para indicar início
 
-            logging.info(f"Executando subprocesso para a tarefa: {current_task_id}. Input: {current_input_path}, Output: {current_output_path}") # Log do caminho
-
-            result = subprocess.run([
+            process = subprocess.Popen([
                 'gswin64c', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
                 f'-dPDFSETTINGS=/{current_compression_type}', '-dNOPAUSE', '-dBATCH',
                 '-dQUIET', f'-sOutputFile={current_output_path}', current_input_path
-            ], check=True, capture_output=True, text=True)
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            with tasks_lock:
-                if current_task_id in tasks:
-                    tasks[current_task_id]['percent'] = 90
-                    tasks[current_task_id]['status'] = "Finalizando compressão..."
+            last_percent = 2
+            while process.poll() is None:
+                current_output_file_size = 0
+                if os.path.exists(current_output_path):
+                    current_output_file_size = os.path.getsize(current_output_path)
 
-            logging.info(f"Ghostscript stdout: {result.stdout}")
-            logging.info(f"Ghostscript stderr: {result.stderr}")
+                if current_output_file_size > 0:
+                    progress_raw = (current_output_file_size / estimated_final_size) * 100
+                    percent = min(int(progress_raw), 95) # Limita o progresso em 95% até a finalização
 
-            # Verificação da existência do arquivo DEPOIS do Ghostscript
+                    # Suavização: Aumenta no máximo 5% por vez
+                    if percent > last_percent + 5:
+                        percent = last_percent + 5
+                    last_percent = percent
+
+                    # Atualiza o status com base no progresso
+                    if percent <= 5:
+                        status = "Iniciando processo de compressão..."
+                    elif 5 < percent <= 15:
+                        status = "Analisando estrutura do PDF e otimizando para compressão..."
+                    elif 15 < percent <= 85:
+                        reduction_percentage = (1 - (current_output_file_size / initial_file_size)) * 100
+                        status = f"Comprimindo conteúdo... (Redução: {reduction_percentage:.1f}%)"
+                    else: # 85 < percent <= 95
+                        status = "Finalizando e validando o arquivo comprimido..."
+                else:
+                    percent = last_percent # Mantém o último progresso se o arquivo ainda não foi criado
+                    status = "Analisando estrutura do PDF..."
+
+                with tasks_lock:
+                    if current_task_id in tasks:
+                        tasks[current_task_id]['percent'] = percent
+                        tasks[current_task_id]['status'] = status
+
+                time.sleep(0.5)
+
+            stdout, stderr = process.communicate()
+            if process.returncode != 0:
+                 raise subprocess.CalledProcessError(process.returncode, 'gswin64c', output=stdout, stderr=stderr)
+
             if not os.path.exists(current_output_path):
-                raise FileNotFoundError(f"Arquivo de saída não foi gerado pelo Ghostscript: {current_output_path}")
-            logging.info(f"Arquivo de saída gerado com sucesso: {current_output_path}")
+                raise FileNotFoundError(f"Arquivo de saída não foi gerado: {current_output_path}")
 
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['percent'] = 100
-                    tasks[current_task_id]['status'] = 'Concluído!'
+                    tasks[current_task_id]['status'] = 'Compressão concluída! Preparando para download.'
                     tasks[current_task_id]['file'] = current_output_path
-            logging.info(f"Compressão concluída para a tarefa: {current_task_id}")
 
-        except subprocess.CalledProcessError as e:
-            logging.error(f"Erro no Ghostscript para a tarefa {current_task_id}: STDOUT: {e.stdout} STDERR: {e.stderr}")
+            end_time = time.time()
+            total_time = end_time - start_time
+
+            input_size_mb = round(os.path.getsize(current_input_path) / (1024 * 1024), 2)
+            output_size_mb = round(os.path.getsize(current_output_path) / (1024 * 1024), 2)
+            num_pages = get_pdf_page_count(current_input_path)
+
+            log_data = {
+                'task_id': current_task_id,
+                'input_file': os.path.basename(current_input_path),
+                'output_file': os.path.basename(current_output_path),
+                'compression_type': current_compression_type,
+                'time_taken_seconds': round(total_time, 2),
+                'pages': num_pages,
+                'input_file_size_mb': input_size_mb,
+                'output_file_size_mb': output_size_mb,
+                'status': 'Concluído!'
+            }
+            save_compression_log(log_data)
+
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            error_message = f"Erro no Ghostscript: {e.stderr.decode(errors='ignore') if hasattr(e, 'stderr') and e.stderr else str(e)}"
+            logging.error(f"Erro na tarefa {current_task_id}: {error_message}")
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['status'] = 'Erro no processamento'
-                    tasks[current_task_id]['error'] = f"Erro no Ghostscript. Detalhes: {e.stderr or e.stdout or e.output}"
+                    tasks[current_task_id]['error'] = error_message
                     tasks[current_task_id]['percent'] = -1
         except Exception as e:
-            logging.error(f"Erro inesperado na thread de compressão para a tarefa {current_task_id}: {e}")
+            logging.error(f"Erro inesperado na tarefa {current_task_id}: {e}")
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['status'] = 'Erro interno'
                     tasks[current_task_id]['error'] = str(e)
                     tasks[current_task_id]['percent'] = -1
         finally:
-            
             if os.path.exists(current_input_path):
                 try:
                     os.remove(current_input_path)
-                    logging.info(f"Arquivo de entrada removido: {current_input_path}")
                 except OSError as e:
                     logging.warning(f"Não foi possível remover o arquivo de entrada {current_input_path}: {e}")
 
 
     # Iniciar a thread, passando explicitamente os argumentos
     thread = threading.Thread(target=compress_task_thread, args=(
-        task_id, input_path, output_path, compression_type, estimated_time
+        task_id, input_path, output_path, compression_type
     ))
     thread.daemon = True # Torna a thread um daemon para que ela não impeça o Flask de sair
     thread.start()
 
     return jsonify({'task_id': task_id})
 
-@app.route('/progress/<task_id>')
+@app.route("/progress/<task_id>")
 def progress(task_id):
     # Use o lock ao ler a tarefa para garantir que o estado seja consistente
     with tasks_lock:
@@ -245,55 +335,74 @@ def progress(task_id):
         logging.warning(f"Tarefa {task_id} não encontrada para requisição de progresso.") # Adicione este log para depuração
         return jsonify({'error': 'Tarefa não encontrada'}), 404
 
-@app.route('/download/<task_id>')
+@app.route("/download/<task_id>")
 def download(task_id):
-    logging.info(f"Requisição de download recebida para task_id: {task_id}") # Log quando a requisição chega
+    logging.info(f"Requisição de download recebida para task_id: {task_id}")
 
     task = tasks.get(task_id)
     if not task:
         logging.warning(f"Download: Tarefa {task_id} não encontrada.")
         return jsonify({'error': 'Tarefa não encontrada'}), 404
 
-    file_path = task.get('file') # Usar .get() para evitar KeyError se a chave 'file' não existir
-
-    if not file_path:
-        logging.warning(f"Download: Chave 'file' ausente para tarefa {task_id}.")
+    file_path = task.get('file')
+    if not file_path or not os.path.exists(file_path):
+        logging.error(f"Download: Arquivo '{file_path}' não encontrado.")
         return jsonify({'error': 'Arquivo não disponível'}), 404
 
-    if not os.path.exists(file_path):
-        logging.error(f"Download: Arquivo '{file_path}' não encontrado no disco para tarefa {task_id}.")
-        return jsonify({'error': 'Arquivo processado não encontrado no servidor.'}), 404
+    logging.info(f"Servindo arquivo: {file_path}")
 
-    logging.info(f"Servindo arquivo: {file_path} para download da tarefa: {task_id}")
-
-    def delayed_file_cleanup(path_to_clean, task_id_to_clean):
-        time.sleep(5)
-        
-        logging.info(f"Tentando limpar arquivo para tarefa {task_id_to_clean}: {path_to_clean}")
-        if os.path.exists(path_to_clean):
-            try:
-                os.remove(path_to_clean)
-                logging.info(f"Arquivo '{path_to_clean}' (tarefa {task_id_to_clean}) removido com sucesso.")
-            except OSError as e:
-                logging.warning(f"Não foi possível remover o arquivo '{path_to_clean}' (tarefa {task_id_to_clean}): {e}")
-        else:
-            logging.info(f"Arquivo '{path_to_clean}' (tarefa {task_id_to_clean}) já foi removido ou não existia.")
-        
+    @after_this_request
+    def cleanup(response):
+        try:
+            os.remove(file_path)
+            logging.info(f"Arquivo {file_path} removido.")
+        except Exception as e:
+            logging.warning(f"Erro ao remover arquivo {file_path}: {e}")
 
         with tasks_lock:
-            if task_id_to_clean in tasks:
-                del tasks[task_id_to_clean]
-                logging.info(f"Tarefa {task_id_to_clean} removida do dicionário de tarefas.")
+            tasks.pop(task_id, None)
 
-
-    # Inicie a thread de limpeza, passando o caminho do arquivo e o ID da tarefa
-    threading.Thread(target=delayed_file_cleanup, args=(file_path, task_id)).start()
+        return response
 
     return send_file(file_path, as_attachment=True)
 
+def get_estimated_compression_ratio(compression_type):
+    ratios = {
+        'screen': 0.20,  # 80% de compressão
+        'ebook': 0.40,   # 60% de compressão
+    }
+    return ratios.get(compression_type, 0.30)  # fallback seguro
+
+COMPRESSION_LOG_FILE = 'compression_log.json'
+
+def save_compression_log(log_data):
+    # Garante que o arquivo exista e seja um JSON válido
+    if not os.path.exists(COMPRESSION_LOG_FILE):
+        with open(COMPRESSION_LOG_FILE, 'w') as f:
+            json.dump([], f) # Inicia com uma lista vazia
+
+    with open(COMPRESSION_LOG_FILE, 'r+') as f:
+        file_data = json.load(f)
+        file_data.append(log_data)
+        f.seek(0) # Volta para o início do arquivo
+        json.dump(file_data, f, indent=4)
+        f.truncate() # Remove o conteúdo restante se o novo for menor
+
+def get_pdf_page_count(pdf_path):
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(pdf_path)
+        return len(reader.pages)
+    except Exception as e:
+        logging.error(f"Erro ao obter número de páginas do PDF {pdf_path}: {e}")
+        return 0 # Retorna 0 em caso de erro
 
 
-
+def convert_office_to_pdf(input_path):
+    if platform.system() == 'Windows':
+        return convert_office_to_pdf_windows(input_path)
+    else:
+        return convert_office_to_pdf_libreoffice(input_path)
 
 # ---------------------------- CONVERSÃO DE ARQUIVOS ----------------------------
 def convert_office_to_pdf_libreoffice(input_path):
@@ -301,6 +410,46 @@ def convert_office_to_pdf_libreoffice(input_path):
                     os.path.dirname(input_path), input_path],
                    check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return os.path.splitext(input_path)[0] + '.pdf'
+
+def convert_office_to_pdf_windows(input_path):
+    ext = os.path.splitext(input_path)[1].lower()
+    abs_input = os.path.abspath(input_path)
+    abs_output = os.path.splitext(abs_input)[0] + '.pdf'
+
+    if ext == '.docx':
+        word = comtypes.client.CreateObject('Word.Application')
+        word.Visible = False
+        try:
+            doc = word.Documents.Open(abs_input, ReadOnly=True)
+            doc.ExportAsFixedFormat(abs_output, ExportFormat=17)  # 17 = PDF
+        finally:
+            doc.Close(SaveChanges=False)
+            word.Quit()
+
+    elif ext == '.xlsx':
+        excel = comtypes.client.CreateObject('Excel.Application')
+        excel.Visible = False
+        excel.DisplayAlerts = False
+        try:
+            wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
+            wb.ExportAsFixedFormat(0, abs_output)  # 0 = PDF
+        finally:
+            wb.Close(SaveChanges=False)
+            excel.Quit()
+
+    elif ext == '.pptx':
+        powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
+        try:
+            pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
+            pres.ExportAsFixedFormat(abs_output, 2)
+        finally:
+            pres.Close()
+            powerpoint.Quit()
+
+    else:
+        raise ValueError(f"Extensão não suportada pelo Office: {ext}")
+
+    return abs_output
 
 def convert_file_to_pdf(file_path, file_ext):
     pdf_stream = io.BytesIO()
@@ -313,18 +462,19 @@ def convert_file_to_pdf(file_path, file_ext):
         pdf.image(temp_path, x=10, y=10, w=180)
         pdf_stream.write(pdf.output(dest='S').encode('latin1'))
         os.remove(temp_path)
-    elif file_ext in ['.docx', '.xlsx']:
-        pdf_path = convert_office_to_pdf_libreoffice(file_path)
+
+    elif file_ext in ['.docx', '.xlsx', '.pptx']:
+        pdf_path = convert_office_to_pdf(file_path)
         with open(pdf_path, 'rb') as f:
             pdf_stream.write(f.read())
         os.remove(pdf_path)
-    elif file_ext == '.pptx':
-        pres = slides.Presentation(file_path)
-        pres.save(pdf_stream, slides.export.SaveFormat.PDF)
+
     else:
         raise ValueError(f"Extensão não suportada: {file_ext}")
+
     pdf_stream.seek(0)
     return pdf_stream
+
 
 @app.route('/convert_all', methods=['POST'])
 def convert_all_files():
@@ -522,4 +672,4 @@ def no_cache(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5009)

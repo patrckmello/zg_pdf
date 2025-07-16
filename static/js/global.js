@@ -14,7 +14,6 @@ const errorMessage3 = document.getElementById('error-message3'); // Para erros e
 
 // Elementos de progresso (usados em compressão e podem ser adaptados para outros)
 const progressContainer = document.getElementById('progress-container');
-const progressBar = document.getElementById('progress-bar');
 const statusMessage = document.getElementById('status-message');
 
 // Referências aos menus principais (para fechar outros menus ao abrir um novo)
