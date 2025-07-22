@@ -42,10 +42,16 @@
         </div>
 
         <div class="side-menu" id="convertMenu">
-            <button class="close-btn" onclick="closeMergeMenu()">×</button>
-            <h3>Converter arquivos <br>para PDF</h3>
-            <button class="start-function" id="start-convert" onclick="startMerge()">Iniciar conversão</button>
-            <div id="loading-spinner" class="spinner loading-spinner hidden"></div>
+            <div id="loading-spinner" class="loading-spinner hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <div class="menu-content">
+                <button class="close-btn" onclick="closeMergeMenu()">×</button>
+                <h3>Selecione a opção <br>de conversão</h3>
+                <div id="convert-options-list" class="convert-options-grid"></div>
+            </div>
+            <button class="start-function" id="start-convert">Iniciar Conversão</button>
         </div>
         </main>
             
@@ -55,7 +61,9 @@
         <span><a class="clickable" href="http://10.1.9.3/glpi/front/ticket.form.php" target="_blank">Reporte um problema</a></span>
     </footer>
     <script>const iconPath = "{{ url_for('static', filename='assets/documento.png') }}";</script>
+    <script>const staticAssetsPath = "{{ url_for('static', filename='assets') }}";</script>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/converter.js') }}"></script>
+    
 </body>
 </html>

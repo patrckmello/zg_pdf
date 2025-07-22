@@ -16,12 +16,16 @@ from PIL import Image
 from fpdf import FPDF
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, send_file, after_this_request
+from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, send_file, after_this_request, g
 from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
 import platform
 import comtypes.client
 from PyPDF2 import PdfReader
+import comtypes
+from docx.shared import Inches
+from pdf2docx import Converter
+import camelot
 
 load_dotenv()
 
@@ -111,6 +115,10 @@ def merge_form():
 @app.route('/organize', methods=['GET'])
 def organize_form():
     return render_template('organize.html')
+
+@app.route('/extract', methods=['GET'])
+def extract_form():
+    return render_template('extract.html')
 
 # ---------------------------- ENVIO DE FEEDBACK ----------------------------
 @app.route('/enviar-feedback', methods=['POST'])
@@ -397,105 +405,349 @@ def get_pdf_page_count(pdf_path):
         logging.error(f"Erro ao obter número de páginas do PDF {pdf_path}: {e}")
         return 0 # Retorna 0 em caso de erro
 
-
-def convert_office_to_pdf(input_path):
-    if platform.system() == 'Windows':
-        return convert_office_to_pdf_windows(input_path)
-    else:
-        return convert_office_to_pdf_libreoffice(input_path)
-
 # ---------------------------- CONVERSÃO DE ARQUIVOS ----------------------------
+import pytesseract
+import pdfplumber
+import tabula
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+from docx import Document
+import pandas as pd
+
+def pdf_to_xlsx_camelot(pdf_path, output_xlsx_path):
+    tables = camelot.read_pdf(pdf_path, pages='all')
+    with pd.ExcelWriter(output_xlsx_path) as writer:
+        for i, table in enumerate(tables):
+            df = table.df
+            df.to_excel(writer, sheet_name=f'Tabela_{i+1}', index=False)
+
+def extract_text_from_pdf(input_path, lang='por'):
+    text = ""
+
+    with pdfplumber.open(input_path) as pdf:
+        for page in pdf.pages:
+            extracted_text = page.extract_text()
+            if extracted_text and extracted_text.strip():
+                text += extracted_text + "\n"
+            else:
+                # Faz OCR se não tiver texto extraído
+                pil_image = page.to_image().original.convert('RGB')
+                ocr_text = pytesseract.image_to_string(pil_image, lang=lang)
+                text += ocr_text + "\n"
+    return text.strip()
+
+def is_image_textual(img, lang='por', conf_threshold=50):
+    data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
+    confidences = []
+
+    for c in data['conf']:
+        try:
+            conf = float(c)
+            if conf > 0:
+                confidences.append(conf)
+        except (ValueError, TypeError):
+            # Ignora valores que não são numéricos
+            continue
+
+    if confidences:
+        avg_conf = sum(confidences) / len(confidences)
+        return avg_conf >= conf_threshold
+    return False
+
+
+conversion_map = {
+    'pdf': ['docx', 'xlsx', 'jpeg', 'txt'],
+    'docx': ['pdf', 'jpeg', 'txt'],
+    'xlsx': ['pdf', 'csv'],
+    'pptx': ['pdf', 'jpeg'],
+    'jpg': ['pdf'],
+    'jpeg':['pdf'],
+    'png': ['pdf'],
+}
+
+def pdf_to_docx(input_pdf_path, output_docx_path):
+    cv = Converter(input_pdf_path)
+    cv.convert(output_docx_path, start=0, end=None)
+    cv.close()
+
+def pdf_to_jpeg_all(input_pdf_path):
+    doc = fitz.open(input_pdf_path)
+    images = []
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+        pix = page.get_pixmap()
+        img_bytes = pix.tobytes("jpeg")
+        images.append(img_bytes)
+    doc.close()
+    return images
+
+def pdf_to_docx_hybrid(input_pdf_path, output_docx_path, lang='por'):
+    docx_buffer = io.BytesIO()
+    
+    # 1. Converter usando pdf2docx para manter formatação
+    cv = Converter(input_pdf_path)
+    cv.convert(docx_buffer, start=0, end=None)
+    cv.close()
+    
+    docx_buffer.seek(0)
+    word_doc = Document(docx_buffer)
+    
+    # 2. Passar o OCR só onde não houver texto ou for imagem escaneada
+    pdf_doc = fitz.open(input_pdf_path)
+
+    for i, page in enumerate(pdf_doc):
+        pix = page.get_pixmap()
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+
+        if is_image_textual(img, lang=lang):
+            # Já tem texto na imagem, faz OCR e adiciona no Word
+            ocr_text = pytesseract.image_to_string(img, lang=lang).strip()
+            if ocr_text:
+                word_doc.add_page_break()
+                word_doc.add_paragraph(f"[OCR - Página {i+1}]\n{ocr_text}")
+        else:
+            # Não faz nada, pois é imagem pura (foto, identidade, etc.)
+            print(f"Página {i+1}: Imagem sem texto detectada. Ignorando OCR.")
+
+    # 3. Salvar no arquivo final
+    word_doc.save(output_docx_path)
+
+@app.route('/convert-extensions', methods=['GET'])
+def get_supported_extensions():
+    extensions = list(conversion_map.keys())
+    return jsonify({'extensions': extensions})
+
+@app.route('/upload-conversion', methods=['POST'])
+def upload_conversion():
+    file = request.files.get('file')
+    if not file:
+        return jsonify({'error': 'Nenhum arquivo enviado.'}), 400
+
+    filename = secure_filename(file.filename)
+    ext = os.path.splitext(filename)[1].lower().replace('.', '')  # sem o ponto
+
+    # Mapeamento de conversão
+    available_options = conversion_map.get(ext)
+    if not available_options:
+        return jsonify({
+            'filename': filename,
+            'extension': ext,
+            'message': 'Tipo de arquivo não suportado para conversão',
+            'options': []
+        }), 200
+
+    # Salva o arquivo temporariamente
+    task_id = str(uuid.uuid4())
+    input_path = os.path.join(UPLOAD_FOLDER, f"{task_id}_{filename}")
+    file.save(input_path)
+
+    return jsonify({
+        'filename': filename,
+        'extension': ext,
+        'task_id': task_id,
+        'message': 'Arquivo recebido com sucesso!',
+        'options': available_options
+    }), 200
+@app.route('/execute-conversion', methods=['POST'])
+def execute_conversion():
+    data = request.json
+    task_id = data.get('task_id')
+    target_format = data.get('target_format')
+
+    # Busca o arquivo salvo
+    file_match = None
+    for f in os.listdir(UPLOAD_FOLDER):
+        if f.startswith(task_id):
+            file_match = f
+            break
+
+    if not file_match:
+        return jsonify({'error': 'Arquivo temporário não encontrado.'}), 404
+
+    input_path = os.path.join(UPLOAD_FOLDER, file_match)
+    ext = os.path.splitext(file_match)[1].lower().replace('.', '')
+
+    try:
+        output_buffer = io.BytesIO()
+
+        if ext == 'pdf':
+            # Extrai o texto para casos txt e xlsx
+            text = extract_text_from_pdf(input_path)
+
+            if target_format == 'docx':
+                temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
+                pdf_to_docx_hybrid(input_path, temp_docx_path)  # usa input_path aqui!
+
+                with open(temp_docx_path, 'rb') as f:
+                    output_buffer.write(f.read())
+                output_buffer.seek(0)
+                os.remove(temp_docx_path)
+
+            elif target_format == 'xlsx':
+                text = extract_text_from_pdf(input_path)
+                lines = text.strip().split("\n")
+
+                df_list = []
+                # 1º Tenta com Camelot lattice (pra PDF com linhas marcadas)
+                tables = camelot.read_pdf(input_path, pages='all', flavor='lattice')
+                
+                if tables.n == 0:
+                    # Se não achou tabela com lattice, tenta stream (análise por espaçamento)
+                    tables = camelot.read_pdf(input_path, pages='all', flavor='stream')
+                
+                if tables.n == 0:
+                    # Se mesmo assim não achar, faz fallback pra texto puro na aba
+                    df_list.append(pd.DataFrame({'Conteúdo': lines}))
+                else:
+                    for tbl in tables:
+                        df = tbl.df.copy()
+                        # Limpeza de células (remove \n e espaços bugados)
+                        df = df.applymap(lambda x: ' '.join(str(x).split()))
+                        df_list.append(df)
+                
+                # Monta Excel com múltiplas abas
+                with pd.ExcelWriter(output_buffer, engine='xlsxwriter') as writer:
+                    for idx, df in enumerate(df_list):
+                        df.to_excel(writer, sheet_name=f'Tabela_{idx+1}'[:31], index=False)
+                    # Aba adicional com texto linear completo
+                    pd.DataFrame({'Texto extraído': lines}).to_excel(writer, sheet_name='Texto_RAW', index=False)
+                output_buffer.seek(0)
+
+
+            elif target_format == 'jpeg':
+                images = pdf_to_jpeg_all(input_path)
+                filename = os.path.splitext(file_match)[0]
+                with zipfile.ZipFile(output_buffer, mode='w') as zf:
+                    for i, img_bytes in enumerate(images, 1):
+                        zf.writestr(f"{filename}_page_{i}.jpeg", img_bytes)
+                output_buffer.seek(0)
+                return send_file(output_buffer, as_attachment=True, download_name=f"{filename}_pages.zip")
+
+            elif target_format == 'txt':
+                output_buffer.write(text.encode('utf-8'))
+                output_buffer.seek(0)
+
+            else:
+                return jsonify({'error': 'Conversão não suportada para PDF.'}), 400
+
+        elif ext in ['docx', 'xlsx', 'pptx']:
+            if target_format == 'pdf':
+                pdf_path = convert_office_to_pdf(input_path)
+                with open(pdf_path, 'rb') as f:
+                    output_buffer.write(f.read())
+                output_buffer.seek(0)
+                os.remove(pdf_path)
+            elif target_format == 'image':
+                return jsonify({'error': 'Conversão Office → Imagem não implementada ainda.'}), 501
+            elif target_format == 'txt' and ext == 'docx':
+                import docx
+                doc = docx.Document(input_path)
+                fullText = '\n'.join([p.text for p in doc.paragraphs])
+                output_buffer.write(fullText.encode('utf-8'))
+                output_buffer.seek(0)
+            else:
+                return jsonify({'error': 'Conversão não suportada.'}), 400
+
+        elif ext in ['jpg', 'jpeg', 'png']:
+            if target_format == 'pdf':
+                image = Image.open(input_path).convert('RGB')
+                pdf = FPDF()
+                pdf.add_page()
+                temp_path = os.path.join(UPLOAD_FOLDER, 'temp_image.jpg')
+                image.save(temp_path)
+                pdf.image(temp_path, x=10, y=10, w=180)
+                os.remove(temp_path)
+                output_buffer.write(pdf.output(dest='S').encode('latin1'))
+                output_buffer.seek(0)
+            else:
+                return jsonify({'error': 'Conversão não suportada para imagem.'}), 400
+
+        else:
+            return jsonify({'error': 'Formato de entrada não reconhecido.'}), 400
+
+        # Limpeza do arquivo temporário
+        os.remove(input_path)
+
+        # Retorno do arquivo convertido
+        return send_file(output_buffer, as_attachment=True, download_name=f'convertido.{target_format}')
+
+    except Exception as e:
+        logging.error(f"Erro na conversão: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/conversion-options/<file_ext>', methods=['GET'])
+def get_conversion_options(file_ext):
+    file_ext = file_ext.lower()
+    options = conversion_map.get(file_ext)
+    if options is None:
+        return jsonify({'options': []})
+    return jsonify({'options': options})
+
+@app.before_request
+def init_com_for_request():
+    comtypes.CoInitialize()
+    g.com_initialized = True
+
+@app.teardown_request
+def uninit_com_for_request(exception):
+    if getattr(g, 'com_initialized', False):
+        comtypes.CoUninitialize()
+
 def convert_office_to_pdf_libreoffice(input_path):
     subprocess.run(['soffice', '--headless', '--convert-to', 'pdf', '--outdir',
                     os.path.dirname(input_path), input_path],
                    check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return os.path.splitext(input_path)[0] + '.pdf'
 
-def convert_office_to_pdf_windows(input_path):
+def convert_office_to_pdf_windows(input_path, timeout=30):
     ext = os.path.splitext(input_path)[1].lower()
     abs_input = os.path.abspath(input_path)
     abs_output = os.path.splitext(abs_input)[0] + '.pdf'
 
-    if ext == '.docx':
-        word = comtypes.client.CreateObject('Word.Application')
-        word.Visible = False
-        try:
-            doc = word.Documents.Open(abs_input, ReadOnly=True)
-            doc.ExportAsFixedFormat(abs_output, ExportFormat=17)  # 17 = PDF
-        finally:
-            doc.Close(SaveChanges=False)
-            word.Quit()
+    def convert():
+        if ext == '.docx':
+            word = comtypes.client.CreateObject('Word.Application')
+            word.Visible = False
+            try:
+                doc = word.Documents.Open(abs_input, ReadOnly=True)
+                doc.ExportAsFixedFormat(abs_output, ExportFormat=17)
+            finally:
+                doc.Close(False)
+                word.Quit()
 
-    elif ext == '.xlsx':
-        excel = comtypes.client.CreateObject('Excel.Application')
-        excel.Visible = False
-        excel.DisplayAlerts = False
-        try:
-            wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
-            wb.ExportAsFixedFormat(0, abs_output)  # 0 = PDF
-        finally:
-            wb.Close(SaveChanges=False)
-            excel.Quit()
+        elif ext == '.xlsx':
+            excel = comtypes.client.CreateObject('Excel.Application')
+            excel.Visible = False
+            excel.DisplayAlerts = False
+            try:
+                wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
+                wb.ExportAsFixedFormat(0, abs_output)
+            finally:
+                wb.Close(False)
+                excel.Quit()
 
-    elif ext == '.pptx':
-        powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
-        try:
-            pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
-            pres.ExportAsFixedFormat(abs_output, 2)
-        finally:
-            pres.Close()
-            powerpoint.Quit()
+        elif ext == '.pptx':
+            powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
+            try:
+                pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
+                pres.ExportAsFixedFormat(abs_output, 2)
+            finally:
+                pres.Close()
+                powerpoint.Quit()
+        else:
+            raise ValueError(f"Extensão não suportada pelo Office: {ext}")
 
-    else:
-        raise ValueError(f"Extensão não suportada pelo Office: {ext}")
-
+    thread = threading.Thread(target=convert)
+    thread.start()
+    thread.join(timeout)
+    if thread.is_alive():
+        raise TimeoutError("Conversão demorou demais e foi abortada.")
     return abs_output
 
-def convert_file_to_pdf(file_path, file_ext):
-    pdf_stream = io.BytesIO()
-    if file_ext in ['.jpg', '.jpeg', '.png', '.gif']:
-        image = Image.open(file_path).convert('RGB')
-        pdf = FPDF()
-        pdf.add_page()
-        temp_path = os.path.join(UPLOAD_FOLDER, 'temp_image.jpg')
-        image.save(temp_path)
-        pdf.image(temp_path, x=10, y=10, w=180)
-        pdf_stream.write(pdf.output(dest='S').encode('latin1'))
-        os.remove(temp_path)
-
-    elif file_ext in ['.docx', '.xlsx', '.pptx']:
-        pdf_path = convert_office_to_pdf(file_path)
-        with open(pdf_path, 'rb') as f:
-            pdf_stream.write(f.read())
-        os.remove(pdf_path)
-
+def convert_office_to_pdf(input_path):
+    if platform.system() == 'Windows':
+        return convert_office_to_pdf_windows(input_path)
     else:
-        raise ValueError(f"Extensão não suportada: {file_ext}")
-
-    pdf_stream.seek(0)
-    return pdf_stream
-
-
-@app.route('/convert_all', methods=['POST'])
-def convert_all_files():
-    files = request.files
-    if not files:
-        return jsonify({"error": "Nenhum arquivo recebido"}), 400
-    memory_zip = io.BytesIO()
-    with zipfile.ZipFile(memory_zip, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
-        for key in files:
-            uploaded = files[key]
-            filename = secure_filename(uploaded.filename)
-            ext = os.path.splitext(filename)[1].lower()
-            path = os.path.join(UPLOAD_FOLDER, filename)
-            uploaded.save(path)
-            stream = convert_file_to_pdf(path, ext)
-            if stream:
-                zf.writestr(os.path.splitext(filename)[0] + '.pdf', stream.getvalue())
-            os.remove(path)
-    memory_zip.seek(0)
-    return send_file(memory_zip, mimetype='application/zip', as_attachment=True, download_name='converted_files.zip')
-
+        return convert_office_to_pdf_libreoffice(input_path)
 
 # ---------------------------- UNIR / DIVIDIR / ORGANIZAR PDFs ----------------------------
 @app.route('/merge', methods=['POST'])
@@ -664,8 +916,6 @@ def organize_pdf():
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='organized.pdf')
 
-
-# ---------------------------- FINAL ----------------------------
 @app.after_request
 def no_cache(response):
     response.headers['Cache-Control'] = 'no-store'

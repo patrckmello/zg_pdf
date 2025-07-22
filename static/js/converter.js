@@ -1,21 +1,153 @@
-
 const convertBtn = document.getElementById('convert-btn');
-const convertStartBtn = document.getElementById('start-convert');
+const startConvertBtn = document.getElementById('start-convert');
 const previewGrid = document.getElementById('preview-grid');
 
+let selectedConversion = null;
+let conversionTaskId = null;
+
 /**
- * Função de renderização de previews específica para o módulo de conversão.
- * Ela usa `selectedFiles` (plural) e exibe ícones genéricos.
+ * Retorna o caminho do ícone baseado na extensão do arquivo.
+ * @param {string} filename - Nome do arquivo.
+ * @returns {string} - Caminho da imagem do ícone.
+ */
+function getIconForFile(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    const iconMap = {
+        'pdf': `${staticAssetsPath}/file-pdf-fill.png`,
+        'docx': `${staticAssetsPath}/file-doc-fill.png`,
+        'xlsx': `${staticAssetsPath}/file-xls-fill.png`,
+        'jpeg': `${staticAssetsPath}/image-fill.png`,
+        'jpg': `${staticAssetsPath}/image-fill.png`,
+        'png': `${staticAssetsPath}/image-fill.png`,
+        'txt': `${staticAssetsPath}/file-txt-fill.png`,
+        'csv': `${staticAssetsPath}/file-csv-fill.png`
+    };
+    return iconMap[ext] || `${staticAssetsPath}/file.png`;
+}
+
+async function uploadForConversion(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/upload-conversion', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.options.length === 0) {
+        showError('Tipo de arquivo não suportado para conversão.');
+        return;
+    }
+
+    conversionTaskId = data.task_id;
+    renderConversionOptions(data.options);
+}
+
+function renderConversionOptions(options) {
+    const container = document.getElementById('convert-options-list');
+    container.innerHTML = '';
+
+    const iconMap = {
+        'pdf': `${staticAssetsPath}/pdf.png`,
+        'docx': `${staticAssetsPath}/word.png`,
+        'xlsx': `${staticAssetsPath}/excel.png`,
+        'jpeg': `${staticAssetsPath}/image.png`,
+        'jpg': `${staticAssetsPath}/image.png`,
+        'png': `${staticAssetsPath}/image.png`,
+        'txt': `${staticAssetsPath}/txt.png`,
+        'csv': `${staticAssetsPath}/csv.png`
+    };
+
+    options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.classList.add('convert-option-btn');
+        btn.innerHTML = `
+            <img src="${iconMap[opt] || staticAssetsPath + '/file.png'}" alt="${opt}">
+            <span>${opt.toUpperCase()}</span>
+        `;
+
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.convert-option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedConversion = opt;
+        });
+
+        container.appendChild(btn);
+    });
+}
+
+const loadingSpinner = document.getElementById('loading-spinner');
+
+function showSpinner() {
+    loadingSpinner.classList.remove('hidden');
+    convertMenu.classList.add('blurred');
+}
+
+function hideSpinner() {
+    loadingSpinner.classList.add('hidden');
+    convertMenu.classList.remove('blurred');
+}
+
+startConvertBtn.addEventListener('click', async () => {
+    if (!selectedConversion) {
+        showError('Selecione um formato de saída.', errorMessage2);
+        return;
+    }
+
+    // Bloqueia botão, mostra spinner e aplica blur no menu
+    startConvertBtn.disabled = true;
+    showSpinner();
+    convertMenu.classList.add('blurred');
+    errorMessage2.style.display = 'none'; // esconde erro antigo
+
+    try {
+        const res = await fetch('/execute-conversion', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                task_id: conversionTaskId,
+                target_format: selectedConversion
+            })
+        });
+
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `convertido.${selectedConversion}`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            resetApp(); // Reseta o app após o download
+        } else {
+            const err = await res.json();
+            showError(err.error || 'Erro na conversão.', errorMessage2);
+        }
+    } catch (error) {
+        showError('Erro inesperado: ' + error.message, errorMessage2);
+    } finally {
+        // Remove blur, esconde spinner e libera botão
+        convertMenu.classList.remove('blurred');
+        hideSpinner();
+        startConvertBtn.disabled = false;
+    }
+});
+
+/**
+ * Renderiza as prévias dos arquivos selecionados.
  */
 async function renderModulePreviews() {
-    refreshPreviews(); // Chama a função para reconstruir o grid
-    // Não precisa de selectedFile aqui, o checkPreviewVisibility global já cuida
+    refreshPreviews();
 }
 
 /**
- * Cria uma pré-visualização de um arquivo na área de conversão.
- * @param {File} file - O arquivo a ser pré-visualizado.
- * @param {number} index - O índice do arquivo na lista de selectedFiles.
+ * Cria uma prévia de um arquivo com ícone dinâmico.
+ * @param {File} file 
+ * @param {number} index 
  */
 async function createPreview(file, index) {
     const previewItem = document.createElement('div');
@@ -23,7 +155,7 @@ async function createPreview(file, index) {
     previewItem.style.position = 'relative';
 
     const img = document.createElement('img');
-    img.src = iconPath;
+    img.src = getIconForFile(file.name);
     img.alt = 'Ícone do arquivo';
     img.classList.add('preview-icon');
     img.style.width = '150px';
@@ -56,7 +188,7 @@ async function createPreview(file, index) {
 }
 
 /**
- * Atualiza todas as pré-visualizações para garantir que os índices estejam corretos após remoções.
+ * Atualiza as prévias para manter índices corretos.
  */
 function refreshPreviews() {
     if (previewGrid) previewGrid.innerHTML = '';
@@ -65,78 +197,25 @@ function refreshPreviews() {
     });
 }
 
-/**
- * Função para converter TODOS os arquivos selecionados para PDF e baixá-los em um ZIP.
- * @param {Array<File>} files - Array de arquivos a serem convertidos.
- */
-async function convertAllToPDF(files) {
-    const formData = new FormData();
-    files.forEach((file, index) => {
-        formData.append(`file${index}`, file);
-    });
+// --- Listener do botão de conversão ---
+convertBtn.addEventListener('click', async () => {
+    if (selectedFiles.length === 0) {
+        showError('Nenhum arquivo selecionado. Por favor, selecione ao menos um arquivo.');
+        return;
+    }
 
-    showSpinner();
     hideError();
+    openMenu(convertMenu);
 
-    try {
-        const response = await fetch('/convert_all', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!response.ok) {
-            let errorMsg = 'Erro ao converter os arquivos.';
-            try {
-                const errorJson = await response.json();
-                if (errorJson.error) errorMsg = errorJson.error;
-            } catch (e) {}
-            throw new Error(errorMsg);
-        }
-
-        const blob = await response.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'converted_files.zip';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-
-        closeMenu(convertMenu);
-        selectedFiles = []; // Limpa a lista após o download
-        if (previewGrid) previewGrid.innerHTML = '';
-        checkPreviewVisibility();
-
-    } catch (error) {
-        console.error(error);
-        showError(error.message);
-    } finally {
-        hideSpinner();
-    }
-}
-
-// --- Listeners de Eventos do Conversor ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (convertBtn) {
-        convertBtn.addEventListener('click', () => {
-            if (selectedFiles.length === 0) {
-                showError('Nenhum arquivo selecionado. Por favor, selecione ao menos um arquivo.');
-            } else {
-                openMenu(convertMenu, [compressionMenu, mergeMenu, splitMenu, organizeMenu]); // Passa outros menus para fechar
-            }
-        });
-    }
-
-    if (convertStartBtn) {
-        convertStartBtn.addEventListener('click', async () => {
-            hideError();
-            if (selectedFiles.length === 0) {
-                showError('Selecione pelo menos um arquivo antes de converter.');
-                return;
-            }
-            await convertAllToPDF(selectedFiles);
-        });
-    }
+    await uploadForConversion(selectedFiles[0]);
 });
+
+function autoOpenExtractMenu() {
+    openMenu(extractMenu);
+    if (mainButtons) mainButtons.style.display = 'none';
+    if (extractButtons) extractButtons.style.display = 'flex';
+
+    previewContainer.innerHTML = '';
+    generateExtractPreviews();
+    previewTitle.textContent = 'Selecione as páginas que deseja extrair:';
+}

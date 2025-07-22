@@ -5168,3 +5168,535 @@
 [2025-07-15 17:40:07,790] INFO in _internal: 10.1.39.126 - - [15/Jul/2025 17:40:07] "GET /static/fonts/Brandon_light.otf HTTP/1.1" 200 -
 [2025-07-15 17:40:07,791] INFO in _internal: 10.1.39.126 - - [15/Jul/2025 17:40:07] "GET /static/fonts/Brandon_reg.otf HTTP/1.1" 200 -
 [2025-07-15 17:40:07,804] INFO in _internal: 10.1.39.126 - - [15/Jul/2025 17:40:07] "GET /static/fonts/Brandon_bld.otf HTTP/1.1" 200 -
+[2025-07-21 16:45:27,796] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5009
+ * Running on http://10.1.39.126:5009
+[2025-07-21 16:45:27,797] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-21 16:45:27,800] INFO in _internal:  * Restarting with stat
+[2025-07-21 16:45:28,760] WARNING in _internal:  * Debugger is active!
+[2025-07-21 16:45:28,764] INFO in _internal:  * Debugger PIN: 583-619-671
+[2025-07-21 16:45:33,074] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET / HTTP/1.1" 200 -
+[2025-07-21 16:45:33,305] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/css/main.css HTTP/1.1" 200 -
+[2025-07-21 16:45:33,347] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,357] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/document.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,368] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:45:33,403] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/compress.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,440] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/convert.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,473] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/split.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,517] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/js/main.js HTTP/1.1" 200 -
+[2025-07-21 16:45:33,614] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/organize.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,632] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/merge.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,656] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/security.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,663] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/support.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,673] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/ok.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,693] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/assets/form-image.png HTTP/1.1" 200 -
+[2025-07-21 16:45:33,832] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/fonts/Brandon_reg.otf HTTP/1.1" 200 -
+[2025-07-21 16:45:33,866] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/fonts/Brandon_bld.otf HTTP/1.1" 200 -
+[2025-07-21 16:45:33,900] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:33] "GET /static/fonts/Brandon_light.otf HTTP/1.1" 200 -
+[2025-07-21 16:45:38,765] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:45:38,801] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:45:38,824] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:45:38,842] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:45:38,867] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:45:38,868] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:45:38] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 16:46:24,540] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:46:24] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:46:24,554] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:46:24] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:47:03,886] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:03] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:47:03,977] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:03] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:47:04,040] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:04] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:47:04,113] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:04] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:47:04,152] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:04] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:47:04,206] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:47:04] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 16:52:14,787] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:14] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:52:14,863] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:14] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:52:14,880] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:14] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:52:14,937] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:14] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:52:14,997] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:14] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:52:15,116] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:15] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 16:52:55,305] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:52:55,383] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:52:55,506] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:52:55,508] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:52:55,512] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:52:55,543] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:52:55] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 16:55:28,372] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:55:28,517] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:55:28,554] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:55:28,592] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:55:28,648] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 16:55:28,662] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:55:28] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:56:15,918] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:15] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 16:56:15,996] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:15] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 16:56:16,119] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:16] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 16:56:16,121] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:16] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 16:56:16,137] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:16] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 16:56:16,349] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 16:56:16] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 17:01:17,517] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 17:01:17,615] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 17:01:17,643] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 17:01:17,647] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 17:01:17,673] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-21 17:01:17,689] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:17] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 17:01:42,944] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:42] "GET /extract HTTP/1.1" 200 -
+[2025-07-21 17:01:43,082] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:43] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-21 17:01:43,126] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:43] "GET /static/css/split.css HTTP/1.1" 200 -
+[2025-07-21 17:01:43,141] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:43] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-21 17:01:43,182] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:43] "GET /static/js/extract.js HTTP/1.1" 200 -
+[2025-07-21 17:01:43,209] INFO in _internal: 10.1.39.126 - - [21/Jul/2025 17:01:43] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 12:21:56,245] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5009
+ * Running on http://10.1.39.126:5009
+[2025-07-22 12:21:56,247] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-22 12:21:56,258] INFO in _internal:  * Restarting with stat
+[2025-07-22 12:21:58,085] WARNING in _internal:  * Debugger is active!
+[2025-07-22 12:21:58,092] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 12:22:02,833] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:22:02] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:22:03,131] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:22:03] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-07-22 12:22:33,908] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-07-22 12:22:34,077] INFO in _internal:  * Restarting with stat
+[2025-07-22 12:22:35,305] WARNING in _internal:  * Debugger is active!
+[2025-07-22 12:22:35,311] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 12:22:35,702] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:22:35] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:22:36,485] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:22:36] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:25,361] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:25] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:26,101] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:26] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:30,791] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:30] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:30,945] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:30] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:31,103] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:31] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:31,254] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:31] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:31,412] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:31] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:24:31,566] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:24:31] "[33mGET / HTTP/1.1[0m" 404 -
+[2025-07-22 12:30:40,583] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-07-22 12:30:40,821] INFO in _internal:  * Restarting with stat
+[2025-07-22 12:30:42,898] WARNING in _internal:  * Debugger is active!
+[2025-07-22 12:30:42,905] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 12:30:45,052] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET / HTTP/1.1" 200 -
+[2025-07-22 12:30:45,352] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/compress.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,393] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/css/main.css HTTP/1.1" 200 -
+[2025-07-22 12:30:45,394] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/js/main.js HTTP/1.1" 200 -
+[2025-07-22 12:30:45,404] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/organize.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,410] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 12:30:45,440] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/security.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,444] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,445] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/document.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,451] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/merge.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,481] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/convert.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,491] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/split.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,501] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/support.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,510] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/ok.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,516] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/assets/form-image.png HTTP/1.1" 200 -
+[2025-07-22 12:30:45,612] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/fonts/Brandon_reg.otf HTTP/1.1" 200 -
+[2025-07-22 12:30:45,613] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/fonts/Brandon_light.otf HTTP/1.1" 200 -
+[2025-07-22 12:30:45,616] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:30:45] "GET /static/fonts/Brandon_bld.otf HTTP/1.1" 200 -
+[2025-07-22 12:36:21,278] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-07-22 12:36:21,425] INFO in _internal:  * Restarting with stat
+[2025-07-22 12:36:25,069] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5009
+ * Running on http://10.1.39.126:5009
+[2025-07-22 12:36:25,070] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-22 12:36:25,073] INFO in _internal:  * Restarting with stat
+[2025-07-22 12:36:26,353] WARNING in _internal:  * Debugger is active!
+[2025-07-22 12:36:26,359] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 12:37:00,336] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 12:37:00,629] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 12:37:00,659] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 12:37:00,742] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 12:37:00,743] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 12:37:00,784] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:00] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 12:37:03,942] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:37:03] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 12:37:11,052] INFO in _generate: Could not import comtypes.gen._00020905_0000_0000_C000_000000000046_0_8_7: No module named 'comtypes.gen._00020905_0000_0000_C000_000000000046_0_8_7'
+[2025-07-22 12:37:11,066] INFO in _generate: # Generating comtypes.gen._00020905_0000_0000_C000_000000000046_0_8_7
+[2025-07-22 12:37:32,056] INFO in _generate: # Generating comtypes.gen.Word
+[2025-07-22 12:37:32,112] INFO in _generate: Could not import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0: No module named 'comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0'
+[2025-07-22 12:37:32,114] INFO in _generate: # Generating comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
+[2025-07-22 12:37:32,297] INFO in _generate: # Generating comtypes.gen.stdole
+[2025-07-22 12:37:32,341] INFO in _generate: Could not import comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8: No module named 'comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8'
+[2025-07-22 12:37:32,343] INFO in _generate: # Generating comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8
+[2025-07-22 12:37:45,991] INFO in _generate: # Generating comtypes.gen.Office
+[2025-07-22 12:37:47,585] INFO in _generate: Could not import comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3: No module named 'comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3'
+[2025-07-22 12:37:47,587] INFO in _generate: # Generating comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3
+[2025-07-22 12:37:48,740] INFO in _generate: # Generating comtypes.gen.VBIDE
+[2025-07-22 12:38:01,613] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:38:01] "POST /convert_all HTTP/1.1" 200 -
+[2025-07-22 12:42:04,786] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 12:42:04,847] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 12:42:04,851] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 12:42:04,866] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 12:42:04,866] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 12:42:04,869] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:04] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 12:42:07,860] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:07] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 12:42:18,391] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 12:42:18] "POST /convert_all HTTP/1.1" 200 -
+[2025-07-22 14:45:01,581] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5009
+ * Running on http://10.1.39.126:5009
+[2025-07-22 14:45:01,582] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2025-07-22 14:45:01,584] INFO in _internal:  * Restarting with stat
+[2025-07-22 14:45:02,841] WARNING in _internal:  * Debugger is active!
+[2025-07-22 14:45:02,845] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 14:45:06,059] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:45:06,260] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:45:06,305] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:45:06,334] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:45:06,336] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:45:06,373] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:06] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:45:11,056] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:45:11] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 14:46:00,174] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:00] "POST /convert_all HTTP/1.1" 200 -
+[2025-07-22 14:46:06,172] INFO in _internal:  * Detected change in 'C:\\Scan\\code\\ZG\\zg_pdf\\app.py', reloading
+[2025-07-22 14:46:06,703] INFO in _internal:  * Restarting with stat
+[2025-07-22 14:46:08,094] WARNING in _internal:  * Debugger is active!
+[2025-07-22 14:46:08,129] INFO in _internal:  * Debugger PIN: 479-033-154
+[2025-07-22 14:46:08,340] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:46:08,530] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:46:08,539] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:46:08,574] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:46:08,586] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:46:08,601] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:08] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:46:11,280] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:11] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 14:46:19,395] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:46:19,455] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:46:19,458] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:46:19,467] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:46:19,479] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:46:19,508] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:19] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:46:21,572] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:46:21] "POST /convert_all HTTP/1.1" 200 -
+[2025-07-22 14:52:43,994] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:43] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:52:44,053] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:44] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:52:44,068] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:44] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:52:44,069] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:44] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:52:44,070] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:44] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:52:44,086] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:44] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:52:46,955] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:46] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 14:52:47,990] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:47] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 14:52:48,005] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:48] "[33mGET /static/assets//static/assets/pdf.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:52:48,005] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:48] "[33mGET /static/assets//static/assets/image.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:52:48,005] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:52:48] "[33mGET /static/assets//static/assets/txt.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:53:00,569] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:00] "[31m[1mPOST /execute-conversion HTTP/1.1[0m" 400 -
+[2025-07-22 14:53:06,093] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:06] "POST /execute-conversion HTTP/1.1" 200 -
+[2025-07-22 14:53:15,266] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:15] "[33mPOST /execute-conversion HTTP/1.1[0m" 404 -
+[2025-07-22 14:53:21,511] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:21] "[33mPOST /execute-conversion HTTP/1.1[0m" 404 -
+[2025-07-22 14:53:23,061] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:53:23,109] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:53:23,131] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:53:23,132] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:53:23,147] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:53:23,148] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:23] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:53:25,941] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:25] "GET /static/assets/documento.png HTTP/1.1" 200 -
+[2025-07-22 14:53:26,933] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:26] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 14:53:26,948] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:26] "[33mGET /static/assets//static/assets/image.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:53:26,948] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:26] "[33mGET /static/assets//static/assets/pdf.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:53:26,948] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:53:26] "[33mGET /static/assets//static/assets/txt.png HTTP/1.1[0m" 404 -
+[2025-07-22 14:56:20,972] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:20] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:56:21,021] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:21] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:56:21,032] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:21] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:56:21,040] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:21] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:56:21,048] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:21] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:56:21,055] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:21] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:56:24,025] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:24] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 14:56:26,213] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:26] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 14:56:26,222] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:26] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 14:56:26,222] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:26] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 14:56:26,223] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:56:26] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 14:57:44,416] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:57:44,466] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:57:44,479] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:57:44,483] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:57:44,483] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:57:44,503] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:44] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:57:48,269] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:48] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 14:57:49,345] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:49] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 14:57:49,356] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:49] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 14:57:49,357] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:49] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 14:57:49,358] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:49] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 14:57:49,359] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:49] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 14:57:55,222] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:55] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 501 -
+[2025-07-22 14:57:59,560] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:57:59] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 501 -
+[2025-07-22 14:58:01,290] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:01] "[31m[1mPOST /execute-conversion HTTP/1.1[0m" 400 -
+[2025-07-22 14:58:03,183] ERROR in app: Erro na conversão: [WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\Scan\\code\\ZG\\zg_pdf\\uploads\\8c4e4bac-34e7-433a-84e2-bbec363c524c_planejamento_zg_pdf.pdf'
+[2025-07-22 14:58:03,184] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:03] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 500 -
+[2025-07-22 14:58:06,722] ERROR in app: Erro na conversão: [WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\Scan\\code\\ZG\\zg_pdf\\uploads\\8c4e4bac-34e7-433a-84e2-bbec363c524c_planejamento_zg_pdf.pdf'
+[2025-07-22 14:58:06,723] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:06] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 500 -
+[2025-07-22 14:58:15,352] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:58:15,415] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:58:15,425] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:58:15,427] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:58:15,428] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:58:15,451] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:15] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:58:37,318] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:58:37,362] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:58:37,378] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:58:37,385] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:58:37,387] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:58:37,391] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:37] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:58:46,546] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:58:46,607] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:58:46,610] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:58:46,612] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:58:46,623] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:58:46,627] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:58:46] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:59:00,975] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:00] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 14:59:01,027] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:01] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 14:59:01,029] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:01] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 14:59:01,046] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:01] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 14:59:01,048] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:01] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 14:59:01,052] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:01] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 14:59:04,135] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 14:59:04] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:04:14,039] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:04:14,101] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:04:14,107] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:04:14,107] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:04:14,117] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:04:14,126] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:14] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:04:17,145] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:17] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:20,941] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:20] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:20,953] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:20] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:26,189] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:26] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:26,199] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:26] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:26,208] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:26] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:30,290] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:04:30,348] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:04:30,361] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:04:30,361] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:04:30,362] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:04:30,379] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:30] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:04:37,495] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:37] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:37,495] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:37] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:37,496] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:37] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:44,874] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:44] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:44,876] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:44] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:04:44,877] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:04:44] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:11,684] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:11] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:11,684] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:11] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:11,689] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:11] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:11,710] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:11] "GET /static/assets/file-xls-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:25,126] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:25] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:25,141] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:25] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:25,160] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:25] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:25,183] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:25] "GET /static/assets/file-xls-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:25,200] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:25] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:29,416] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:29] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:05:33,839] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:33] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:33,840] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:33] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:33,845] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:33] "GET /static/assets/file-xls-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:33,845] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:33] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:33,854] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:33] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:34,664] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:34] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:34,668] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:34] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:34,668] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:34] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:34,672] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:34] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:35,470] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:35] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:35,470] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:35] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:35,471] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:35] "GET /static/assets/file-txt-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:37,210] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:37] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:37,211] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:37] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:41,390] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:41] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:05:41,407] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:41] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:05:41,408] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:41] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:05:41,415] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:41] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:05:41,417] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:41] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:05:42,894] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:42] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:05:43,624] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:43] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:05:43,635] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:43] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:05:43,635] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:43] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:05:43,635] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:43] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:05:43,635] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:05:43] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:07:21,438] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:07:21,502] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:07:21,506] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:07:21,508] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:07:21,523] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:07:21,524] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:21] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:07:23,893] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:23] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:07:24,923] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:24] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:07:24,940] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:24] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 15:07:44,608] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:44] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:07:44,614] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:44] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:07:46,535] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:46] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:07:46,544] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:46] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:07:46,548] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:46] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:07:46,549] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:46] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:07:46,553] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:07:46] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:08:27,843] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:08:27,909] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:08:27,909] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:08:27,910] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:08:27,930] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:08:27,931] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:27] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:08:30,590] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:30] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:08:31,647] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:31] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:08:31,659] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:31] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:08:31,661] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:31] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:08:31,665] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:31] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:08:31,679] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:08:31] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:09:26,530] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:09:26,573] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:09:26,596] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:09:26,599] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:09:26,600] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:09:26,620] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:26] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:09:28,974] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:28] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:09:30,026] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:30] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:09:30,044] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:30] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:09:30,046] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:30] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:09:30,047] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:30] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:09:30,048] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:09:30] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:10:29,653] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:10:29,718] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:10:29,741] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:10:29,771] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:10:29,801] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:10:29,821] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:29] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:10:31,956] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:31] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:10:33,141] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:33] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:10:33,154] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:33] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:10:33,162] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:33] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:10:33,162] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:33] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:10:33,170] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:10:33] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:11:21,477] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:11:21,528] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:11:21,529] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:11:21,543] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:11:21,546] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:11:21,553] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:21] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:11:25,087] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:25] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:11:26,054] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:26] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:11:26,072] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:26] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:11:26,073] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:26] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:11:26,077] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:26] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:11:26,078] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:11:26] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:12:37,371] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:12:37,432] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:12:37,438] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:12:37,445] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:12:37,447] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:12:37,459] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:37] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:12:39,822] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:39] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:12:41,012] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:41] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:12:41,032] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:41] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:12:41,033] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:41] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:12:41,034] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:41] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:12:41,046] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:12:41] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:13:41,625] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:13:41,670] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:13:41,694] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:13:41,694] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:13:41,696] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:13:41,716] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:41] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:13:44,801] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:44] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:13:45,747] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:45] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:13:45,763] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:45] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:13:45,763] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:45] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:13:45,764] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:45] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:13:45,765] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:45] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:13:56,345] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:13:56] "[31m[1mPOST /execute-conversion HTTP/1.1[0m" 400 -
+[2025-07-22 15:14:02,834] ERROR in app: Erro na conversão: [WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\Scan\\code\\ZG\\zg_pdf\\uploads\\a637741f-d576-4d8b-92dc-07d70a5a9caa_exemplo.pdf'
+[2025-07-22 15:14:02,842] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:02] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 500 -
+[2025-07-22 15:14:06,049] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:14:06,104] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:14:06,119] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:14:06,120] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:14:06,122] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:14:06,143] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:06] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:14:08,463] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:08] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:14:09,511] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:09] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:14:09,530] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:09] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:14:09,530] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:09] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:14:09,531] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:09] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:14:09,532] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:09] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:14:12,905] ERROR in app: Erro na conversão: [WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\Scan\\code\\ZG\\zg_pdf\\uploads\\8bf93496-088a-4f76-a3ff-e09beb051d9b_exemplo.pdf'
+[2025-07-22 15:14:12,913] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:12] "[35m[1mPOST /execute-conversion HTTP/1.1[0m" 500 -
+[2025-07-22 15:14:23,539] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /compress HTTP/1.1" 200 -
+[2025-07-22 15:14:23,582] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-07-22 15:14:23,590] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:14:23,592] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:14:23,622] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:14:23,626] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:23] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-07-22 15:14:29,989] INFO in app: Thread de compressão iniciada para a tarefa: b2ca6297-ccb7-4d4a-9a67-c1779767460a
+[2025-07-22 15:14:29,993] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:29] "POST /compress HTTP/1.1" 200 -
+[2025-07-22 15:14:31,001] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:31] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:32,016] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:32] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:33,011] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:33] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:34,009] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:34] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:35,006] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:35] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:36,004] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:36] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:37,008] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:37] "GET /progress/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:38,048] INFO in app: Requisição de download recebida para task_id: b2ca6297-ccb7-4d4a-9a67-c1779767460a
+[2025-07-22 15:14:38,048] INFO in app: Servindo arquivo: C:\Scan\code\ZG\zg_pdf\processed\comprimidoZG_exemplo.pdf
+[2025-07-22 15:14:38,050] WARNING in app: Erro ao remover arquivo C:\Scan\code\ZG\zg_pdf\processed\comprimidoZG_exemplo.pdf: [WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\Scan\\code\\ZG\\zg_pdf\\processed\\comprimidoZG_exemplo.pdf'
+[2025-07-22 15:14:38,051] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:38] "GET /download/b2ca6297-ccb7-4d4a-9a67-c1779767460a HTTP/1.1" 200 -
+[2025-07-22 15:14:40,061] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /compress HTTP/1.1" 200 -
+[2025-07-22 15:14:40,133] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:14:40,143] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-07-22 15:14:40,145] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:14:40,149] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-07-22 15:14:40,163] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:14:40] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:16:46,785] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /compress HTTP/1.1" 200 -
+[2025-07-22 15:16:46,846] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /static/css/compress.css HTTP/1.1" 200 -
+[2025-07-22 15:16:46,861] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:16:46,878] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:16:46,878] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:16:46,880] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:46] "GET /static/js/compressor.js HTTP/1.1" 200 -
+[2025-07-22 15:16:50,113] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:16:50,153] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:16:50,172] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:16:50,174] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:16:50,178] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:16:50,188] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:50] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:16:53,372] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:53] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:16:54,840] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:54] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:16:54,850] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:16:54] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 15:17:01,534] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:17:01,590] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:17:01,601] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:17:01,604] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:17:01,606] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:17:01,625] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:01] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:17:03,398] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:03] "GET /static/assets/file-pdf-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:17:04,395] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:04] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:17:04,408] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:04] "GET /static/assets/word.png HTTP/1.1" 200 -
+[2025-07-22 15:17:04,424] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:04] "GET /static/assets/excel.png HTTP/1.1" 200 -
+[2025-07-22 15:17:04,425] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:04] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:17:04,428] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:17:04] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:18:12,799] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:18:12,853] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:18:12,879] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:18:12,879] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:18:12,881] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:18:12,909] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:12] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:18:16,287] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:16] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:18:17,053] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:17] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:18:17,065] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:17] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:18:17,068] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:17] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:18:17,071] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:17] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 15:18:26,410] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "POST /execute-conversion HTTP/1.1" 200 -
+[2025-07-22 15:18:26,541] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:18:26,654] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:18:26,707] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:18:26,748] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:18:26,775] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:18:26,830] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:26] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:18:32,563] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:32] "GET /static/assets/file-doc-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:18:33,390] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:33] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:18:33,477] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:33] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 15:18:33,493] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:33] "GET /static/assets/image.png HTTP/1.1" 200 -
+[2025-07-22 15:18:33,512] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:33] "GET /static/assets/txt.png HTTP/1.1" 200 -
+[2025-07-22 15:18:35,191] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:35] "[31m[1mPOST /execute-conversion HTTP/1.1[0m" 400 -
+[2025-07-22 15:18:40,693] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:40] "POST /execute-conversion HTTP/1.1" 200 -
+[2025-07-22 15:18:40,971] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:40] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:18:41,024] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:41] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:18:41,088] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:41] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:18:41,120] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:41] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:18:41,153] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:41] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:18:41,182] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:18:41] "GET /static/js/converter.js HTTP/1.1" 200 -
+[2025-07-22 15:19:15,481] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:15] "GET /static/assets/image-fill.png HTTP/1.1" 200 -
+[2025-07-22 15:19:16,158] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:16] "POST /upload-conversion HTTP/1.1" 200 -
+[2025-07-22 15:19:16,164] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:16] "GET /static/assets/pdf.png HTTP/1.1" 200 -
+[2025-07-22 15:19:22,449] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "POST /execute-conversion HTTP/1.1" 200 -
+[2025-07-22 15:19:22,470] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /convert HTTP/1.1" 200 -
+[2025-07-22 15:19:22,546] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /static/css/convert.css HTTP/1.1" 200 -
+[2025-07-22 15:19:22,555] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /static/assets/zg.png HTTP/1.1" 200 -
+[2025-07-22 15:19:22,557] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /static/js/global.js HTTP/1.1" 200 -
+[2025-07-22 15:19:22,644] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /static/css/global.css HTTP/1.1" 200 -
+[2025-07-22 15:19:22,647] INFO in _internal: 10.1.39.126 - - [22/Jul/2025 15:19:22] "GET /static/js/converter.js HTTP/1.1" 200 -

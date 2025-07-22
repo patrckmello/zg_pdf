@@ -31,5 +31,16 @@
         "input_file_size_mb": 23.64,
         "output_file_size_mb": 3.14,
         "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "b2ca6297-ccb7-4d4a-9a67-c1779767460a",
+        "input_file": "b2ca6297-ccb7-4d4a-9a67-c1779767460a_exemplo.pdf",
+        "output_file": "comprimidoZG_exemplo.pdf",
+        "compression_type": "ebook",
+        "time_taken_seconds": 6.54,
+        "pages": 23,
+        "input_file_size_mb": 23.64,
+        "output_file_size_mb": 3.14,
+        "status": "Conclu\u00eddo!"
     }
 ]

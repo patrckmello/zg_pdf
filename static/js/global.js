@@ -157,6 +157,7 @@ async function handleFilesUniversal(files) {
         selectedFile = null; // Caso não seja um PDF para o compressor, ou seja para outros módulos.
     }
 
+    
 
     Array.from(files).forEach(file => {
         // Adiciona apenas se o arquivo não estiver duplicado (nome e tamanho)
@@ -172,7 +173,23 @@ async function handleFilesUniversal(files) {
         await renderModulePreviews();
     }
 
-    checkPreviewVisibility(); // Atualiza a visibilidade do container de previews geral
+        // Limpa seleção múltipla se for PDF único (como no Extract)
+    if (files.length === 1 && files[0].type === "application/pdf") {
+        selectedFile = files[0];
+        selectedFiles = [files[0]]; // Limpa e define só esse
+    }
+
+    if (typeof renderModulePreviews === 'function') {
+        await renderModulePreviews();
+    }
+
+    checkPreviewVisibility();
+
+    // Abrir menu automaticamente se o módulo for Extrair
+    if (typeof autoOpenExtractMenu === 'function') {
+        autoOpenExtractMenu();
+    }
+
 }
 
 
