@@ -39,14 +39,14 @@ async function rebuildPreviews() {
     previewContainer.innerHTML = ''; // limpa previews antigos
 
     if (selectedFiles.length === 0) {
-        showError('⚠️ Nenhum arquivo selecionado para organizar.', errorMessage);
+        showError('Nenhum arquivo selecionado para organizar.', errorMessage);
         if (fileInput) fileInput.disabled = false;
         if (dropZone) dropZone.classList.remove('disabled-upload');
         return;
     }
 
     if (selectedFiles.length > 1) {
-        showError('⚠️ Apenas um arquivo pode ser organizado por vez.', errorMessage);
+        showError('Apenas um arquivo pode ser organizado por vez.', errorMessage);
         
         // Mantém só o primeiro arquivo, removendo os extras
         selectedFiles = [selectedFiles[0]];
@@ -216,14 +216,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (organizeBtn) {
         organizeBtn.addEventListener('click', async () => {
             hideAllErrors();
-            openMenu(organizeMenu);
-            if (typeof fileInput !== 'undefined' && fileInput) fileInput.disabled = true;
-            if (typeof dropZone !== 'undefined' && dropZone) dropZone.classList.add('disabled-upload');
 
-            if (selectedFiles.length !== 1) {
-                showError(' ⚠️ Por favor, selecione um arquivo por vez para organizar.', errorMessage2);
+            // ✅ Verifica antes de abrir o menu
+            if (!selectedFiles || selectedFiles.length !== 1) {
+                showError('Por favor, selecione um arquivo por vez para organizar.', errorMessage2);
                 return;
             }
+
+            // ✅ Agora sim, abre o menu com tudo certo
+            openMenu(organizeMenu);
+
+            if (typeof fileInput !== 'undefined' && fileInput) fileInput.disabled = true;
+            if (typeof dropZone !== 'undefined' && dropZone) dropZone.classList.add('disabled-upload');
 
             if (mainButtons) mainButtons.style.display = 'none';
             if (organizeButtons) organizeButtons.style.display = 'flex';
@@ -274,7 +278,7 @@ if (startOrganizeBtn) {
 
         } catch (error) {
             console.error('Erro ao organizar PDF:', error);
-            showError(' ⚠️ Ocorreu um erro ao organizar o PDF.');
+            showError('Ocorreu um erro ao organizar o PDF.');
         } finally {
             hideSpinner();
             closeMenu(organizeMenu);
@@ -286,7 +290,7 @@ if (startOrganizeBtn) {
 if (deselectAllBtn) {
     deselectAllBtn.addEventListener('click', () => {
         if (selectedWrappers.length === 0) {
-            showError(' ⚠️ Não há nenhuma página selecionada.');
+            showError('Não há nenhuma página selecionada.');
         }
         clearPageSelections();
     });
@@ -306,7 +310,7 @@ if (selectAllBtn) {
 if (rotateSelectedBtn) {
     rotateSelectedBtn.addEventListener('click', async () => {
         if (selectedWrappers.length === 0) {
-            showError(' ⚠️ Por favor, selecione ao menos uma página para girar.');
+            showError('Por favor, selecione ao menos uma página para girar.');
             return;
         }
         hideError();

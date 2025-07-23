@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mergeBtn.addEventListener('click', () => {
             hideAllErrors();
             if (selectedFiles.length < 2) {
-                showError(' ⚠️ Selecione pelo menos 2 arquivos para unir.', errorMessage3);
+                showError('Selecione pelo menos 2 arquivos para unir.', errorMessage3);
             } else {
                 openMenu(mergeMenu, [compressionMenu, splitMenu, organizeMenu, convertMenu]); // Funções de menu globais
             }
@@ -76,7 +76,7 @@ if (startMergeBtn) {
 
         if (selectedFiles.length < 2) {
             hideSpinner();
-            showError(' ⚠️ Selecione pelo menos 2 arquivos para realizar a união.', errorMessage3);
+            showError('Selecione pelo menos 2 arquivos para realizar a união.', errorMessage3);
             return;
         }
 

@@ -13,7 +13,7 @@
 <body>
     <header>
         <div class="navbar">
-            <img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo">
+            <a href="http://10.1.3.113:5009"  class="logo-link"><img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo"></a>
             <h1 class="title">Organizar PDF</h1>
         </div>
     </header>
@@ -32,14 +32,15 @@
                 <button id="deselect-all-btn" class="function-btn">Desselecionar Todas</button>
                 <button id="back-btn" class="function-btn">Voltar</button>
             </div>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="error-message2" class="error-message2" style="display: none;"></div>
+            <div id="error-message3" class="error-message3" style="display: none;"></div>
             
             <div id="main-function-buttons">
                 <button id="organize-btn" class="function-btn">Organizar</button>
             </div>
 
-            <div id="error-message" class="error-message"></div>
-            <div id="error-message2" class="error-message2" style="display: none;"></div>
-            <div id="error-message3" class="error-message3" style="display: none;"></div>
 
             <div id="preview-container-grid" class="preview-grid" style="display: none;">
                 <p id="preview-title" class="text-sm text-gray-600 mb-1">Pré-visualização (arraste para ordenar):</p>

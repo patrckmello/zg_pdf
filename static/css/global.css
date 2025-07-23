@@ -10,6 +10,23 @@ header {
     transition: all 0.3s ease-in-out; /* Adicionando transição para todas as propriedades */
 }
 
+/* O link vai ser o container posicionado */
+.navbar a.logo-link {
+    position: absolute;
+    left: 0;
+    height: 100px;
+    display: block; /* para aceitar altura */
+    transition: height 0.3s ease-in-out;
+}
+
+/* A imagem dentro do link */
+.navbar a.logo-link img.logo {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+
 .navbar {
     display: flex;
     align-items: center;

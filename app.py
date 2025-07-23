@@ -178,9 +178,10 @@ def enviar_feedback():
         msg.html = corpo_email_html
         mail.send(msg)
         flash("Mensagem enviada com sucesso! Obrigado pelo seu feedback.", "success")
+        return '', 200
     except Exception as e:
         flash(f"Erro ao enviar mensagem: {e}", "error")
-
+        return str(e), 500
     return redirect(url_for('index'))
 
 
@@ -219,14 +220,19 @@ def compress():
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['status'] = 'Iniciando processo de compressão...'
-                    tasks[current_task_id]['percent'] = 2 # Começa em 2% para indicar início
+                    tasks[current_task_id]['percent'] = 2
 
-            process = subprocess.Popen([
-                'gswin64c', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
-                f'-dPDFSETTINGS=/{current_compression_type}', '-dNOPAUSE', '-dBATCH',
-                '-dQUIET', f'-sOutputFile={current_output_path}', current_input_path
-            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            def run_gs(cmd_output_path, compression_type_override, extra_flags=None):
+                command = [
+                    'gswin64c', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
+                    f'-dPDFSETTINGS=/{compression_type_override}', '-dNOPAUSE', '-dBATCH', '-dQUIET',
+                    f'-sOutputFile={cmd_output_path}', current_input_path
+                ]
+                if extra_flags:
+                    command += extra_flags
+                return subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+            process = run_gs(current_output_path, current_compression_type)
             last_percent = 2
             while process.poll() is None:
                 current_output_file_size = 0
@@ -235,14 +241,12 @@ def compress():
 
                 if current_output_file_size > 0:
                     progress_raw = (current_output_file_size / estimated_final_size) * 100
-                    percent = min(int(progress_raw), 95) # Limita o progresso em 95% até a finalização
+                    percent = min(int(progress_raw), 95)
 
-                    # Suavização: Aumenta no máximo 5% por vez
                     if percent > last_percent + 5:
                         percent = last_percent + 5
                     last_percent = percent
 
-                    # Atualiza o status com base no progresso
                     if percent <= 5:
                         status = "Iniciando processo de compressão..."
                     elif 5 < percent <= 15:
@@ -250,10 +254,10 @@ def compress():
                     elif 15 < percent <= 85:
                         reduction_percentage = (1 - (current_output_file_size / initial_file_size)) * 100
                         status = f"Comprimindo conteúdo... (Redução: {reduction_percentage:.1f}%)"
-                    else: # 85 < percent <= 95
+                    else:
                         status = "Finalizando e validando o arquivo comprimido..."
                 else:
-                    percent = last_percent # Mantém o último progresso se o arquivo ainda não foi criado
+                    percent = last_percent
                     status = "Analisando estrutura do PDF..."
 
                 with tasks_lock:
@@ -265,10 +269,41 @@ def compress():
 
             stdout, stderr = process.communicate()
             if process.returncode != 0:
-                 raise subprocess.CalledProcessError(process.returncode, 'gswin64c', output=stdout, stderr=stderr)
+                raise subprocess.CalledProcessError(process.returncode, 'gswin64c', output=stdout, stderr=stderr)
 
             if not os.path.exists(current_output_path):
                 raise FileNotFoundError(f"Arquivo de saída não foi gerado: {current_output_path}")
+
+            final_file_size = os.path.getsize(current_output_path)
+            if final_file_size >= initial_file_size:
+                # Compressão não eficaz, tenta fallback agressivo
+                logging.warning("Compressão ineficaz. Tentando fallback agressivo.")
+                fallback_path = current_output_path.replace('.pdf', '_fallback.pdf')
+                aggressive_flags = [
+                    '-dDownsampleColorImages=true',
+                    '-dColorImageResolution=72',
+                    '-dAutoFilterColorImages=false',
+                    '-dColorImageFilter=/DCTEncode',
+                    '-dGrayImageResolution=72',
+                    '-dDownsampleGrayImages=true',
+                    '-dAutoFilterGrayImages=false',
+                    '-dGrayImageFilter=/DCTEncode',
+                    '-dMonoImageResolution=72',
+                    '-dDownsampleMonoImages=true'
+                ]
+                fallback_process = run_gs(fallback_path, "screen", aggressive_flags)
+                fallback_process.communicate()
+
+                if os.path.exists(fallback_path):
+                    fallback_size = os.path.getsize(fallback_path)
+                    if fallback_size < initial_file_size:
+                        os.replace(fallback_path, current_output_path)
+                    else:
+                        os.replace(current_input_path, current_output_path)
+                        try: os.remove(fallback_path)
+                        except: pass
+                else:
+                    os.replace(current_input_path, current_output_path)
 
             with tasks_lock:
                 if current_task_id in tasks:
@@ -279,9 +314,9 @@ def compress():
             end_time = time.time()
             total_time = end_time - start_time
 
-            input_size_mb = round(os.path.getsize(current_input_path) / (1024 * 1024), 2)
+            input_size_mb = round(initial_file_size / (1024 * 1024), 2)
             output_size_mb = round(os.path.getsize(current_output_path) / (1024 * 1024), 2)
-            num_pages = get_pdf_page_count(current_input_path)
+            num_pages = get_pdf_page_count(current_output_path)
 
             log_data = {
                 'task_id': current_task_id,
@@ -408,7 +443,6 @@ def get_pdf_page_count(pdf_path):
 # ---------------------------- CONVERSÃO DE ARQUIVOS ----------------------------
 import pytesseract
 import pdfplumber
-import tabula
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 from docx import Document
 import pandas as pd
@@ -455,10 +489,10 @@ def is_image_textual(img, lang='por', conf_threshold=50):
 
 
 conversion_map = {
-    'pdf': ['docx', 'xlsx', 'jpeg', 'txt'],
-    'docx': ['pdf', 'jpeg', 'txt'],
-    'xlsx': ['pdf', 'csv'],
-    'pptx': ['pdf', 'jpeg'],
+    'pdf': ['docx', 'xlsx', 'txt'],
+    'docx': ['pdf', 'txt'],
+    'xlsx': ['pdf'],
+    'pptx': ['pdf'],
     'jpg': ['pdf'],
     'jpeg':['pdf'],
     'png': ['pdf'],
@@ -468,17 +502,6 @@ def pdf_to_docx(input_pdf_path, output_docx_path):
     cv = Converter(input_pdf_path)
     cv.convert(output_docx_path, start=0, end=None)
     cv.close()
-
-def pdf_to_jpeg_all(input_pdf_path):
-    doc = fitz.open(input_pdf_path)
-    images = []
-    for page_num in range(len(doc)):
-        page = doc[page_num]
-        pix = page.get_pixmap()
-        img_bytes = pix.tobytes("jpeg")
-        images.append(img_bytes)
-    doc.close()
-    return images
 
 def pdf_to_docx_hybrid(input_pdf_path, output_docx_path, lang='por'):
     docx_buffer = io.BytesIO()
@@ -510,6 +533,8 @@ def pdf_to_docx_hybrid(input_pdf_path, output_docx_path, lang='por'):
 
     # 3. Salvar no arquivo final
     word_doc.save(output_docx_path)
+
+
 
 @app.route('/convert-extensions', methods=['GET'])
 def get_supported_extensions():
@@ -565,6 +590,7 @@ def execute_conversion():
 
     input_path = os.path.join(UPLOAD_FOLDER, file_match)
     ext = os.path.splitext(file_match)[1].lower().replace('.', '')
+    temp_files_to_delete = []
 
     try:
         output_buffer = io.BytesIO()
@@ -575,6 +601,7 @@ def execute_conversion():
 
             if target_format == 'docx':
                 temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
+                temp_files_to_delete.append(temp_docx_path)
                 pdf_to_docx_hybrid(input_path, temp_docx_path)  # usa input_path aqui!
 
                 with open(temp_docx_path, 'rb') as f:
@@ -611,17 +638,7 @@ def execute_conversion():
                     # Aba adicional com texto linear completo
                     pd.DataFrame({'Texto extraído': lines}).to_excel(writer, sheet_name='Texto_RAW', index=False)
                 output_buffer.seek(0)
-
-
-            elif target_format == 'jpeg':
-                images = pdf_to_jpeg_all(input_path)
-                filename = os.path.splitext(file_match)[0]
-                with zipfile.ZipFile(output_buffer, mode='w') as zf:
-                    for i, img_bytes in enumerate(images, 1):
-                        zf.writestr(f"{filename}_page_{i}.jpeg", img_bytes)
-                output_buffer.seek(0)
-                return send_file(output_buffer, as_attachment=True, download_name=f"{filename}_pages.zip")
-
+               
             elif target_format == 'txt':
                 output_buffer.write(text.encode('utf-8'))
                 output_buffer.seek(0)
@@ -632,6 +649,7 @@ def execute_conversion():
         elif ext in ['docx', 'xlsx', 'pptx']:
             if target_format == 'pdf':
                 pdf_path = convert_office_to_pdf(input_path)
+                temp_files_to_delete.append(temp_docx_path)
                 with open(pdf_path, 'rb') as f:
                     output_buffer.write(f.read())
                 output_buffer.seek(0)
@@ -673,6 +691,23 @@ def execute_conversion():
     except Exception as e:
         logging.error(f"Erro na conversão: {e}")
         return jsonify({'error': str(e)}), 500
+    
+    finally:
+        # Aqui a limpeza geral
+        # Remove arquivo original (upload)
+        if os.path.exists(input_path):
+            try:
+                os.remove(input_path)
+            except Exception as e:
+                logging.warning(f"Erro removendo arquivo original: {input_path} - {e}")
+
+        # Remove arquivos temporários criados durante o processo
+        for temp_file in temp_files_to_delete:
+            if os.path.exists(temp_file):
+                try:
+                    os.remove(temp_file)
+                except Exception as e:
+                    logging.warning(f"Erro removendo arquivo temporário: {temp_file} - {e}")
 
 @app.route('/conversion-options/<file_ext>', methods=['GET'])
 def get_conversion_options(file_ext):
@@ -698,50 +733,59 @@ def convert_office_to_pdf_libreoffice(input_path):
                    check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return os.path.splitext(input_path)[0] + '.pdf'
 
-def convert_office_to_pdf_windows(input_path, timeout=30):
+def convert_office_to_pdf_windows(input_path, timeout=120):
     ext = os.path.splitext(input_path)[1].lower()
     abs_input = os.path.abspath(input_path)
     abs_output = os.path.splitext(abs_input)[0] + '.pdf'
 
     def convert():
-        if ext == '.docx':
-            word = comtypes.client.CreateObject('Word.Application')
-            word.Visible = False
-            try:
-                doc = word.Documents.Open(abs_input, ReadOnly=True)
-                doc.ExportAsFixedFormat(abs_output, ExportFormat=17)
-            finally:
-                doc.Close(False)
-                word.Quit()
+        comtypes.CoInitialize()
+        try:
+            if ext == '.docx':
+                word = comtypes.client.CreateObject('Word.Application')
+                word.Visible = False
+                try:
+                    doc = word.Documents.Open(abs_input, ReadOnly=True)
+                    doc.ExportAsFixedFormat(abs_output, ExportFormat=17)
+                finally:
+                    doc.Close(False)
+                    word.Quit()
 
-        elif ext == '.xlsx':
-            excel = comtypes.client.CreateObject('Excel.Application')
-            excel.Visible = False
-            excel.DisplayAlerts = False
-            try:
-                wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
-                wb.ExportAsFixedFormat(0, abs_output)
-            finally:
-                wb.Close(False)
-                excel.Quit()
+            elif ext == '.xlsx':
+                excel = comtypes.client.CreateObject('Excel.Application')
+                excel.Visible = False
+                excel.DisplayAlerts = False
+                try:
+                    wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
+                    wb.ExportAsFixedFormat(0, abs_output)
+                finally:
+                    wb.Close(False)
+                    excel.Quit()
 
-        elif ext == '.pptx':
-            powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
-            try:
-                pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
-                pres.ExportAsFixedFormat(abs_output, 2)
-            finally:
-                pres.Close()
-                powerpoint.Quit()
-        else:
-            raise ValueError(f"Extensão não suportada pelo Office: {ext}")
+            elif ext == '.pptx':
+                powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
+                try:
+                    pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
+                    pres.ExportAsFixedFormat(abs_output, 2)  # 2 = PDF
+                finally:
+                    pres.Close()
+                    powerpoint.Quit()
+
+            else:
+                raise ValueError(f"Extensão não suportada pelo Office: {ext}")
+
+        finally:
+            comtypes.CoUninitialize()
 
     thread = threading.Thread(target=convert)
     thread.start()
     thread.join(timeout)
+
     if thread.is_alive():
         raise TimeoutError("Conversão demorou demais e foi abortada.")
+
     return abs_output
+
 
 def convert_office_to_pdf(input_path):
     if platform.system() == 'Windows':

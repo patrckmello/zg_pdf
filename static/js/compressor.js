@@ -15,6 +15,10 @@ async function renderModulePreviews() {
     const pdfCanvas = document.getElementById("pdf-canvas");
     const pdfInfo = document.getElementById("pdf-info");
 
+    // Antes de qualquer coisa, limpa qualquer botão remove antigo, pra não duplicar
+    const oldRemoveBtn = pdfPreviewContainer.querySelector('.remove-btn');
+    if (oldRemoveBtn) oldRemoveBtn.remove();
+
     if (selectedFile && selectedFile.type === "application/pdf") {
         hideAllErrors(); // Oculta mensagens de erro anteriores
         if (pdfPreviewContainer) pdfPreviewContainer.style.display = "block";
@@ -28,9 +32,8 @@ async function renderModulePreviews() {
             pdfjsLib.getDocument(typedarray).promise.then(pdf => {
                 const totalPages = pdf.numPages;
 
-                // ⚠️ Alerta visual usando errorMessage
                 if (totalPages > 1000 && errorMessage) {
-                    errorMessage.textContent = "⚠️ Este arquivo possui muitas páginas e pode demorar mais para ser processado. Recomendamos aguardar com paciência.";
+                    errorMessage.textContent = "Este arquivo possui muitas páginas e pode demorar mais para ser processado. Recomendamos aguardar com paciência.";
                     errorMessage.style.display = "block";
                 }
 
@@ -43,6 +46,44 @@ async function renderModulePreviews() {
                     pdfCanvas.height = viewport.height;
                     pdfCanvas.width = viewport.width;
                     page.render({ canvasContext: ctx, viewport });
+
+                    // Cria o botão remover, posiciona no canto superior direito do container
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = '×';
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.title = 'Remover arquivo';
+
+                    // Estiliza para ficar no topo direito (se quiser, estilize no CSS)
+                    removeBtn.style.position = 'absolute';
+                    removeBtn.style.top = '5px';
+                    removeBtn.style.right = '5px';
+                    removeBtn.style.zIndex = '10';
+                    removeBtn.style.cursor = 'pointer';
+                    removeBtn.style.fontSize = '20px';
+                    removeBtn.style.background = 'transparent';
+                    removeBtn.style.border = 'none';
+                    removeBtn.style.color = '#f00';
+
+                    removeBtn.addEventListener('click', () => {
+                        selectedFile = null;
+                        selectedFiles = [];
+                        if (pdfInfo) pdfInfo.textContent = "";
+                        if (pdfCanvas) {
+                            const ctx = pdfCanvas.getContext("2d");
+                            ctx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+                        }
+                        if (pdfPreviewContainer) {
+                            pdfPreviewContainer.style.display = "none";
+                        }
+                        checkPreviewVisibility();
+                        resetApp();
+                    });
+
+                    // Para o botão posicionar direito, o container deve ser relativo
+                    if (pdfPreviewContainer) {
+                        pdfPreviewContainer.style.position = 'relative';
+                        pdfPreviewContainer.appendChild(removeBtn);
+                    }
                 });
             }).catch(err => {
                 if (pdfInfo) pdfInfo.textContent = `Erro ao ler número de páginas.`;
@@ -50,6 +91,7 @@ async function renderModulePreviews() {
             });
         };
         reader.readAsArrayBuffer(selectedFile);
+
         if (compressBtn) compressBtn.disabled = false;
     } else {
         if (errorMessage) {
@@ -58,7 +100,10 @@ async function renderModulePreviews() {
         }
         selectedFile = null;
         if (compressBtn) compressBtn.disabled = true;
-        if (pdfPreviewContainer) pdfPreviewContainer.style.display = "none";
+        if (pdfPreviewContainer) {
+            pdfPreviewContainer.style.display = "none";
+            pdfPreviewContainer.innerHTML = ''; // limpa tudo
+        }
         if (pdfCanvas) pdfCanvas.getContext("2d").clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
         if (pdfInfo) pdfInfo.textContent = "";
     }
@@ -197,3 +242,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+

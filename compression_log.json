@@ -42,5 +42,49 @@
         "input_file_size_mb": 23.64,
         "output_file_size_mb": 3.14,
         "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "dda11b91-3c0b-4b80-9b34-59d1cd8f93a3",
+        "input_file": "dda11b91-3c0b-4b80-9b34-59d1cd8f93a3_SENTENCA--.pdf",
+        "output_file": "comprimidoZG_SENTENCA--.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 9.37,
+        "pages": 0,
+        "input_file_size_mb": 2.47,
+        "output_file_size_mb": 2.47,
+        "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "abd77c52-b3d4-4248-a20c-68c25a891f83",
+        "input_file": "abd77c52-b3d4-4248-a20c-68c25a891f83_SENTENCA--.pdf",
+        "output_file": "comprimidoZG_SENTENCA--.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 9.58,
+        "pages": 3,
+        "input_file_size_mb": 2.47,
+        "output_file_size_mb": 2.47,
+        "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "42b85eeb-1da3-4a79-91e8-61130196d61d",
+        "input_file": "42b85eeb-1da3-4a79-91e8-61130196d61d_SENTENCA--.pdf",
+        "output_file": "comprimidoZG_SENTENCA--.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 9.33,
+        "pages": 3,
+        "input_file_size_mb": 2.47,
+        "output_file_size_mb": 3.5,
+        "status": "Conclu\u00eddo!"
+    },
+    {
+        "task_id": "d960b28a-9226-47b1-bbcb-f34583c24542",
+        "input_file": "d960b28a-9226-47b1-bbcb-f34583c24542_exemplo.pdf",
+        "output_file": "comprimidoZG_exemplo.pdf",
+        "compression_type": "screen",
+        "time_taken_seconds": 7.05,
+        "pages": 23,
+        "input_file_size_mb": 23.64,
+        "output_file_size_mb": 3.11,
+        "status": "Conclu\u00eddo!"
     }
 ]

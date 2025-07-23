@@ -1,4 +1,47 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("feedback-form");
+    const popup = document.getElementById("form-popup");
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // evita o comportamento padrão (recarregar página)
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Enviando...";
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro ao enviar feedback");
+            return response.text(); // ou json(), se backend retornar JSON
+        })
+        .then(() => {
+            popup.classList.remove("hidden");
+            popup.classList.add("show");
+            
+            // Limpa o form, se quiser
+            form.reset();
+
+            setTimeout(() => {
+                popup.classList.remove("show");
+                popup.classList.add("hidden");
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Enviar";
+            }, 4000);
+        })
+        .catch(err => {
+            alert("Erro ao enviar feedback, tente novamente.");
+            console.error(err);
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Enviar";
+        });
+    });
 
     // --- REINTRODUZIR: Animações de Revelação de SEÇÕES (com IntersectionObserver) ---
     // Isso é o que adiciona a classe 'show-section' às suas <section>s
@@ -142,5 +185,4 @@ document.addEventListener("DOMContentLoaded", function() {
         reset: false
     });
 
-    // Você pode continuar adicionando mais regras para o footer, etc.
 });

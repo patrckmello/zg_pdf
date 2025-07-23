@@ -20,7 +20,8 @@ function getIconForFile(filename) {
         'jpg': `${staticAssetsPath}/image-fill.png`,
         'png': `${staticAssetsPath}/image-fill.png`,
         'txt': `${staticAssetsPath}/file-txt-fill.png`,
-        'csv': `${staticAssetsPath}/file-csv-fill.png`
+        'csv': `${staticAssetsPath}/file-csv-fill.png`,
+        'pptx': `${staticAssetsPath}/pptx.png`
     };
     return iconMap[ext] || `${staticAssetsPath}/file.png`;
 }
@@ -57,7 +58,8 @@ function renderConversionOptions(options) {
         'jpg': `${staticAssetsPath}/image.png`,
         'png': `${staticAssetsPath}/image.png`,
         'txt': `${staticAssetsPath}/txt.png`,
-        'csv': `${staticAssetsPath}/csv.png`
+        'csv': `${staticAssetsPath}/csv.png`,
+        'pptx': `${staticAssetsPath}/pptx.png`
     };
 
     options.forEach(opt => {
@@ -219,3 +221,4 @@ function autoOpenExtractMenu() {
     generateExtractPreviews();
     previewTitle.textContent = 'Selecione as páginas que deseja extrair:';
 }
+

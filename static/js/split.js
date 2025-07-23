@@ -35,13 +35,13 @@ async function rebuildPreviews() {
     previewContainer.innerHTML = ''; // Limpa previews antigos
 
     if (selectedFiles.length === 0) {
-        showError('⚠️ Nenhum arquivo selecionado para dividir.', errorMessage);
+        showError('Nenhum arquivo selecionado para dividir.', errorMessage);
         enableFileInputAndDropZone(); // libera input e dropzone para novo arquivo
         return;
     }
 
     if (selectedFiles.length > 1) {
-        showError('⚠️ Apenas um arquivo pode ser dividido. Apenas o primeiro será usado.', errorMessage);
+        showError('Apenas um arquivo pode ser dividido. Apenas o primeiro será usado.', errorMessage);
         // Mantém só o primeiro arquivo
         selectedFiles = [selectedFiles[0]];
         // Atualiza input para ter só o primeiro arquivo
@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
         splitBtn.addEventListener('click', () => { 
             hideAllErrors();
             if (selectedFiles.length === 0) {
-                showError(' ⚠️ Por favor, selecione um arquivo para dividir.', errorMessage2);
+                showError('Por favor, selecione um arquivo para dividir.', errorMessage2);
             } else if (selectedFiles.length > 1) {
                 // Embora o preview só mostre um, a validação aqui ainda é útil.
-                showError(' ⚠️ Por favor, selecione apenas um arquivo para dividir.', errorMessage2);
+                showError('Por favor, selecione apenas um arquivo para dividir.', errorMessage2);
             } else {
                 // A pré-visualização já foi criada. Apenas abra o menu.
                 openMenu(splitMenu, [compressionMenu, mergeMenu, organizeMenu, convertMenu]);
@@ -95,14 +95,14 @@ if (startSplitBtn) {
             // Todo o seu código original vai aqui dentro
             if (selectedFiles.length !== 1) {
                 hideSpinner();
-                showError(' ⚠️ Por favor, selecione apenas UM arquivo para dividir.');
+                showError('Por favor, selecione apenas UM arquivo para dividir.');
                 return;
             }
 
             const selectedModeBtn = document.querySelector('.mode-btn.active');
             if (!selectedModeBtn) {
                 hideSpinner();
-                showError(' ⚠️ Por favor, selecione um modo de divisão.');
+                showError('Por favor, selecione um modo de divisão.');
                 return;
             }
 
@@ -117,7 +117,7 @@ if (startSplitBtn) {
                 const parts = parseInt(partsInput.value);
                 if (isNaN(parts) || parts <= 0) {
                     hideSpinner();
-                    showError(' ⚠️ Número de partes inválido. Informe um valor numérico maior que 0.');
+                    showError('Número de partes inválido. Informe um valor numérico maior que 0.');
                     return;
                 }
                 formData.append('parts', parts);
@@ -126,7 +126,7 @@ if (startSplitBtn) {
                 const sizeMB = parseFloat(sizeInput.value);
                 if (isNaN(sizeMB) || sizeMB <= 0) {
                     hideSpinner();
-                    showError(' ⚠️ Tamanho inválido. Informe um valor em MB (maior que 0).');
+                    showError('Tamanho inválido. Informe um valor em MB (maior que 0).');
                     return;
                 }
                 formData.append('max_size_mb', sizeMB);
@@ -158,7 +158,7 @@ if (startSplitBtn) {
 
             } catch (error) {
                 console.error("ERRO CAPTURADO:", error);
-                showError(` ⚠️ Ocorreu um erro ao dividir o PDF: ${error.message}`);
+                showError(`Ocorreu um erro ao dividir o PDF: ${error.message}`);
             } finally {
                 hideSpinner();
                 if (typeof closeMenu === 'function' && typeof splitMenu !== 'undefined') {

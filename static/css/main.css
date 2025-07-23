@@ -426,4 +426,71 @@ footer#main-footer {
     color: white
 }
 
+.popup {
+  position: fixed;
+  top: 40px;
+  right: 30px;
+  background-color: #28a745;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  font-weight: 600;
+  z-index: 1000;
 
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateY(20px) translateX(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  /* Remove visibility da transição para controlar manualmente */
+}
+
+.popup.show {
+  opacity: 1;
+  visibility: visible; /* fica visível imediatamente */
+  pointer-events: auto;
+  transform: translateY(0) translateX(0);
+  border: 2px solid #00ff99;
+  animation: borderPulse 1.5s ease-in-out infinite alternate;
+  transition-delay: 0s; /* aparece sem delay */
+}
+
+.popup.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) translateX(20px);
+  border: 2px solid transparent;
+  animation: none;
+
+  /* delay a visibilidade para deixar a transição terminar */
+  transition-delay: 0.5s; /* espera meio segundo pra aplicar */
+  visibility: hidden;
+  /* IMPORTANTE: visibility não faz parte da transição, 
+     mas o delay faz a troca só depois da opacidade */
+}
+
+@keyframes borderPulse {
+  0% {
+    border-color: #00ff99;
+    box-shadow: 0 0 8px #00ff99;
+  }
+  100% {
+    border-color: #00cc77;
+    box-shadow: 0 0 20px #00cc77;
+  }
+}
+
+button[type="submit"] {
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+button[type="submit"]:disabled {
+  background-color: #aaa;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
