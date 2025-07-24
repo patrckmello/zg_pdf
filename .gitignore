@@ -1,2 +1,9 @@
 .env
-zg_pdf.spec
+venv/
+build/
+dist/
+app.log
+processed/
+uploads/
+app.spec
+compression_log.json

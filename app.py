@@ -601,7 +601,7 @@ def execute_conversion():
 
             if target_format == 'docx':
                 temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
-                temp_files_to_delete.append(temp_docx_path)
+                temp_files_to_delete.append(pdf_path)
                 pdf_to_docx_hybrid(input_path, temp_docx_path)  # usa input_path aqui!
 
                 with open(temp_docx_path, 'rb') as f:
@@ -649,7 +649,7 @@ def execute_conversion():
         elif ext in ['docx', 'xlsx', 'pptx']:
             if target_format == 'pdf':
                 pdf_path = convert_office_to_pdf(input_path)
-                temp_files_to_delete.append(temp_docx_path)
+                temp_files_to_delete.append(pdf_path)
                 with open(pdf_path, 'rb') as f:
                     output_buffer.write(f.read())
                 output_buffer.seek(0)
