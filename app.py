@@ -601,8 +601,8 @@ def execute_conversion():
 
             if target_format == 'docx':
                 temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
-                temp_files_to_delete.append(pdf_path)
-                pdf_to_docx_hybrid(input_path, temp_docx_path)  # usa input_path aqui!
+                temp_files_to_delete.append(input_path)
+                pdf_to_docx_hybrid(input_path, temp_docx_path)
 
                 with open(temp_docx_path, 'rb') as f:
                     output_buffer.write(f.read())
