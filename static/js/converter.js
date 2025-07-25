@@ -44,7 +44,32 @@ async function uploadForConversion(file) {
 
     conversionTaskId = data.task_id;
     renderConversionOptions(data.options);
+
+    // Verifica se PDF é escaneado e mostra alerta amarelo
+    if (data.is_scanned) {
+        showFloatingAlert('Aviso: seu PDF é escaneado, a conversão pode demorar mais do que o normal.');
+    }
 }
+
+function showFloatingAlert(message, duration = 5000) {
+    const alertDiv = document.getElementById('floating-alert');
+    if (!alertDiv) return;
+
+    alertDiv.textContent = message;
+    alertDiv.style.display = 'block';
+
+    // Se já tiver animação, reinicia (pra segurar o tempo certinho)
+    alertDiv.style.animation = 'none';
+    // Força reflow pra resetar a animação
+    void alertDiv.offsetWidth;
+    alertDiv.style.animation = null;
+
+    // Depois do tempo, some o popup
+    setTimeout(() => {
+        alertDiv.style.display = 'none';
+    }, duration);
+}
+
 
 function renderConversionOptions(options) {
     const container = document.getElementById('convert-options-list');
@@ -221,4 +246,5 @@ function autoOpenExtractMenu() {
     generateExtractPreviews();
     previewTitle.textContent = 'Selecione as páginas que deseja extrair:';
 }
+
 

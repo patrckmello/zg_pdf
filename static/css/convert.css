@@ -19,6 +19,18 @@ main {
     text-align: center;
 }
 
+.preview-filename {
+    max-width: 180px;    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
+    word-break: break-word; 
+}
+
+
 /* --- Pré-visualizações de Arquivos --- */
 #preview-container-grid {
   background-color: #f0f0f0; /* cinza claro */
@@ -117,5 +129,59 @@ main {
   user-select: none;
   transition: filter 0.3s ease;
   position: absolute;
+}
+
+/* Popup voador com borda gradient animada */
+#floating-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff3cd;
+  color: #856404;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.7);
+  border: 3px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: linear-gradient(270deg, #f1c40f, #f39c12, #f1c40f);
+  animation: popupBorderMove 3s linear infinite, slideInOut 5s forwards;
+  z-index: 9999;
+  cursor: default;
+  user-select: none;
+}
+
+/* Animação da borda gradient */
+@keyframes popupBorderMove {
+  0% {
+    border-image-source: linear-gradient(270deg, #f1c40f, #f39c12, #f1c40f);
+  }
+  50% {
+    border-image-source: linear-gradient(90deg, #f1c40f, #f39c12, #f1c40f);
+  }
+  100% {
+    border-image-source: linear-gradient(270deg, #f1c40f, #f39c12, #f1c40f);
+  }
+}
+
+/* Animação de aparecer deslizando da direita e sumir */
+@keyframes slideInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 }
 

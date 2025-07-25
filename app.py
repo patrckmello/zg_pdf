@@ -446,6 +446,7 @@ import pdfplumber
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 from docx import Document
 import pandas as pd
+from zipfile import ZipFile
 
 def pdf_to_xlsx_camelot(pdf_path, output_xlsx_path):
     tables = camelot.read_pdf(pdf_path, pages='all')
@@ -487,6 +488,15 @@ def is_image_textual(img, lang='por', conf_threshold=50):
         return avg_conf >= conf_threshold
     return False
 
+def is_pdf_scanned(pdf_path, lang='por'):
+    with pdfplumber.open(pdf_path) as pdf:
+        total_text = ""
+        for page in pdf.pages:
+            text = page.extract_text()
+            if text and text.strip():
+                total_text += text.strip()
+        # Se total_text for vazio ou quase vazio, PDF é escaneado
+        return len(total_text) < 200
 
 conversion_map = {
     'pdf': ['docx', 'xlsx', 'txt'],
@@ -498,43 +508,59 @@ conversion_map = {
     'png': ['pdf'],
 }
 
-def pdf_to_docx(input_pdf_path, output_docx_path):
-    cv = Converter(input_pdf_path)
-    cv.convert(output_docx_path, start=0, end=None)
-    cv.close()
-
-def pdf_to_docx_hybrid(input_pdf_path, output_docx_path, lang='por'):
+def pdf_to_docx(input_pdf_path, output_docx_path, lang='por', conf_threshold=50):
+    # 1. Converte o PDF para DOCX mantendo layout e texto
     docx_buffer = io.BytesIO()
-    
-    # 1. Converter usando pdf2docx para manter formatação
     cv = Converter(input_pdf_path)
     cv.convert(docx_buffer, start=0, end=None)
     cv.close()
-    
     docx_buffer.seek(0)
     word_doc = Document(docx_buffer)
-    
-    # 2. Passar o OCR só onde não houver texto ou for imagem escaneada
+
+    # 2. Abre o PDF com PyMuPDF para análise página a página
     pdf_doc = fitz.open(input_pdf_path)
 
+    # Função auxiliar pra calcular média de confiança OCR na imagem da página
+    def is_image_textual(img, lang=lang, conf_threshold=conf_threshold):
+        data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
+        confidences = []
+        for c in data['conf']:
+            try:
+                conf = float(c)
+                if conf > 0:
+                    confidences.append(conf)
+            except:
+                continue
+        if confidences:
+            avg_conf = sum(confidences) / len(confidences)
+            return avg_conf >= conf_threshold
+        return False
+
+    # 3. Para cada página, verifica se é 100% imagem (sem texto)
     for i, page in enumerate(pdf_doc):
+        text_in_page = page.get_text().strip()
         pix = page.get_pixmap()
         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
 
-        if is_image_textual(img, lang=lang):
-            # Já tem texto na imagem, faz OCR e adiciona no Word
+        if not text_in_page and is_image_textual(img, lang=lang):
+            # Página provavelmente escaneada sem texto: substitui conteúdo no DOCX
             ocr_text = pytesseract.image_to_string(img, lang=lang).strip()
-            if ocr_text:
-                word_doc.add_page_break()
-                word_doc.add_paragraph(f"[OCR - Página {i+1}]\n{ocr_text}")
-        else:
-            # Não faz nada, pois é imagem pura (foto, identidade, etc.)
-            print(f"Página {i+1}: Imagem sem texto detectada. Ignorando OCR.")
 
-    # 3. Salvar no arquivo final
+            # Calcula índice aproximado da página no documento Word
+            # Importante: Isso é uma aproximação simples, considerando que cada página 
+            # corresponda a um "parágrafo bloco" no Word.
+            # Caso o número de parágrafos seja menor, adiciona ao final.
+            if i < len(word_doc.paragraphs):
+                # Limpa o conteúdo do parágrafo
+                p = word_doc.paragraphs[i]
+                p.clear()
+                p.add_run(ocr_text)
+            else:
+                # Adiciona nova página/ parágrafo no final
+                word_doc.add_paragraph(ocr_text)
+
+    # 4. Salva o DOCX resultante
     word_doc.save(output_docx_path)
-
-
 
 @app.route('/convert-extensions', methods=['GET'])
 def get_supported_extensions():
@@ -548,9 +574,8 @@ def upload_conversion():
         return jsonify({'error': 'Nenhum arquivo enviado.'}), 400
 
     filename = secure_filename(file.filename)
-    ext = os.path.splitext(filename)[1].lower().replace('.', '')  # sem o ponto
+    ext = os.path.splitext(filename)[1].lower().replace('.', '')
 
-    # Mapeamento de conversão
     available_options = conversion_map.get(ext)
     if not available_options:
         return jsonify({
@@ -560,18 +585,23 @@ def upload_conversion():
             'options': []
         }), 200
 
-    # Salva o arquivo temporariamente
     task_id = str(uuid.uuid4())
     input_path = os.path.join(UPLOAD_FOLDER, f"{task_id}_{filename}")
     file.save(input_path)
+
+    is_scanned = False
+    if ext == 'pdf':
+        is_scanned = is_pdf_scanned(input_path)
 
     return jsonify({
         'filename': filename,
         'extension': ext,
         'task_id': task_id,
         'message': 'Arquivo recebido com sucesso!',
-        'options': available_options
+        'options': available_options,
+        'is_scanned': is_scanned
     }), 200
+
 @app.route('/execute-conversion', methods=['POST'])
 def execute_conversion():
     data = request.json
@@ -601,13 +631,14 @@ def execute_conversion():
 
             if target_format == 'docx':
                 temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
-                temp_files_to_delete.append(input_path)
-                pdf_to_docx_hybrid(input_path, temp_docx_path)
+                pdf_to_docx(input_path, temp_docx_path)
+                
+                temp_files_to_delete.append(temp_docx_path) 
+                temp_files_to_delete.append(input_path)  
 
                 with open(temp_docx_path, 'rb') as f:
                     output_buffer.write(f.read())
                 output_buffer.seek(0)
-                os.remove(temp_docx_path)
 
             elif target_format == 'xlsx':
                 text = extract_text_from_pdf(input_path)
