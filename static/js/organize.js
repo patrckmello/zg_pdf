@@ -67,7 +67,8 @@ async function rebuildPreviews() {
     if (dropZone) dropZone.classList.add('disabled-upload');
 
     // Cria preview do arquivo único
-    await createPreview(selectedFiles[0], 0);
+    const previewElement = await createPreview(selectedFiles[0], 0);
+    previewContainer.appendChild(previewElement);
 
     checkPreviewVisibility();
 }

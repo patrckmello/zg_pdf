@@ -21,38 +21,82 @@ function updateMergeButtonState() {
     }
 }
 async function rebuildPreviews() {
-    if (previewContainer) previewContainer.innerHTML = '';
+    if (!previewContainer) return;
+
+    const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        await createPreview(file, i);
+        const preview = await createPreview(file, i);
+        if (preview) fragment.appendChild(preview);
     }
+
+    previewContainer.innerHTML = ''; // Limpa uma vez só
+    previewContainer.appendChild(fragment); // Adiciona tudo de uma vez
+
     updatePreviewIndices();
-    updateMergeButtonState();
-    checkPreviewVisibility(); 
+    updateMergeButtonState?.();
+    checkPreviewVisibility();
 
     if (sortableInstance) sortableInstance.destroy();
-    if (previewContainer) {
-        sortableInstance = Sortable.create(previewContainer, {
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            onSort: function(evt) {
-                const newOrderFileNames = Array.from(evt.to.children).map(item => item.getAttribute('data-filename'));
-                const reorderedSelectedFiles = [];
-                newOrderFileNames.forEach(fileName => {
-                    const file = selectedFiles.find(f => f.name === fileName);
-                    if (file) {
-                        reorderedSelectedFiles.push(file);
-                    }
-                });
-                selectedFiles = reorderedSelectedFiles;
-                updatePreviewIndices();
-            }
-        });
-    }
+    sortableInstance = Sortable.create(previewContainer, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onSort: function (evt) {
+            const newOrderFileNames = Array.from(evt.to.children).map(item => item.getAttribute('data-filename'));
+            selectedFiles = newOrderFileNames.map(name => selectedFiles.find(f => f.name === name)).filter(Boolean);
+            updatePreviewIndices();
+        }
+    });
 }
 
+
+async function handleFilesMerge(files) {
+    hideAllErrors();
+
+    // Filtra apenas PDFs
+    const newFiles = Array.from(files).filter(f => f.type === "application/pdf");
+
+    if (newFiles.length === 0) {
+        showError("Somente arquivos PDF são permitidos.", errorMessage3);
+        return;
+    }
+
+    // Adiciona os arquivos, evitando duplicados
+    newFiles.forEach(file => {
+        const alreadyExists = selectedFiles.some(
+            f => f.name === file.name && f.size === file.size
+        );
+        if (!alreadyExists) {
+            selectedFiles.push(file);
+        }
+    });
+
+    await rebuildPreviews();       // Recria as pré-visualizações
+    checkPreviewVisibility();      // Garante que o preview apareça
+    updateMergeButtonState();      // Ativa/desativa o botão de merge conforme necessário
+}
+
+
 // --- LISTENERS DO MERGE ---
+
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.backgroundColor = '';
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        handleFilesMerge(files);
+    }
+});
+
+fileInput.addEventListener('change', function () {
+    if (this.files.length > 0) {
+        handleFilesMerge(this.files);
+    }
+
+    // 💥 Reset obrigatório para permitir reenvio do mesmo arquivo
+    this.value = '';
+});
 
 // Listener principal para iniciar a funcionalidade de união
 document.addEventListener('DOMContentLoaded', () => {

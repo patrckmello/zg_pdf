@@ -145,39 +145,24 @@ function closeMenu(menuToClose) {
  * @param {FileList} files - A lista de arquivos.
  */
 async function handleFilesUniversal(files) {
-    hideAllErrors(); // Oculta erros antes de processar novos arquivos
+    hideAllErrors();
 
-    // Limpa selectedFile se estamos adicionando múltiplos arquivos (para evitar conflito com compressor)
+    // Se estiver selecionando múltiplos arquivos, não mexa em selectedFile (que é só pra compressor)
     if (files.length > 1) {
         selectedFile = null;
     } else if (files.length === 1 && files[0].type === "application/pdf" && document.getElementById("pdf-preview-container")) {
-        // Se é um único PDF e o container de preview do compressor existe, setamos selectedFile
+        // Caso queira manter o selectedFile para preview compressor, pode manter aqui
         selectedFile = files[0];
     } else {
-        selectedFile = null; // Caso não seja um PDF para o compressor, ou seja para outros módulos.
+        selectedFile = null;
     }
 
-    
-
     Array.from(files).forEach(file => {
-        // Adiciona apenas se o arquivo não estiver duplicado (nome e tamanho)
+        // Adiciona só se não duplicar
         if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
             selectedFiles.push(file);
         }
     });
-
-    // Chama a função de renderização de previews específica do módulo ativo
-    // Esta parte assume que haverá uma função 'renderModulePreviews()' em cada script.
-    // Você precisará definir 'renderModulePreviews()' em compress.js, convert.js e unir_dividir_organizar.js
-    if (typeof renderModulePreviews === 'function') {
-        await renderModulePreviews();
-    }
-
-        // Limpa seleção múltipla se for PDF único (como no Extract)
-    if (files.length === 1 && files[0].type === "application/pdf") {
-        selectedFile = files[0];
-        selectedFiles = [files[0]]; // Limpa e define só esse
-    }
 
     if (typeof renderModulePreviews === 'function') {
         await renderModulePreviews();
@@ -185,11 +170,9 @@ async function handleFilesUniversal(files) {
 
     checkPreviewVisibility();
 
-    // Abrir menu automaticamente se o módulo for Extrair
     if (typeof autoOpenExtractMenu === 'function') {
         autoOpenExtractMenu();
     }
-
 }
 
 
@@ -215,7 +198,6 @@ dropZone.addEventListener('drop', (e) => {
     dropZone.style.backgroundColor = ''; // Restaura a cor original
     const files = e.dataTransfer.files;
     if (files.length > 0) {
-        fileInput.files = files; // Atribui os arquivos arrastados ao input de arquivo
         handleFilesUniversal(files); // Usa o manipulador universal
     }
 });
@@ -301,7 +283,7 @@ function updatePreviewIndices() {
 function createPreview(file, index) {
     return new Promise((resolve) => {
         const fileReader = new FileReader();
-        fileReader.onload = async function() {
+        fileReader.onload = async function () {
             const typedarray = new Uint8Array(this.result);
             const pdf = await pdfjsLib.getDocument(typedarray).promise;
             const page = await pdf.getPage(1);
@@ -349,12 +331,13 @@ function createPreview(file, index) {
             wrapper.appendChild(fileNameElement);
             wrapper.appendChild(canvas);
             wrapper.appendChild(removeBtn);
-            if (previewContainer) previewContainer.appendChild(wrapper);
-            resolve();
+
+            resolve(wrapper); // Agora retorna o wrapper
         };
         fileReader.readAsArrayBuffer(file);
     });
 }
+
 
 // --- LISTENERS GLOBAIS ---
 document.addEventListener('DOMContentLoaded', () => {

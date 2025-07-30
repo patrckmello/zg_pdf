@@ -837,15 +837,12 @@ def merge_pdfs():
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='unido.pdf')
 
-# Garanta que estes imports estejam no topo do seu arquivo app.py
 import io
 import math
 import zipfile
 import fitz  # PyMuPDF
 from flask import request, send_file, jsonify
-from datetime import datetime # <--- ESTA É A LINHA DA CORREÇÃO!
-
-# ... (seu código da app Flask e outras rotas) ...
+from datetime import datetime
 
 @app.route('/split', methods=['POST'])
 def split_pdfs():
@@ -904,7 +901,10 @@ def split_pdfs():
                 end_page = min(start_page + pages_per_part - 1, pdf_doc.page_count - 1)
                 if start_page > end_page: continue
                 new_pdf = fitz.open()
-                new_pdf.insert_pdf(pdf_doc, from_page=start_page, to_page=end_page)
+                for page_num in range(start_page, end_page + 1):
+                    page = pdf_doc[page_num]
+                    new_pdf.new_page(width=page.rect.width, height=page.rect.height)
+                    new_pdf[-1].show_pdf_page(new_pdf[-1].rect, pdf_doc, page_num)
                 output_buffer = io.BytesIO()
                 new_pdf.save(output_buffer, garbage=4, deflate=True) 
                 output_buffer.seek(0)
@@ -928,7 +928,9 @@ def split_pdfs():
                 print(f"[{datetime.now()}] ===== Processando Bloco #{part_number} (começando da pág. {chunk_start_page + 1}) =====")
                 
                 single_page_doc = fitz.open()
-                single_page_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=chunk_start_page)
+                page = pdf_doc[chunk_start_page]
+                single_page_doc.new_page(width=page.rect.width, height=page.rect.height)
+                single_page_doc[-1].show_pdf_page(single_page_doc[-1].rect, pdf_doc, chunk_start_page)
                 single_page_buffer = io.BytesIO()
                 single_page_doc.save(single_page_buffer)
                 if single_page_buffer.tell() > max_size_bytes:
@@ -942,7 +944,10 @@ def split_pdfs():
                 while low <= high:
                     mid = (low + high) // 2
                     test_doc = fitz.open()
-                    test_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=mid)
+                    for page_num in range(chunk_start_page, mid + 1):
+                        page = pdf_doc[page_num]
+                        test_doc.new_page(width=page.rect.width, height=page.rect.height)
+                        test_doc[-1].show_pdf_page(test_doc[-1].rect, pdf_doc, page_num)
                     test_buffer = io.BytesIO()
                     test_doc.save(test_buffer)
                     test_doc.close()
@@ -957,7 +962,9 @@ def split_pdfs():
                 print(f"[{datetime.now()}] Bloco #{part_number} definido via busca: páginas {chunk_start_page + 1} a {chunk_end_page + 1}. Criando PDF final...")
 
                 final_chunk_doc = fitz.open()
-                final_chunk_doc.insert_pdf(pdf_doc, from_page=chunk_start_page, to_page=chunk_end_page)
+                for page_num in range(chunk_start_page, chunk_end_page + 1):
+                    final_chunk_doc.new_page(-1, width=pdf_doc[page_num].rect.width, height=pdf_doc[page_num].rect.height)
+                    final_chunk_doc[-1].show_pdf_page(final_chunk_doc[-1].rect, pdf_doc, page_num)
                 output_buffer = io.BytesIO()
                 final_chunk_doc.save(output_buffer, garbage=4, deflate=True)
                 output_buffer.seek(0)

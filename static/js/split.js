@@ -58,7 +58,8 @@ async function rebuildPreviews() {
     disableFileInputAndDropZone();
 
     // Cria preview para o arquivo único
-    await createPreview(selectedFiles[0], 0);
+    const previewElement = await createPreview(selectedFiles[0], 0);
+    previewContainer.appendChild(previewElement);
 
     checkPreviewVisibility();
 }
