@@ -147,11 +147,10 @@ function closeMenu(menuToClose) {
 async function handleFilesUniversal(files) {
     hideAllErrors();
 
-    // Se estiver selecionando múltiplos arquivos, não mexa em selectedFile (que é só pra compressor)
     if (files.length > 1) {
         selectedFile = null;
     } else if (files.length === 1 && files[0].type === "application/pdf" && document.getElementById("pdf-preview-container")) {
-        // Caso queira manter o selectedFile para preview compressor, pode manter aqui
+
         selectedFile = files[0];
     } else {
         selectedFile = null;

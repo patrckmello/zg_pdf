@@ -698,17 +698,64 @@ def execute_conversion():
 
         elif ext in ['jpg', 'jpeg', 'png']:
             if target_format == 'pdf':
+                from PIL import Image
+                from fpdf import FPDF
+                import tempfile
+
+                # Abre imagem e garante RGB
                 image = Image.open(input_path).convert('RGB')
-                pdf = FPDF()
+                img_w_px, img_h_px = image.size
+
+                # Define página A4 e orientação com base na imagem
+                # (mais alto que largo → Retrato; mais largo que alto → Paisagem)
+                if img_w_px >= img_h_px:
+                    page_format = 'A4'
+                    orientation = 'L'  # Landscape
+                    page_w_mm, page_h_mm = 297, 210
+                else:
+                    page_format = 'A4'
+                    orientation = 'P'  # Portrait
+                    page_w_mm, page_h_mm = 210, 297
+
+                margin_mm = 10
+                max_w_mm = page_w_mm - 2 * margin_mm
+                max_h_mm = page_h_mm - 2 * margin_mm
+
+                # Calcula escala para caber na área útil preservando proporção
+                scale_w = max_w_mm / img_w_px
+                scale_h = max_h_mm / img_h_px
+                scale = min(scale_w, scale_h)
+
+                disp_w_mm = img_w_px * scale
+                disp_h_mm = img_h_px * scale
+
+                # Centraliza na página
+                x_mm = (page_w_mm - disp_w_mm) / 2.0
+                y_mm = (page_h_mm - disp_h_mm) / 2.0
+
+                # Cria PDF e insere imagem dimensionada
+                pdf = FPDF(orientation=orientation, unit='mm', format=page_format)
+                pdf.set_auto_page_break(False)  # evita que o FPDF tente quebrar a imagem em outra página
                 pdf.add_page()
-                temp_path = os.path.join(UPLOAD_FOLDER, 'temp_image.jpg')
-                image.save(temp_path)
-                pdf.image(temp_path, x=10, y=10, w=180)
-                os.remove(temp_path)
+
+                # FPDF lida melhor com JPEG; salvamos temporariamente
+                with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp:
+                    temp_path = tmp.name
+                image.save(temp_path, 'JPEG', quality=95)
+
+                pdf.image(temp_path, x=x_mm, y=y_mm, w=disp_w_mm, h=disp_h_mm)
+
+                # Limpeza do temp
+                try:
+                    os.remove(temp_path)
+                except Exception:
+                    pass
+
                 output_buffer.write(pdf.output(dest='S').encode('latin1'))
                 output_buffer.seek(0)
             else:
                 return jsonify({'error': 'Conversão não suportada para imagem.'}), 400
+
 
         else:
             return jsonify({'error': 'Formato de entrada não reconhecido.'}), 400
