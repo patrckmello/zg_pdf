@@ -27,7 +27,6 @@ O projeto ZG PDF é construído com as seguintes tecnologias:
     *   `Ghostscript`: Para compressão de PDFs.
     *   `FPDF`: Para conversão de imagens para PDF.
     *   `Aspose.Slides`: Para conversão de PPTX para PDF.
-    *   `LibreOffice` (via subprocesso): Para conversão de DOCX e XLSX para PDF.
 *   **Outras Bibliotecas Python:**
     *   `python-dotenv`: Gerenciamento de variáveis de ambiente.
     *   `Flask-Mail`: Envio de e-mails para feedback.
@@ -49,7 +48,10 @@ Certifique-se de ter os seguintes softwares instalados em seu sistema:
 *   **Python 3.x**
 *   **pip** (gerenciador de pacotes do Python)
 *   **Ghostscript**: Necessário para a funcionalidade de compressão de PDF. Pode ser baixado em [https://www.ghostscript.com/download/gsdnld.html](https://www.ghostscript.com/download/gsdnld.html).
-*   **LibreOffice**: Necessário para a conversão de arquivos DOCX e XLSX para PDF. Pode ser baixado em [https://www.libreoffice.org/download/download-libreoffice/](https://www.libreoffice.org/download/download-libreoffice/).
+*   **TesseractOCR**: Necessário para a transcrição de arquivos escaneados em texto. Pode ser baixado em [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki).
+
+*   **Interessante pontuar**: Ghostscript e Tesseract devem estar no path do sistema. Editar as variáveis de ambiente > Variáveis de ambiente > Variável 'Path' > Editar... > Novo
+Ghostscript fica algo como [C:\Program Files\gs\gs<versão>\bin] e o TesseractOCR fica algo como [C:\Program Files\Tesseract-OCR]
 
 ### Configuração
 

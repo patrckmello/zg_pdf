@@ -1,31 +1,36 @@
 import os
-import uuid
-import time
-import subprocess
-import threading
-import json
-import datetime
-import zipfile
-import math
 import sys
-import tempfile
 import io
 import json
+import time
+import math
+import zipfile
+import tempfile
 import logging
-from PIL import Image
-from fpdf import FPDF
-import fitz  # PyMuPDF
+import threading
+import subprocess
+import platform
+import uuid
+from datetime import datetime
+import shutil
+
+
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, send_file, after_this_request, g
+from flask import (
+    Flask, render_template, request, redirect, flash, url_for,
+    jsonify, send_file, after_this_request, g
+)
 from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
-import platform
-import comtypes.client
-from PyPDF2 import PdfReader
-import comtypes
-from docx.shared import Inches
+
+import fitz  # PyMuPDF
+from PIL import Image
+from fpdf import FPDF
 from pdf2docx import Converter
+import pdfplumber
+import pytesseract
 import camelot
+import pandas as pd
 
 load_dotenv()
 
@@ -33,7 +38,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "chave-padrao-fallback")
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024
 
-# ---------------------------- CONFIGURAÇÕES ----------------------------
+# ---------------------------- CONFIG ----------------------------
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
 app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT", 587))
 app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS", "True").lower() in ("true", "1", "yes")
@@ -43,55 +48,66 @@ app.config['MAIL_DEFAULT_SENDER'] = (os.getenv("MAIL_DEFAULT_SENDER_NAME"), os.g
 mail = Mail(app)
 
 # Diretórios
-if getattr(sys, 'frozen', False):
-    BASE_DIR = tempfile.gettempdir()  # PyInstaller --onefile
-else:
-    BASE_DIR = os.getcwd()
-
+BASE_DIR = tempfile.gettempdir() if getattr(sys, 'frozen', False) else os.getcwd()
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 PROCESSED_FOLDER = os.path.join(BASE_DIR, 'processed')
-
-# Criação dos diretórios
 for folder in [UPLOAD_FOLDER, PROCESSED_FOLDER]:
     os.makedirs(folder, exist_ok=True)
 
-LOGS_FILE = 'compression_logs.json'
+# Logs / tasks
+COMPRESSION_LOG_FILE = 'compression_log.json'
 log_lock = threading.Lock()
-
-# Locks e tarefas
 tasks_lock = threading.Lock()
 tasks = {}
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    handlers=[logging.FileHandler("app.log", encoding='utf-8'), logging.StreamHandler()]
+)
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-                    handlers=[logging.FileHandler("app.log", encoding='utf-8'), logging.StreamHandler()])
+# Ajuste Ghostscript por SO
+GS_CMD = "gswin64c" if platform.system() == "Windows" else "gs"
+
+# Pytesseract: sem caminho fixo no Linux
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
-def save_compression_log(log_data):
+# ---------------------------- Utils ----------------------------
+def save_compression_log(log_data: dict) -> None:
+    """Append seguro em JSON (cria se não existir)."""
     with log_lock:
-        try:
-            # Tenta abrir o arquivo existente e carregar dados
-            try:
-                with open(LOGS_FILE, 'r', encoding='utf-8') as f:
-                    logs = json.load(f)
-            except FileNotFoundError:
-                logs = []
+        if not os.path.exists(COMPRESSION_LOG_FILE):
+            with open(COMPRESSION_LOG_FILE, 'w', encoding='utf-8') as f:
+                json.dump([], f, ensure_ascii=False)
+        with open(COMPRESSION_LOG_FILE, 'r+', encoding='utf-8') as f:
+            data = json.load(f)
+            data.append(log_data)
+            f.seek(0)
+            json.dump(data, f, indent=4, ensure_ascii=False)
+            f.truncate()
 
-            logs.append(log_data)  # Adiciona o novo log
 
-            with open(LOGS_FILE, 'w', encoding='utf-8') as f:
-                json.dump(logs, f, indent=4, ensure_ascii=False)
-        except Exception as e:
-            logging.error(f"Erro ao salvar log de compressão: {e}")
-
-def get_pdf_page_count(file_path):
+def get_pdf_page_count(pdf_path: str) -> int:
+    """Conta páginas com pypdf (robusto)."""
     try:
-        reader = PdfReader(file_path)
-        return len(reader.pages)
+        from pypdf import PdfReader
+        return len(PdfReader(pdf_path).pages)
     except Exception as e:
-        logging.warning(f"Não foi possível obter número de páginas: {e}")
-        return None
-# ---------------------------- ROTAS DE TEMPLATES ----------------------------
+        logging.error(f"Erro ao obter número de páginas do PDF {pdf_path}: {e}")
+        return 0
+
+
+def get_estimated_compression_ratio(compression_type: str) -> float:
+    ratios = {
+        'screen': 0.20,  # ~80% de compressão
+        'ebook': 0.40,   # ~60% de compressão
+    }
+    return ratios.get(compression_type, 0.30)
+
+
+# ---------------------------- Templates ----------------------------
 @app.route('/')
 def index():
     return render_template('main.html')
@@ -120,7 +136,8 @@ def organize_form():
 def extract_form():
     return render_template('extract.html')
 
-# ---------------------------- ENVIO DE FEEDBACK ----------------------------
+
+# ---------------------------- Feedback ----------------------------
 @app.route('/enviar-feedback', methods=['POST'])
 def enviar_feedback():
     nome = request.form.get('name')
@@ -131,49 +148,22 @@ def enviar_feedback():
     corpo_email_html = f"""
     <html>
     <body style="font-family: Arial, Helvetica, sans-serif; color: #444; background: #f9fafc; padding: 20px; margin: 0;">
-        <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px;">
-        <h2 style="
-            background: linear-gradient(90deg, #0052cc, #007bff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-            font-size: 28px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;">
-            📬 Novo feedback recebido
-        </h2>
-
-        <p style="font-size: 16px; margin: 10px 0;"><strong>👤 Nome:</strong> {nome}</p>
-        <p style="font-size: 16px; margin: 10px 0;"><strong>📧 E-mail:</strong> {email}</p>
-        <p style="font-size: 16px; margin: 10px 0;"><strong>🏢 Setor:</strong> {setor}</p>
-
-        <p style="font-size: 16px; margin: 20px 0 10px 0;"><strong>💬 Mensagem:</strong></p>
-        <p style="
-            background-color: #f5f7fa;
-            border-left: 5px solid #007bff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-size: 15px;
-            white-space: pre-wrap;
-            color: #333;">
-            {mensagem}
-        </p>
-
-        <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
-
-        <p style="font-size: 12px; color: #999; text-align: center; font-style: italic;">
-            Enviado automaticamente pelo sistema de feedback do site.
-        </p>
-        </div>
+      <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px;">
+        <h2 style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;background:linear-gradient(90deg,#0052cc,#007bff);font-weight:700;font-size:28px;margin-bottom:25px;display:flex;align-items:center;gap:10px;">📬 Novo feedback recebido</h2>
+        <p><strong>👤 Nome:</strong> {nome}</p>
+        <p><strong>📧 E-mail:</strong> {email}</p>
+        <p><strong>🏢 Setor:</strong> {setor}</p>
+        <p><strong>💬 Mensagem:</strong></p>
+        <p style="background:#f5f7fa;border-left:5px solid #007bff;padding:15px 20px;border-radius:8px;white-space:pre-wrap;color:#333;">{mensagem}</p>
+        <hr style="border:none;border-top:1px solid #ddd;margin:30px 0;">
+        <p style="font-size:12px;color:#999;text-align:center;font-style:italic;">Enviado automaticamente pelo sistema de feedback do site.</p>
+      </div>
     </body>
     </html>
     """
 
     try:
-        msg = Message(subject="Feedback do Site",
-                      recipients=["ti@zavagnagralha.com.br"])  # seu email para receber o feedback
+        msg = Message(subject="Feedback do Site", recipients=["ti@zavagnagralha.com.br"])
         msg.body = "Você recebeu um novo feedback!"
         msg.html = corpo_email_html
         mail.send(msg)
@@ -182,10 +172,9 @@ def enviar_feedback():
     except Exception as e:
         flash(f"Erro ao enviar mensagem: {e}", "error")
         return str(e), 500
-    return redirect(url_for('index'))
 
 
-# ---------------------------- COMPRESSÃO DE PDF ----------------------------
+# ---------------------------- Compressão ----------------------------
 @app.route("/compress", methods=["POST"])
 def compress():
     file = request.files.get('file')
@@ -200,13 +189,7 @@ def compress():
     file.save(input_path)
 
     with tasks_lock:
-        tasks[task_id] = {
-            'percent': 0,
-            'status': 'Iniciando compressão...',
-            'file': None, # Garante que 'file' exista desde o início
-            'error': None # Para capturar erros na thread
-        }
-
+        tasks[task_id] = {'percent': 0, 'status': 'Iniciando compressão...', 'file': None, 'error': None}
 
     def compress_task_thread(current_task_id, current_input_path, current_output_path, current_compression_type):
         start_time = time.time()
@@ -214,35 +197,46 @@ def compress():
         try:
             initial_file_size = os.path.getsize(current_input_path)
             compression_ratio = get_estimated_compression_ratio(current_compression_type)
-            estimated_final_size = initial_file_size * compression_ratio
-            if estimated_final_size == 0: estimated_final_size = 1
+            estimated_final_size = max(int(initial_file_size * compression_ratio), 1)
 
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['status'] = 'Iniciando processo de compressão...'
                     tasks[current_task_id]['percent'] = 2
 
-            def run_gs(cmd_output_path, compression_type_override, extra_flags=None):
+            def run_gs_compat(cmd_output_path, compression_type_override, extra_flags=None):
+                # usa a variável current_input_path do escopo da thread
+                return run_gs(current_input_path, cmd_output_path, compression_type_override, extra_flags)
+
+            def run_gs(current_input_path, cmd_output_path, compression_type_override, extra_flags=None):
+                gs_path = shutil.which("gs") or "/usr/bin/gs"
+                if not os.path.exists(gs_path):
+                    raise FileNotFoundError(f"Ghostscript não encontrado em PATH, tente instalar ou definir o caminho, procurado: {gs_path}")
+
                 command = [
-                    'gswin64c', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
-                    f'-dPDFSETTINGS=/{compression_type_override}', '-dNOPAUSE', '-dBATCH', '-dQUIET',
-                    f'-sOutputFile={cmd_output_path}', current_input_path
+                    gs_path,
+                    "-sDEVICE=pdfwrite",
+                    "-dCompatibilityLevel=1.4",
+                    f"-dPDFSETTINGS=/{compression_type_override}",
+                    "-dNOPAUSE",
+                    "-dBATCH",
+                    "-dQUIET",
+                    f"-sOutputFile={cmd_output_path}",
+                    current_input_path,
                 ]
                 if extra_flags:
                     command += extra_flags
-                return subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            process = run_gs(current_output_path, current_compression_type)
+                # retorna Popen para funcionar com poll() e communicate()
+                return subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+            process = run_gs_compat(current_output_path, current_compression_type)
             last_percent = 2
             while process.poll() is None:
-                current_output_file_size = 0
-                if os.path.exists(current_output_path):
-                    current_output_file_size = os.path.getsize(current_output_path)
-
+                current_output_file_size = os.path.getsize(current_output_path) if os.path.exists(current_output_path) else 0
                 if current_output_file_size > 0:
                     progress_raw = (current_output_file_size / estimated_final_size) * 100
                     percent = min(int(progress_raw), 95)
-
                     if percent > last_percent + 5:
                         percent = last_percent + 5
                     last_percent = percent
@@ -250,12 +244,12 @@ def compress():
                     if percent <= 5:
                         status = "Iniciando processo de compressão..."
                     elif 5 < percent <= 15:
-                        status = "Analisando estrutura do PDF e otimizando para compressão..."
+                        status = "Analisando estrutura do PDF e otimizando..."
                     elif 15 < percent <= 85:
                         reduction_percentage = (1 - (current_output_file_size / initial_file_size)) * 100
-                        status = f"Comprimindo conteúdo... (Redução: {reduction_percentage:.1f}%)"
+                        status = f"Comprimindo... (Redução: {reduction_percentage:.1f}%)"
                     else:
-                        status = "Finalizando e validando o arquivo comprimido..."
+                        status = "Finalizando e validando..."
                 else:
                     percent = last_percent
                     status = "Analisando estrutura do PDF..."
@@ -269,29 +263,21 @@ def compress():
 
             stdout, stderr = process.communicate()
             if process.returncode != 0:
-                raise subprocess.CalledProcessError(process.returncode, 'gswin64c', output=stdout, stderr=stderr)
+                raise subprocess.CalledProcessError(process.returncode, process.args, output=stdout, stderr=stderr)
 
             if not os.path.exists(current_output_path):
                 raise FileNotFoundError(f"Arquivo de saída não foi gerado: {current_output_path}")
 
             final_file_size = os.path.getsize(current_output_path)
             if final_file_size >= initial_file_size:
-                # Compressão não eficaz, tenta fallback agressivo
                 logging.warning("Compressão ineficaz. Tentando fallback agressivo.")
                 fallback_path = current_output_path.replace('.pdf', '_fallback.pdf')
                 aggressive_flags = [
-                    '-dDownsampleColorImages=true',
-                    '-dColorImageResolution=72',
-                    '-dAutoFilterColorImages=false',
-                    '-dColorImageFilter=/DCTEncode',
-                    '-dGrayImageResolution=72',
-                    '-dDownsampleGrayImages=true',
-                    '-dAutoFilterGrayImages=false',
-                    '-dGrayImageFilter=/DCTEncode',
-                    '-dMonoImageResolution=72',
-                    '-dDownsampleMonoImages=true'
+                    '-dDownsampleColorImages=true', '-dColorImageResolution=72', '-dAutoFilterColorImages=false', '-dColorImageFilter=/DCTEncode',
+                    '-dGrayImageResolution=72', '-dDownsampleGrayImages=true', '-dAutoFilterGrayImages=false', '-dGrayImageFilter=/DCTEncode',
+                    '-dMonoImageResolution=72', '-dDownsampleMonoImages=true'
                 ]
-                fallback_process = run_gs(fallback_path, "screen", aggressive_flags)
+                fallback_process = run_gs_compat(fallback_path, "screen", aggressive_flags)
                 fallback_process.communicate()
 
                 if os.path.exists(fallback_path):
@@ -300,33 +286,29 @@ def compress():
                         os.replace(fallback_path, current_output_path)
                     else:
                         os.replace(current_input_path, current_output_path)
-                        try: os.remove(fallback_path)
-                        except: pass
+                        try:
+                            os.remove(fallback_path)
+                        except Exception:
+                            pass
                 else:
                     os.replace(current_input_path, current_output_path)
 
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['percent'] = 100
-                    tasks[current_task_id]['status'] = 'Compressão concluída! Preparando para download.'
+                    tasks[current_task_id]['status'] = 'Compressão concluída! Preparando download...'
                     tasks[current_task_id]['file'] = current_output_path
 
             end_time = time.time()
-            total_time = end_time - start_time
-
-            input_size_mb = round(initial_file_size / (1024 * 1024), 2)
-            output_size_mb = round(os.path.getsize(current_output_path) / (1024 * 1024), 2)
-            num_pages = get_pdf_page_count(current_output_path)
-
             log_data = {
                 'task_id': current_task_id,
                 'input_file': os.path.basename(current_input_path),
                 'output_file': os.path.basename(current_output_path),
                 'compression_type': current_compression_type,
-                'time_taken_seconds': round(total_time, 2),
-                'pages': num_pages,
-                'input_file_size_mb': input_size_mb,
-                'output_file_size_mb': output_size_mb,
+                'time_taken_seconds': round(end_time - start_time, 2),
+                'pages': get_pdf_page_count(current_output_path),
+                'input_file_size_mb': round(initial_file_size / (1024 * 1024), 2),
+                'output_file_size_mb': round(os.path.getsize(current_output_path) / (1024 * 1024), 2),
                 'status': 'Concluído!'
             }
             save_compression_log(log_data)
@@ -353,35 +335,28 @@ def compress():
                 except OSError as e:
                     logging.warning(f"Não foi possível remover o arquivo de entrada {current_input_path}: {e}")
 
-
-    # Iniciar a thread, passando explicitamente os argumentos
-    thread = threading.Thread(target=compress_task_thread, args=(
-        task_id, input_path, output_path, compression_type
-    ))
-    thread.daemon = True # Torna a thread um daemon para que ela não impeça o Flask de sair
+    thread = threading.Thread(target=compress_task_thread, args=(task_id, input_path, output_path, compression_type))
+    thread.daemon = True
     thread.start()
 
     return jsonify({'task_id': task_id})
 
+
 @app.route("/progress/<task_id>")
 def progress(task_id):
-    # Use o lock ao ler a tarefa para garantir que o estado seja consistente
     with tasks_lock:
         task = tasks.get(task_id)
-
     if task:
-        # Se a tarefa tiver um erro, retorne um status de erro para o frontend
         if task.get('error'):
-            return jsonify(task), 500 # Ou 400, dependendo de como você quer sinalizar erros
+            return jsonify(task), 500
         return jsonify(task)
-    else:
-        logging.warning(f"Tarefa {task_id} não encontrada para requisição de progresso.") # Adicione este log para depuração
-        return jsonify({'error': 'Tarefa não encontrada'}), 404
+    logging.warning(f"Tarefa {task_id} não encontrada para progresso.")
+    return jsonify({'error': 'Tarefa não encontrada'}), 404
+
 
 @app.route("/download/<task_id>")
 def download(task_id):
     logging.info(f"Requisição de download recebida para task_id: {task_id}")
-
     task = tasks.get(task_id)
     if not task:
         logging.warning(f"Download: Tarefa {task_id} não encontrada.")
@@ -401,102 +376,85 @@ def download(task_id):
             logging.info(f"Arquivo {file_path} removido.")
         except Exception as e:
             logging.warning(f"Erro ao remover arquivo {file_path}: {e}")
-
         with tasks_lock:
             tasks.pop(task_id, None)
-
         return response
 
     return send_file(file_path, as_attachment=True)
 
-def get_estimated_compression_ratio(compression_type):
-    ratios = {
-        'screen': 0.20,  # 80% de compressão
-        'ebook': 0.40,   # 60% de compressão
-    }
-    return ratios.get(compression_type, 0.30)  # fallback seguro
 
-COMPRESSION_LOG_FILE = 'compression_log.json'
-
-def save_compression_log(log_data):
-    # Garante que o arquivo exista e seja um JSON válido
-    if not os.path.exists(COMPRESSION_LOG_FILE):
-        with open(COMPRESSION_LOG_FILE, 'w') as f:
-            json.dump([], f) # Inicia com uma lista vazia
-
-    with open(COMPRESSION_LOG_FILE, 'r+') as f:
-        file_data = json.load(f)
-        file_data.append(log_data)
-        f.seek(0) # Volta para o início do arquivo
-        json.dump(file_data, f, indent=4)
-        f.truncate() # Remove o conteúdo restante se o novo for menor
-
-def get_pdf_page_count(pdf_path):
-    try:
-        from pypdf import PdfReader
-        reader = PdfReader(pdf_path)
-        return len(reader.pages)
-    except Exception as e:
-        logging.error(f"Erro ao obter número de páginas do PDF {pdf_path}: {e}")
-        return 0 # Retorna 0 em caso de erro
-
-# ---------------------------- CONVERSÃO DE ARQUIVOS ----------------------------
-import pytesseract
-import pdfplumber
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-from docx import Document
-import pandas as pd
-from zipfile import ZipFile
-
-def pdf_to_xlsx_camelot(pdf_path, output_xlsx_path):
-    tables = camelot.read_pdf(pdf_path, pages='all')
-    with pd.ExcelWriter(output_xlsx_path) as writer:
-        for i, table in enumerate(tables):
-            df = table.df
-            df.to_excel(writer, sheet_name=f'Tabela_{i+1}', index=False)
-
+# ---------------------------- Conversão ----------------------------
 def extract_text_from_pdf(input_path, lang='por'):
     text = ""
-
     with pdfplumber.open(input_path) as pdf:
         for page in pdf.pages:
             extracted_text = page.extract_text()
             if extracted_text and extracted_text.strip():
                 text += extracted_text + "\n"
             else:
-                # Faz OCR se não tiver texto extraído
+                # OCR fallback
                 pil_image = page.to_image().original.convert('RGB')
                 ocr_text = pytesseract.image_to_string(pil_image, lang=lang)
                 text += ocr_text + "\n"
     return text.strip()
 
-def is_image_textual(img, lang='por', conf_threshold=50):
-    data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
-    confidences = []
 
-    for c in data['conf']:
-        try:
-            conf = float(c)
-            if conf > 0:
-                confidences.append(conf)
-        except (ValueError, TypeError):
-            # Ignora valores que não são numéricos
-            continue
-
-    if confidences:
-        avg_conf = sum(confidences) / len(confidences)
-        return avg_conf >= conf_threshold
-    return False
-
-def is_pdf_scanned(pdf_path, lang='por'):
+def is_pdf_scanned(pdf_path):
     with pdfplumber.open(pdf_path) as pdf:
         total_text = ""
         for page in pdf.pages:
-            text = page.extract_text()
-            if text and text.strip():
-                total_text += text.strip()
-        # Se total_text for vazio ou quase vazio, PDF é escaneado
+            t = page.extract_text()
+            if t and t.strip():
+                total_text += t.strip()
         return len(total_text) < 200
+
+
+def pdf_to_docx(input_pdf_path, output_docx_path, lang='por', conf_threshold=50):
+    # 1) PDF -> DOCX (layout)
+    docx_buffer = io.BytesIO()
+    cv = Converter(input_pdf_path)
+    cv.convert(docx_buffer, start=0, end=None)
+    cv.close()
+    docx_buffer.seek(0)
+
+    from docx import Document
+    word_doc = Document(docx_buffer)
+
+    # 2) OCR por página se necessário
+    pdf_doc = fitz.open(input_pdf_path)
+
+    def is_image_textual(img, lang=lang, conf_threshold=conf_threshold):
+        data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
+        confs = []
+        for c in data['conf']:
+            try:
+                v = float(c)
+                if v > 0:
+                    confs.append(v)
+            except Exception:
+                pass
+        if confs:
+            return (sum(confs) / len(confs)) >= conf_threshold
+        return False
+
+    for i, page in enumerate(pdf_doc):
+        text_in_page = page.get_text().strip()
+        pix = page.get_pixmap()
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+
+        if not text_in_page and is_image_textual(img, lang=lang):
+            ocr_text = pytesseract.image_to_string(img, lang=lang).strip()
+            if i < len(word_doc.paragraphs):
+                p = word_doc.paragraphs[i]
+                # Limpeza simples: remove runs e substitui
+                for r in p.runs:
+                    r.text = ""
+                p.add_run(ocr_text)
+            else:
+                word_doc.add_paragraph(ocr_text)
+
+    word_doc.save(output_docx_path)
+
 
 conversion_map = {
     'pdf': ['docx', 'xlsx', 'txt'],
@@ -504,68 +462,15 @@ conversion_map = {
     'xlsx': ['pdf'],
     'pptx': ['pdf'],
     'jpg': ['pdf'],
-    'jpeg':['pdf'],
+    'jpeg': ['pdf'],
     'png': ['pdf'],
 }
 
-def pdf_to_docx(input_pdf_path, output_docx_path, lang='por', conf_threshold=50):
-    # 1. Converte o PDF para DOCX mantendo layout e texto
-    docx_buffer = io.BytesIO()
-    cv = Converter(input_pdf_path)
-    cv.convert(docx_buffer, start=0, end=None)
-    cv.close()
-    docx_buffer.seek(0)
-    word_doc = Document(docx_buffer)
-
-    # 2. Abre o PDF com PyMuPDF para análise página a página
-    pdf_doc = fitz.open(input_pdf_path)
-
-    # Função auxiliar pra calcular média de confiança OCR na imagem da página
-    def is_image_textual(img, lang=lang, conf_threshold=conf_threshold):
-        data = pytesseract.image_to_data(img, lang=lang, output_type=pytesseract.Output.DICT)
-        confidences = []
-        for c in data['conf']:
-            try:
-                conf = float(c)
-                if conf > 0:
-                    confidences.append(conf)
-            except:
-                continue
-        if confidences:
-            avg_conf = sum(confidences) / len(confidences)
-            return avg_conf >= conf_threshold
-        return False
-
-    # 3. Para cada página, verifica se é 100% imagem (sem texto)
-    for i, page in enumerate(pdf_doc):
-        text_in_page = page.get_text().strip()
-        pix = page.get_pixmap()
-        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-
-        if not text_in_page and is_image_textual(img, lang=lang):
-            # Página provavelmente escaneada sem texto: substitui conteúdo no DOCX
-            ocr_text = pytesseract.image_to_string(img, lang=lang).strip()
-
-            # Calcula índice aproximado da página no documento Word
-            # Importante: Isso é uma aproximação simples, considerando que cada página 
-            # corresponda a um "parágrafo bloco" no Word.
-            # Caso o número de parágrafos seja menor, adiciona ao final.
-            if i < len(word_doc.paragraphs):
-                # Limpa o conteúdo do parágrafo
-                p = word_doc.paragraphs[i]
-                p.clear()
-                p.add_run(ocr_text)
-            else:
-                # Adiciona nova página/ parágrafo no final
-                word_doc.add_paragraph(ocr_text)
-
-    # 4. Salva o DOCX resultante
-    word_doc.save(output_docx_path)
 
 @app.route('/convert-extensions', methods=['GET'])
 def get_supported_extensions():
-    extensions = list(conversion_map.keys())
-    return jsonify({'extensions': extensions})
+    return jsonify({'extensions': list(conversion_map.keys())})
+
 
 @app.route('/upload-conversion', methods=['POST'])
 def upload_conversion():
@@ -575,8 +480,8 @@ def upload_conversion():
 
     filename = secure_filename(file.filename)
     ext = os.path.splitext(filename)[1].lower().replace('.', '')
-
     available_options = conversion_map.get(ext)
+
     if not available_options:
         return jsonify({
             'filename': filename,
@@ -589,9 +494,7 @@ def upload_conversion():
     input_path = os.path.join(UPLOAD_FOLDER, f"{task_id}_{filename}")
     file.save(input_path)
 
-    is_scanned = False
-    if ext == 'pdf':
-        is_scanned = is_pdf_scanned(input_path)
+    is_scanned = is_pdf_scanned(input_path) if ext == 'pdf' else False
 
     return jsonify({
         'filename': filename,
@@ -602,19 +505,58 @@ def upload_conversion():
         'is_scanned': is_scanned
     }), 200
 
+
+def _find_soffice():
+    candidates = [
+        shutil.which("soffice"),
+        "/usr/bin/soffice",
+        "/usr/lib/libreoffice/program/soffice",
+        shutil.which("libreoffice"),   # snap costuma expor esse
+        "/snap/bin/libreoffice",
+    ]
+    for p in candidates:
+        if p and os.path.exists(p):
+            return p
+    return None
+
+def convert_office_to_pdf_libreoffice(input_path):
+    """Office -> PDF via LibreOffice (Linux)."""
+    soffice = _find_soffice()
+    if not soffice:
+        raise FileNotFoundError(
+            "LibreOffice não encontrado. Instale 'libreoffice' e/ou ajuste PATH. "
+            "Procurei por: soffice/libreoffice em /usr/bin, /usr/lib/libreoffice, /snap/bin."
+        )
+    # Usa 'libreoffice' se for o que achou
+    cmd = [soffice, '--headless', '--convert-to', 'pdf', '--outdir',
+           os.path.dirname(input_path), input_path]
+    try:
+        res = subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Executável não encontrado: {soffice}") from e
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"Falha na conversão LO. stdout:\n{e.stdout}\nstderr:\n{e.stderr}") from e
+    return os.path.splitext(input_path)[0] + '.pdf'
+
+
+def convert_office_to_pdf(input_path):
+    """Despacha por SO. No Linux usa LibreOffice, no Windows tu pode plugar automação Office se quiser (removido aqui)."""
+    if platform.system() == 'Windows':
+        raise RuntimeError("Conversão Office->PDF no Windows não está habilitada nesta build.")
+    return convert_office_to_pdf_libreoffice(input_path)
+
+
 @app.route('/execute-conversion', methods=['POST'])
 def execute_conversion():
     data = request.json
     task_id = data.get('task_id')
     target_format = data.get('target_format')
 
-    # Busca o arquivo salvo
     file_match = None
     for f in os.listdir(UPLOAD_FOLDER):
         if f.startswith(task_id):
             file_match = f
             break
-
     if not file_match:
         return jsonify({'error': 'Arquivo temporário não encontrado.'}), 404
 
@@ -626,50 +568,36 @@ def execute_conversion():
         output_buffer = io.BytesIO()
 
         if ext == 'pdf':
-            # Extrai o texto para casos txt e xlsx
             text = extract_text_from_pdf(input_path)
 
             if target_format == 'docx':
                 temp_docx_path = os.path.join(PROCESSED_FOLDER, f"{task_id}.docx")
                 pdf_to_docx(input_path, temp_docx_path)
-                
-                temp_files_to_delete.append(temp_docx_path) 
-                temp_files_to_delete.append(input_path)  
-
+                temp_files_to_delete.append(temp_docx_path)
+                temp_files_to_delete.append(input_path)
                 with open(temp_docx_path, 'rb') as f:
                     output_buffer.write(f.read())
                 output_buffer.seek(0)
 
             elif target_format == 'xlsx':
-                text = extract_text_from_pdf(input_path)
                 lines = text.strip().split("\n")
-
                 df_list = []
-                # 1º Tenta com Camelot lattice (pra PDF com linhas marcadas)
                 tables = camelot.read_pdf(input_path, pages='all', flavor='lattice')
-                
                 if tables.n == 0:
-                    # Se não achou tabela com lattice, tenta stream (análise por espaçamento)
                     tables = camelot.read_pdf(input_path, pages='all', flavor='stream')
-                
                 if tables.n == 0:
-                    # Se mesmo assim não achar, faz fallback pra texto puro na aba
                     df_list.append(pd.DataFrame({'Conteúdo': lines}))
                 else:
                     for tbl in tables:
                         df = tbl.df.copy()
-                        # Limpeza de células (remove \n e espaços bugados)
                         df = df.applymap(lambda x: ' '.join(str(x).split()))
                         df_list.append(df)
-                
-                # Monta Excel com múltiplas abas
                 with pd.ExcelWriter(output_buffer, engine='xlsxwriter') as writer:
                     for idx, df in enumerate(df_list):
                         df.to_excel(writer, sheet_name=f'Tabela_{idx+1}'[:31], index=False)
-                    # Aba adicional com texto linear completo
                     pd.DataFrame({'Texto extraído': lines}).to_excel(writer, sheet_name='Texto_RAW', index=False)
                 output_buffer.seek(0)
-               
+
             elif target_format == 'txt':
                 output_buffer.write(text.encode('utf-8'))
                 output_buffer.seek(0)
@@ -686,100 +614,86 @@ def execute_conversion():
                 output_buffer.seek(0)
                 os.remove(pdf_path)
             elif target_format == 'image':
-                return jsonify({'error': 'Conversão Office → Imagem não implementada ainda.'}), 501
+                return jsonify({'error': 'Conversão Office → Imagem não implementada.'}), 501
             elif target_format == 'txt' and ext == 'docx':
                 import docx
                 doc = docx.Document(input_path)
-                fullText = '\n'.join([p.text for p in doc.paragraphs])
-                output_buffer.write(fullText.encode('utf-8'))
+                full_text = '\n'.join([p.text for p in doc.paragraphs])
+                output_buffer.write(full_text.encode('utf-8'))
                 output_buffer.seek(0)
             else:
                 return jsonify({'error': 'Conversão não suportada.'}), 400
 
         elif ext in ['jpg', 'jpeg', 'png']:
             if target_format == 'pdf':
-                from PIL import Image
-                from fpdf import FPDF
-                import tempfile
-
-                # Abre imagem e garante RGB
                 image = Image.open(input_path).convert('RGB')
                 img_w_px, img_h_px = image.size
 
-                # Define página A4 e orientação com base na imagem
-                # (mais alto que largo → Retrato; mais largo que alto → Paisagem)
                 if img_w_px >= img_h_px:
-                    page_format = 'A4'
-                    orientation = 'L'  # Landscape
-                    page_w_mm, page_h_mm = 297, 210
+                    orientation = 'L'; page_w_mm, page_h_mm = 297, 210
                 else:
-                    page_format = 'A4'
-                    orientation = 'P'  # Portrait
-                    page_w_mm, page_h_mm = 210, 297
+                    orientation = 'P'; page_w_mm, page_h_mm = 210, 297
 
                 margin_mm = 10
                 max_w_mm = page_w_mm - 2 * margin_mm
                 max_h_mm = page_h_mm - 2 * margin_mm
 
-                # Calcula escala para caber na área útil preservando proporção
                 scale_w = max_w_mm / img_w_px
                 scale_h = max_h_mm / img_h_px
                 scale = min(scale_w, scale_h)
 
                 disp_w_mm = img_w_px * scale
                 disp_h_mm = img_h_px * scale
-
-                # Centraliza na página
                 x_mm = (page_w_mm - disp_w_mm) / 2.0
                 y_mm = (page_h_mm - disp_h_mm) / 2.0
 
-                # Cria PDF e insere imagem dimensionada
-                pdf = FPDF(orientation=orientation, unit='mm', format=page_format)
-                pdf.set_auto_page_break(False)  # evita que o FPDF tente quebrar a imagem em outra página
+                pdf = FPDF(orientation=orientation, unit='mm', format='A4')
+                pdf.set_auto_page_break(False)
                 pdf.add_page()
 
-                # FPDF lida melhor com JPEG; salvamos temporariamente
                 with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp:
                     temp_path = tmp.name
                 image.save(temp_path, 'JPEG', quality=95)
 
                 pdf.image(temp_path, x=x_mm, y=y_mm, w=disp_w_mm, h=disp_h_mm)
 
-                # Limpeza do temp
                 try:
                     os.remove(temp_path)
                 except Exception:
                     pass
 
-                output_buffer.write(pdf.output(dest='S').encode('latin1'))
+                pdf_data = pdf.output(dest='S')
+
+                # FPDF 1.x → str | FPDF2 → bytes/bytearray
+                if isinstance(pdf_data, str):
+                    pdf_data = pdf_data.encode('latin1')
+
+                output_buffer.write(pdf_data)
                 output_buffer.seek(0)
+
             else:
                 return jsonify({'error': 'Conversão não suportada para imagem.'}), 400
-
 
         else:
             return jsonify({'error': 'Formato de entrada não reconhecido.'}), 400
 
-        # Limpeza do arquivo temporário
-        os.remove(input_path)
+        # Limpa upload temporário
+        try:
+            os.remove(input_path)
+        except Exception:
+            pass
 
-        # Retorno do arquivo convertido
         return send_file(output_buffer, as_attachment=True, download_name=f'convertido.{target_format}')
 
     except Exception as e:
         logging.error(f"Erro na conversão: {e}")
         return jsonify({'error': str(e)}), 500
-    
     finally:
-        # Aqui a limpeza geral
-        # Remove arquivo original (upload)
         if os.path.exists(input_path):
             try:
                 os.remove(input_path)
             except Exception as e:
                 logging.warning(f"Erro removendo arquivo original: {input_path} - {e}")
-
-        # Remove arquivos temporários criados durante o processo
         for temp_file in temp_files_to_delete:
             if os.path.exists(temp_file):
                 try:
@@ -787,91 +701,8 @@ def execute_conversion():
                 except Exception as e:
                     logging.warning(f"Erro removendo arquivo temporário: {temp_file} - {e}")
 
-@app.route('/conversion-options/<file_ext>', methods=['GET'])
-def get_conversion_options(file_ext):
-    file_ext = file_ext.lower()
-    options = conversion_map.get(file_ext)
-    if options is None:
-        return jsonify({'options': []})
-    return jsonify({'options': options})
 
-@app.before_request
-def init_com_for_request():
-    comtypes.CoInitialize()
-    g.com_initialized = True
-
-@app.teardown_request
-def uninit_com_for_request(exception):
-    if getattr(g, 'com_initialized', False):
-        comtypes.CoUninitialize()
-
-def convert_office_to_pdf_libreoffice(input_path):
-    subprocess.run(['soffice', '--headless', '--convert-to', 'pdf', '--outdir',
-                    os.path.dirname(input_path), input_path],
-                   check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return os.path.splitext(input_path)[0] + '.pdf'
-
-def convert_office_to_pdf_windows(input_path, timeout=120):
-    ext = os.path.splitext(input_path)[1].lower()
-    abs_input = os.path.abspath(input_path)
-    abs_output = os.path.splitext(abs_input)[0] + '.pdf'
-
-    def convert():
-        comtypes.CoInitialize()
-        try:
-            if ext == '.docx':
-                word = comtypes.client.CreateObject('Word.Application')
-                word.Visible = False
-                try:
-                    doc = word.Documents.Open(abs_input, ReadOnly=True)
-                    doc.ExportAsFixedFormat(abs_output, ExportFormat=17)
-                finally:
-                    doc.Close(False)
-                    word.Quit()
-
-            elif ext == '.xlsx':
-                excel = comtypes.client.CreateObject('Excel.Application')
-                excel.Visible = False
-                excel.DisplayAlerts = False
-                try:
-                    wb = excel.Workbooks.Open(abs_input, UpdateLinks=0, ReadOnly=True)
-                    wb.ExportAsFixedFormat(0, abs_output)
-                finally:
-                    wb.Close(False)
-                    excel.Quit()
-
-            elif ext == '.pptx':
-                powerpoint = comtypes.client.CreateObject('PowerPoint.Application')
-                try:
-                    pres = powerpoint.Presentations.Open(abs_input, WithWindow=False)
-                    pres.ExportAsFixedFormat(abs_output, 2)  # 2 = PDF
-                finally:
-                    pres.Close()
-                    powerpoint.Quit()
-
-            else:
-                raise ValueError(f"Extensão não suportada pelo Office: {ext}")
-
-        finally:
-            comtypes.CoUninitialize()
-
-    thread = threading.Thread(target=convert)
-    thread.start()
-    thread.join(timeout)
-
-    if thread.is_alive():
-        raise TimeoutError("Conversão demorou demais e foi abortada.")
-
-    return abs_output
-
-
-def convert_office_to_pdf(input_path):
-    if platform.system() == 'Windows':
-        return convert_office_to_pdf_windows(input_path)
-    else:
-        return convert_office_to_pdf_libreoffice(input_path)
-
-# ---------------------------- UNIR / DIVIDIR / ORGANIZAR PDFs ----------------------------
+# ---------------------------- Merge / Split / Organize ----------------------------
 @app.route('/merge', methods=['POST'])
 def merge_pdfs():
     files = request.files.getlist('files')
@@ -884,96 +715,86 @@ def merge_pdfs():
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='unido.pdf')
 
-import io
-import math
-import zipfile
-import fitz  # PyMuPDF
-from flask import request, send_file, jsonify
-from datetime import datetime
 
 @app.route('/split', methods=['POST'])
 def split_pdfs():
     print(f"[{datetime.now()}] REQUISIÇÃO /split recebida.")
-    
+
     if 'pdfs' not in request.files:
         return jsonify({"message": "Nenhum arquivo enviado."}), 400
 
     f = request.files.getlist('pdfs')[0]
     mode = request.form.get('mode')
-    
-    # --- MUDANÇA #1: LÓGICA DE REPARO OPCIONAL ---
-    # Verifica se o frontend enviou a flag para reparar o PDF
+
     repair_needed = request.form.get('repair_pdf') == 'true'
-    
+
     try:
         pdf_bytes = f.read()
 
         if repair_needed:
-            print(f"[{datetime.now()}] Reparo solicitado. Iniciando limpeza do PDF em memória...")
-            # Abre o PDF original
+            print(f"[{datetime.now()}] Reparo solicitado. Limpando PDF em memória...")
             original_doc = fitz.open(stream=pdf_bytes, filetype='pdf')
-            # Cria um buffer em memória para salvar a versão reparada
             repaired_buffer = io.BytesIO()
-            # Salva no buffer com a opção 'clean=True', que repara a estrutura do PDF
             original_doc.save(repaired_buffer, garbage=4, deflate=True, clean=True)
             original_doc.close()
-            # O 'pdf_bytes' agora será o do PDF reparado para o resto da função
             pdf_bytes = repaired_buffer.getvalue()
             print(f"[{datetime.now()}] PDF reparado com sucesso.")
 
-        # O resto da função continua igual, mas usando 'pdf_bytes' (que pode ter sido reparado)
         pdf_doc = fitz.open(stream=pdf_bytes, filetype='pdf')
-        print(f"[{datetime.now()}] PDF aberto com sucesso. {pdf_doc.page_count} páginas.")
+        print(f"[{datetime.now()}] PDF aberto. {pdf_doc.page_count} páginas.")
     except Exception as e:
-        print(f"[{datetime.now()}] Erro ao abrir ou reparar PDF: {e}")
+        print(f"[{datetime.now()}] Erro ao abrir/reparar PDF: {e}")
         return jsonify({"message": f"Arquivo PDF inválido ou corrompido demais para reparar: {e}"}), 400
-    # ----------------------------------------------------
-        
+
     filename = f.filename.rsplit('.', 1)[0]
     zip_buffer = io.BytesIO()
 
-    # O resto da sua função continua exatamente como estava antes
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
         if mode == 'parts':
-            # ... (código do modo 'parts' sem alterações) ...
             try:
                 parts = int(request.form.get('parts'))
-                if parts <= 0: return jsonify({"message": "O número de partes deve ser maior que 0."}), 400
-                if parts > pdf_doc.page_count: return jsonify({"message": f"O número de partes ({parts}) não pode ser maior que o número de páginas ({pdf_doc.page_count})."}), 400
-            except (ValueError, TypeError): return jsonify({"message": "Número de partes inválido."}), 400
+                if parts <= 0:
+                    return jsonify({"message": "O número de partes deve ser maior que 0."}), 400
+                if parts > pdf_doc.page_count:
+                    return jsonify({"message": f"O número de partes ({parts}) não pode ser maior que o número de páginas ({pdf_doc.page_count})."}), 400
+            except (ValueError, TypeError):
+                return jsonify({"message": "Número de partes inválido."}), 400
 
             pages_per_part = math.ceil(pdf_doc.page_count / parts)
             for i in range(parts):
                 start_page = i * pages_per_part
                 end_page = min(start_page + pages_per_part - 1, pdf_doc.page_count - 1)
-                if start_page > end_page: continue
+                if start_page > end_page:
+                    continue
                 new_pdf = fitz.open()
                 for page_num in range(start_page, end_page + 1):
                     page = pdf_doc[page_num]
                     new_pdf.new_page(width=page.rect.width, height=page.rect.height)
                     new_pdf[-1].show_pdf_page(new_pdf[-1].rect, pdf_doc, page_num)
                 output_buffer = io.BytesIO()
-                new_pdf.save(output_buffer, garbage=4, deflate=True) 
+                new_pdf.save(output_buffer, garbage=4, deflate=True)
                 output_buffer.seek(0)
                 zipf.writestr(f"{filename}_parte_{i+1}_de_{parts}.pdf", output_buffer.read())
                 new_pdf.close()
 
         elif mode == 'size':
-            # ... (código do modo 'size' com busca binária sem alterações) ...
             try:
                 max_size_mb = float(request.form.get('max_size_mb'))
-                if max_size_mb <= 0: return jsonify({"message": "O tamanho máximo deve ser maior que 0 MB."}), 400
-            except (ValueError, TypeError): return jsonify({"message": "Tamanho máximo inválido."}), 400
+                if max_size_mb <= 0:
+                    return jsonify({"message": "O tamanho máximo deve ser maior que 0 MB."}), 400
+            except (ValueError, TypeError):
+                return jsonify({"message": "Tamanho máximo inválido."}), 400
 
             max_size_bytes = max_size_mb * 1024 * 1024
             part_number = 1
             chunk_start_page = 0
-            
-            print(f"[{datetime.now()}] Iniciando divisão por tamanho com BUSCA BINÁRIA. Limite: {max_size_mb}MB.")
+
+            print(f"[{datetime.now()}] Iniciando divisão por tamanho (busca binária). Limite: {max_size_mb}MB.")
 
             while chunk_start_page < pdf_doc.page_count:
-                print(f"[{datetime.now()}] ===== Processando Bloco #{part_number} (começando da pág. {chunk_start_page + 1}) =====")
-                
+                print(f"[{datetime.now()}] ===== Bloco #{part_number} (pág. {chunk_start_page + 1}) =====")
+
+                # checa página única
                 single_page_doc = fitz.open()
                 page = pdf_doc[chunk_start_page]
                 single_page_doc.new_page(width=page.rect.width, height=page.rect.height)
@@ -981,52 +802,45 @@ def split_pdfs():
                 single_page_buffer = io.BytesIO()
                 single_page_doc.save(single_page_buffer)
                 if single_page_buffer.tell() > max_size_bytes:
-                     print(f"[{datetime.now()}] ERRO: Página única maior que o limite.")
-                     return jsonify({"message": f"A página {chunk_start_page + 1} sozinha ({single_page_buffer.tell() / (1024*1024):.2f}MB) já é maior que o limite de {max_size_mb} MB."}), 400
-                
-                low = chunk_start_page
-                high = pdf_doc.page_count - 1
+                    return jsonify({"message": f"A página {chunk_start_page + 1} sozinha ({single_page_buffer.tell() / (1024*1024):.2f}MB) já é maior que o limite de {max_size_mb} MB."}), 400
+
+                low, high = chunk_start_page, pdf_doc.page_count - 1
                 best_end_page = chunk_start_page
 
                 while low <= high:
                     mid = (low + high) // 2
                     test_doc = fitz.open()
                     for page_num in range(chunk_start_page, mid + 1):
-                        page = pdf_doc[page_num]
-                        test_doc.new_page(width=page.rect.width, height=page.rect.height)
+                        p = pdf_doc[page_num]
+                        test_doc.new_page(width=p.rect.width, height=p.rect.height)
                         test_doc[-1].show_pdf_page(test_doc[-1].rect, pdf_doc, page_num)
                     test_buffer = io.BytesIO()
                     test_doc.save(test_buffer)
                     test_doc.close()
-                    
+
                     if test_buffer.tell() <= max_size_bytes:
                         best_end_page = mid
                         low = mid + 1
                     else:
                         high = mid - 1
-                
-                chunk_end_page = best_end_page
-                print(f"[{datetime.now()}] Bloco #{part_number} definido via busca: páginas {chunk_start_page + 1} a {chunk_end_page + 1}. Criando PDF final...")
 
                 final_chunk_doc = fitz.open()
-                for page_num in range(chunk_start_page, chunk_end_page + 1):
-                    final_chunk_doc.new_page(-1, width=pdf_doc[page_num].rect.width, height=pdf_doc[page_num].rect.height)
+                for page_num in range(chunk_start_page, best_end_page + 1):
+                    p = pdf_doc[page_num]
+                    final_chunk_doc.new_page(width=p.rect.width, height=p.rect.height)
                     final_chunk_doc[-1].show_pdf_page(final_chunk_doc[-1].rect, pdf_doc, page_num)
                 output_buffer = io.BytesIO()
                 final_chunk_doc.save(output_buffer, garbage=4, deflate=True)
                 output_buffer.seek(0)
                 zipf.writestr(f"{filename}_parte_{part_number}.pdf", output_buffer.read())
-                
-                print(f"[{datetime.now()}] Bloco #{part_number} salvo no ZIP. Total de {final_chunk_doc.page_count} páginas.")
-                
                 final_chunk_doc.close()
+
                 part_number += 1
-                chunk_start_page = chunk_end_page + 1
-                
+                chunk_start_page = best_end_page + 1
+
     pdf_doc.close()
     zip_buffer.seek(0)
-    
-    print(f"[{datetime.now()}] Processo finalizado. Enviando ZIP para o cliente.")
+    print(f"[{datetime.now()}] Finalizado. Enviando ZIP.")
     return send_file(zip_buffer, as_attachment=True, download_name=f'{filename}_dividido.zip', mimetype='application/zip')
 
 
@@ -1037,18 +851,22 @@ def organize_pdf():
     pdf_doc = fitz.open(stream=file.read(), filetype='pdf')
     new_doc = fitz.open()
     for item in new_order:
-        page = pdf_doc[item['page'] - 1]
-        page.set_rotation(item.get('rotation', 0))
-        new_doc.insert_pdf(pdf_doc, from_page=item['page'] - 1, to_page=item['page'] - 1)
+        # Rotação é aplicada na cópia (insert_pdf mantém a geometria)
+        page_index = item['page'] - 1
+        new_doc.insert_pdf(pdf_doc, from_page=page_index, to_page=page_index, rotate=item.get('rotation', 0))
     buffer = io.BytesIO()
     new_doc.save(buffer)
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='organized.pdf')
 
+
+# ---------------------------- No Cache ----------------------------
 @app.after_request
 def no_cache(response):
     response.headers['Cache-Control'] = 'no-store'
     return response
 
+
 if __name__ == '__main__':
+    # Para Linux
     app.run(debug=True, host='0.0.0.0', port=5009)
