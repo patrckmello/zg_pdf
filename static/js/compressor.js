@@ -179,13 +179,13 @@ function pollProgress(taskId) {
             .then(data => {
                 const percent = data.percent;
                 const status = data.status;
+                const summary = data.summary || null;
 
                 if (progressBar) {
                     const currentWidth = parseFloat(progressBar.style.width) || 0;
                     const newWidth = currentWidth + (percent - currentWidth) * 0.3; // suaviza o movimento
                     progressBar.style.width = newWidth + '%';
 
-                    // Liga/desliga a animação shimmer
                     if (percent > 0 && percent < 100) {
                         progressBar.classList.add('animated');
                     } else {
@@ -194,24 +194,43 @@ function pollProgress(taskId) {
                 }
 
                 if (percent < 100) {
-                    statusMessage.textContent = `🛠️ ${status}`;
+                    if (statusMessage) {
+                        statusMessage.style.display = 'block';
+                        statusMessage.textContent = `🛠️ ${status}`;
+                    }
                 } else {
-                    statusMessage.textContent = '✅ Compressão concluída!';
                     clearInterval(interval);
 
+                    if (statusMessage) {
+                        let msg = '✅ Compressão concluída!';
+                        if (summary) {
+                            const inMb = summary.input_mb?.toFixed ? summary.input_mb.toFixed(2) : summary.input_mb;
+                            const outMb = summary.output_mb?.toFixed ? summary.output_mb.toFixed(2) : summary.output_mb;
+                            const pct = summary.reduction_pct?.toFixed ? summary.reduction_pct.toFixed(1) : summary.reduction_pct;
+
+                            msg += ` Redução de ${pct}% (${inMb} MB → ${outMb} MB em ${summary.time_s}s).`;
+                        }
+                        statusMessage.style.display = 'block';
+                        statusMessage.textContent = msg;
+                    }
+
+                    // pequena pausa pra pessoa ver o resumo antes de baixar
                     setTimeout(() => {
-                        window.location.href = `/download/${taskId}`; // Inicia download
+                        window.location.href = `/download/${taskId}`;
 
                         setTimeout(() => {
                             resetApp();
                         }, 2000);
-                    }, 1000);
+                    }, 1500);
                 }
             })
             .catch(err => {
                 clearInterval(interval);
                 console.error('Erro ao buscar progresso:', err);
-                if (statusMessage) statusMessage.textContent = 'Erro ao buscar progresso.';
+                if (statusMessage) {
+                    statusMessage.style.display = 'block';
+                    statusMessage.textContent = 'Erro ao buscar progresso.';
+                }
             });
     }, 1000);
 }

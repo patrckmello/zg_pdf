@@ -211,7 +211,6 @@ def enviar_feedback():
         flash(f"Erro ao enviar mensagem: {e}", "error")
         return str(e), 500
 
-
 # ---------------------------- Compressão ----------------------------
 @app.route("/compress", methods=["POST"])
 def compress():
@@ -227,11 +226,19 @@ def compress():
     file.save(input_path)
 
     with tasks_lock:
-        tasks[task_id] = {'percent': 0, 'status': 'Iniciando compressão...', 'file': None, 'error': None}
+        tasks[task_id] = {
+            'percent': 0,
+            'status': 'Iniciando compressão...',
+            'file': None,
+            'error': None,
+            'summary': None,
+        }
 
     def compress_task_thread(current_task_id, current_input_path, current_output_path, current_compression_type):
         start_time = time.time()
+        started_at = datetime.utcnow().isoformat() + "Z"
         logging.info(f"Thread de compressão iniciada para a tarefa: {current_task_id}")
+
         try:
             initial_file_size = os.path.getsize(current_input_path)
             compression_ratio = get_estimated_compression_ratio(current_compression_type)
@@ -242,14 +249,14 @@ def compress():
                     tasks[current_task_id]['status'] = 'Iniciando processo de compressão...'
                     tasks[current_task_id]['percent'] = 2
 
-            def run_gs_compat(cmd_output_path, compression_type_override, extra_flags=None):
-                # usa a variável current_input_path do escopo da thread
-                return run_gs(current_input_path, cmd_output_path, compression_type_override, extra_flags)
-
+            # -------- função base para chamar o Ghostscript --------
             def run_gs(current_input_path, cmd_output_path, compression_type_override, extra_flags=None):
                 gs_path = shutil.which("gs") or "/usr/bin/gs"
                 if not os.path.exists(gs_path):
-                    raise FileNotFoundError(f"Ghostscript não encontrado em PATH, tente instalar ou definir o caminho, procurado: {gs_path}")
+                    raise FileNotFoundError(
+                        f"Ghostscript não encontrado em PATH. "
+                        f"Tente instalar ou definir o caminho. Procurado: {gs_path}"
+                    )
 
                 command = [
                     gs_path,
@@ -265,16 +272,30 @@ def compress():
                 if extra_flags:
                     command += extra_flags
 
-                # retorna Popen para funcionar com poll() e communicate()
-                return subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                # retorna Popen para poder usar poll() e communicate()
+                return subprocess.Popen(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
 
+            # wrapper compatível com a lógica atual
+            def run_gs_compat(cmd_output_path, compression_type_override, extra_flags=None):
+                return run_gs(current_input_path, cmd_output_path, compression_type_override, extra_flags)
+
+            # --------- chamada principal ---------
             process = run_gs_compat(current_output_path, current_compression_type)
             last_percent = 2
+
             while process.poll() is None:
                 current_output_file_size = os.path.getsize(current_output_path) if os.path.exists(current_output_path) else 0
+
                 if current_output_file_size > 0:
                     progress_raw = (current_output_file_size / estimated_final_size) * 100
                     percent = min(int(progress_raw), 95)
+
+                    # suaviza incrementos pra barra não “pular”
                     if percent > last_percent + 5:
                         percent = last_percent + 5
                     last_percent = percent
@@ -301,58 +322,98 @@ def compress():
 
             stdout, stderr = process.communicate()
             if process.returncode != 0:
-                raise subprocess.CalledProcessError(process.returncode, process.args, output=stdout, stderr=stderr)
+                raise subprocess.CalledProcessError(
+                    process.returncode,
+                    process.args,
+                    output=stdout,
+                    stderr=stderr,
+                )
 
             if not os.path.exists(current_output_path):
                 raise FileNotFoundError(f"Arquivo de saída não foi gerado: {current_output_path}")
 
+            # --------- fallback agressivo se não tiver ganho ---------
             final_file_size = os.path.getsize(current_output_path)
+
             if final_file_size >= initial_file_size:
                 logging.warning("Compressão ineficaz. Tentando fallback agressivo.")
                 fallback_path = current_output_path.replace('.pdf', '_fallback.pdf')
                 aggressive_flags = [
                     '-dDownsampleColorImages=true', '-dColorImageResolution=72', '-dAutoFilterColorImages=false', '-dColorImageFilter=/DCTEncode',
                     '-dGrayImageResolution=72', '-dDownsampleGrayImages=true', '-dAutoFilterGrayImages=false', '-dGrayImageFilter=/DCTEncode',
-                    '-dMonoImageResolution=72', '-dDownsampleMonoImages=true'
+                    '-dMonoImageResolution=72', '-dDownsampleMonoImages=true',
                 ]
                 fallback_process = run_gs_compat(fallback_path, "screen", aggressive_flags)
-                fallback_process.communicate()
+                fb_stdout, fb_stderr = fallback_process.communicate()
 
                 if os.path.exists(fallback_path):
                     fallback_size = os.path.getsize(fallback_path)
                     if fallback_size < initial_file_size:
                         os.replace(fallback_path, current_output_path)
+                        final_file_size = fallback_size
                     else:
+                        # sem ganho real: mantém arquivo original como resultado
                         os.replace(current_input_path, current_output_path)
+                        final_file_size = initial_file_size
                         try:
                             os.remove(fallback_path)
                         except Exception:
                             pass
                 else:
+                    # fallback falhou: devolve original
                     os.replace(current_input_path, current_output_path)
+                    final_file_size = initial_file_size
+
+            # --------- computa métricas finais ---------
+            end_time = time.time()
+            time_taken = round(end_time - start_time, 2)
+
+            size_reduction_bytes = initial_file_size - final_file_size
+            size_reduction_mb = round(size_reduction_bytes / (1024 * 1024), 2)
+            input_mb = round(initial_file_size / (1024 * 1024), 2)
+            output_mb = round(final_file_size / (1024 * 1024), 2)
+            if initial_file_size > 0:
+                size_reduction_pct = round((size_reduction_bytes / initial_file_size) * 100, 2)
+            else:
+                size_reduction_pct = 0.0
+
+            pages = get_pdf_page_count(current_output_path)
 
             with tasks_lock:
                 if current_task_id in tasks:
                     tasks[current_task_id]['percent'] = 100
                     tasks[current_task_id]['status'] = 'Compressão concluída! Preparando download...'
                     tasks[current_task_id]['file'] = current_output_path
+                    tasks[current_task_id]['summary'] = {
+                        'input_mb': input_mb,
+                        'output_mb': output_mb,
+                        'reduction_mb': size_reduction_mb,
+                        'reduction_pct': size_reduction_pct,
+                        'time_s': time_taken,
+                        'pages': pages,
+                    }
 
-            end_time = time.time()
             log_data = {
                 'task_id': current_task_id,
                 'input_file': os.path.basename(current_input_path),
                 'output_file': os.path.basename(current_output_path),
                 'compression_type': current_compression_type,
-                'time_taken_seconds': round(end_time - start_time, 2),
-                'pages': get_pdf_page_count(current_output_path),
-                'input_file_size_mb': round(initial_file_size / (1024 * 1024), 2),
-                'output_file_size_mb': round(os.path.getsize(current_output_path) / (1024 * 1024), 2),
-                'status': 'Concluído!'
+                'time_taken_seconds': time_taken,
+                'pages': pages,
+                'input_file_size_mb': input_mb,
+                'output_file_size_mb': output_mb,
+                'size_reduction_mb': size_reduction_mb,
+                'size_reduction_pct': size_reduction_pct,
+                'status': 'Concluído!',
+                'started_at': started_at,
+                'finished_at': datetime.utcnow().isoformat() + "Z",
             }
             save_compression_log(log_data)
 
         except (subprocess.CalledProcessError, FileNotFoundError) as e:
-            error_message = f"Erro no Ghostscript: {e.stderr.decode(errors='ignore') if hasattr(e, 'stderr') and e.stderr else str(e)}"
+            # e.stderr já é string (text=True), não precisa decode
+            stderr_text = getattr(e, "stderr", "") or ""
+            error_message = f"Erro no Ghostscript: {stderr_text or str(e)}"
             logging.error(f"Erro na tarefa {current_task_id}: {error_message}")
             with tasks_lock:
                 if current_task_id in tasks:
@@ -373,12 +434,14 @@ def compress():
                 except OSError as e:
                     logging.warning(f"Não foi possível remover o arquivo de entrada {current_input_path}: {e}")
 
-    thread = threading.Thread(target=compress_task_thread, args=(task_id, input_path, output_path, compression_type))
-    thread.daemon = True
+    thread = threading.Thread(
+        target=compress_task_thread,
+        args=(task_id, input_path, output_path, compression_type),
+        daemon=True,
+    )
     thread.start()
 
     return jsonify({'task_id': task_id})
-
 
 @app.route("/progress/<task_id>")
 def progress(task_id):
