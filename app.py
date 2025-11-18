@@ -7,6 +7,7 @@ import math
 import zipfile
 import tempfile
 import logging
+from logging.handlers import RotatingFileHandler
 import threading
 import subprocess
 import platform
@@ -47,10 +48,53 @@ app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 app.config['MAIL_DEFAULT_SENDER'] = (os.getenv("MAIL_DEFAULT_SENDER_NAME"), os.getenv("MAIL_DEFAULT_SENDER_EMAIL"))
 mail = Mail(app)
 
+# =================== LOGGING GLOBAL ===================
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_DIR = os.path.join(PROJECT_DIR, "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+
+LOG_FILE = os.path.join(LOG_DIR, "zg_pdf.log")
+
+# Formato bonitinho
+formatter = logging.Formatter(
+    '[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# 🔁 Rotação por tamanho (ex: 10 MB, guarda 5 arquivos antigos)
+file_handler = RotatingFileHandler(
+    LOG_FILE,
+    maxBytes=10 * 1024 * 1024,  # 10 MB
+    backupCount=5,              # zg_pdf.log, zg_pdf.log.1, ... .5
+    encoding="utf-8"
+)
+file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.INFO)
+
+# Log no console (vai pro journalctl)
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+console_handler.setLevel(logging.INFO)
+
+# Root logger
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+
+# Evita duplicar handler se recarregar app em dev
+if not any(isinstance(h, RotatingFileHandler) for h in root_logger.handlers):
+    root_logger.addHandler(file_handler)
+if not any(isinstance(h, logging.StreamHandler) for h in root_logger.handlers):
+    root_logger.addHandler(console_handler)
+
+# Logger “principal” da app (opcional, se quiser usar logging.getLogger("zg_pdf"))
+log = logging.getLogger("zg_pdf")
+
 # Diretórios
-BASE_DIR = tempfile.gettempdir() if getattr(sys, 'frozen', False) else os.getcwd()
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-PROCESSED_FOLDER = os.path.join(BASE_DIR, 'processed')
+WORK_DIR = tempfile.gettempdir() if getattr(sys, 'frozen', False) else os.getcwd()
+UPLOAD_FOLDER = os.path.join(WORK_DIR, 'uploads')
+PROCESSED_FOLDER = os.path.join(WORK_DIR, 'processed')
+
 for folder in [UPLOAD_FOLDER, PROCESSED_FOLDER]:
     os.makedirs(folder, exist_ok=True)
 
@@ -59,12 +103,6 @@ COMPRESSION_LOG_FILE = 'compression_log.json'
 log_lock = threading.Lock()
 tasks_lock = threading.Lock()
 tasks = {}
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-    handlers=[logging.FileHandler("app.log", encoding='utf-8'), logging.StreamHandler()]
-)
 
 # Ajuste Ghostscript por SO
 GS_CMD = "gswin64c" if platform.system() == "Windows" else "gs"

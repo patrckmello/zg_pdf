@@ -43,6 +43,82 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+        // =================== MODAL DE MELHORIAS / FERRAMENTAS ===================
+
+    const improvementModal = document.getElementById("improvement-modal");
+    const improvementClose = document.getElementById("improvement-close");
+    const improvementForm = document.getElementById("improvement-form");
+
+    if (improvementModal && improvementForm) {
+        // Abre o modal sempre que o usuário entrar na página
+        improvementModal.classList.remove("hidden");
+
+        // Fechar no X
+        if (improvementClose) {
+            improvementClose.addEventListener("click", () => {
+                improvementModal.classList.add("hidden");
+            });
+        }
+
+        // Fechar clicando fora da caixa
+        improvementModal.addEventListener("click", (e) => {
+            if (e.target === improvementModal) {
+                improvementModal.classList.add("hidden");
+            }
+        });
+
+        // Reaproveita o popup verde de sucesso
+        const successPopup = document.getElementById("form-popup");
+        const submitBtnImprovement = improvementForm.querySelector('button[type="submit"]');
+
+        improvementForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            if (submitBtnImprovement) {
+                submitBtnImprovement.disabled = true;
+                submitBtnImprovement.textContent = "Enviando...";
+            }
+
+            const formData = new FormData(improvementForm);
+
+            fetch(improvementForm.action, {
+                method: "POST",
+                body: formData
+            })
+            .then((response) => {
+                if (!response.ok) throw new Error("Erro ao enviar sugestão");
+                return response.text();
+            })
+            .then(() => {
+                // fecha o modal
+                improvementModal.classList.add("hidden");
+
+                // mostra o popup verde padrão
+                if (successPopup) {
+                    successPopup.classList.remove("hidden");
+                    successPopup.classList.add("show");
+
+                    setTimeout(() => {
+                        successPopup.classList.remove("show");
+                        successPopup.classList.add("hidden");
+                    }, 4000);
+                }
+
+                improvementForm.reset();
+            })
+            .catch((err) => {
+                alert("Erro ao enviar sugestão, tente novamente.");
+                console.error(err);
+            })
+            .finally(() => {
+                if (submitBtnImprovement) {
+                    submitBtnImprovement.disabled = false;
+                    submitBtnImprovement.textContent = "Enviar sugestão";
+                }
+            });
+        });
+    }
+
     // --- REINTRODUZIR: Animações de Revelação de SEÇÕES (com IntersectionObserver) ---
     // Isso é o que adiciona a classe 'show-section' às suas <section>s
     const sections = document.querySelectorAll("section");

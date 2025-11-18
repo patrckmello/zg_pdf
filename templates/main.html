@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="navbar">
-            <a href="http://10.1.3.113:5009"  class="logo-link"><img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo"></a>
+            <a href="http://10.1.2.38:5009"  class="logo-link"><img src="{{ url_for('static', filename='assets/zg.png') }}" class="logo" alt="Logo"></a>
             <h1 class="title">ZG PDF</h1>
         </div>
     </header>
@@ -27,23 +27,23 @@
         <section id="tools">
             <h1>Ferramentas</h1>
             <div class="tools-box">
-                <a href="http://10.1.3.113:5009/compress" target="_blank" class="tool">
+                <a href="http://10.1.2.38:5009/compress" target="_blank" class="tool">
                     <img src="{{ url_for('static', filename='assets/compress.png') }}" class="tool-icon" alt="Comprimir">
                      <h2>Comprimir</h2>
                 </a>
-                <a href="http://10.1.3.113:5009/convert" target="_blank" class="tool">
+                <a href="http://10.1.2.38:5009/convert" target="_blank" class="tool">
                     <img src="{{ url_for('static', filename='assets/convert.png') }}" class="tool-icon" alt="Converter">
                      <h2>Converter</h2>
                 </a>
-                <a href="http://10.1.3.113:5009/split" target="_blank" class="tool">
+                <a href="http://10.1.2.38:5009/split" target="_blank" class="tool">
                     <img src="{{ url_for('static', filename='assets/split.png') }}" class="tool-icon" alt="Dividir">
                      <h2>Dividir</h2>
                 </a>
-                <a href="http://10.1.3.113:5009/organize" target="_blank" class="tool">
+                <a href="http://10.1.2.38:5009/organize" target="_blank" class="tool">
                     <img src="{{ url_for('static', filename='assets/organize.png') }}" class="tool-icon" alt="Organizar">
                      <h2>Organizar</h2>
                 </a>
-                <a href="http://10.1.3.113:5009/merge" target="_blank" class="tool">
+                <a href="http://10.1.2.38:5009/merge" target="_blank" class="tool">
                     <img src="{{ url_for('static', filename='assets/merge.png') }}" class="tool-icon" alt="Unir">
                      <h2>Unir</h2>
                 </a>
@@ -132,6 +132,50 @@
                 <p>Mensagem enviada com sucesso! 🎉</p>
             </div>
     </footer>
+    <div id="improvement-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <button type="button" id="improvement-close" class="modal-close">&times;</button>
+            <h2>Nos ajude a melhorar o ZG PDF</h2>
+            <p class="modal-subtitle">
+                Quer sugerir uma nova ferramenta ou melhoria? Conta pra gente rapidinho aqui embaixo 👇
+            </p>
+
+            <form id="improvement-form" action="{{ url_for('enviar_feedback') }}" method="POST">
+                <div class="modal-field">
+                    <label for="imp-name">Nome</label>
+                    <input type="text" id="imp-name" name="name" placeholder="Seu nome" required>
+                </div>
+
+                <div class="modal-field">
+                    <label for="imp-email">E-mail (opcional)</label>
+                    <input type="email" id="imp-email" name="email" placeholder="nome@zavagnagralha.com.br">
+                </div>
+
+                <div class="modal-field">
+                    <label for="imp-sector">Setor</label>
+                    <select id="imp-sector" name="sector">
+                        <option value="" selected>Não informado</option>
+                        <option value="Jurídico">Jurídico</option>
+                        <option value="Administrativo">Administrativo</option>
+                        <option value="Financeiro">Financeiro</option>
+                        <option value="RH">RH</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="modal-field">
+                    <label for="imp-message">O que você gostaria de ver aqui?</label>
+                    <textarea id="imp-message" name="message" rows="4"
+                              placeholder="Ex: ferramenta para assinar PDFs, automatizar numeração de páginas, etc."
+                              required></textarea>
+                </div>
+
+                <button type="submit" class="modal-submit-btn">
+                    Enviar sugestão
+                </button>
+            </form>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

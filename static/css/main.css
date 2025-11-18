@@ -494,3 +494,118 @@ button[type="submit"]:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 520px;
+  width: 90%;
+  padding: 24px 28px 24px 28px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.modal-box h2 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-subtitle {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.modal-field {
+  margin-bottom: 14px;
+}
+
+.modal-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.modal-field input,
+.modal-field select,
+.modal-field textarea {
+  width: 100%;
+  font-family: 'Brandon', sans-serif;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cdd1d8;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.modal-field textarea {
+  min-height: 90px;
+}
+
+.modal-submit-btn {
+  margin-top: 6px;
+  display: inline-block;
+  padding: 9px 22px;
+  border-radius: 999px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.modal-submit-btn:hover {
+  background: #333;
+}
+
+.modal-submit-btn:active {
+  transform: scale(0.97);
+}
+
+.modal-submit-btn:disabled {
+  background-color: #aaa;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Botão de fechar (X) */
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
