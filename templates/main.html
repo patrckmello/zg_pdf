@@ -135,9 +135,26 @@
     <div id="improvement-modal" class="modal-overlay hidden">
         <div class="modal-box">
             <button type="button" id="improvement-close" class="modal-close">&times;</button>
-            <h2>Nos ajude a melhorar o ZG PDF</h2>
+
+            <h2>🚀 Atualização no ZG PDF</h2>
+
             <p class="modal-subtitle">
-                Quer sugerir uma nova ferramenta ou melhoria? Conta pra gente rapidinho aqui embaixo 👇
+                O sistema recebeu melhorias importantes para tornar o trabalho mais rápido e eficiente.
+            </p>
+
+            <p class="modal-text"><strong>Novidades desta atualização:</strong></p>
+            <ul class="modal-feature-list">
+                <li>Conversão de vários arquivos ao mesmo tempo</li>
+                <li>Compressão de até 10 PDFs simultaneamente</li>
+                <li>Processamento mais ágil e estável</li>
+            </ul>
+
+            <p class="modal-text">
+                A equipe de TI desenvolveu essas melhorias com foco na rotina do escritório e segue aprimorando a ferramenta continuamente.
+            </p>
+
+            <p class="modal-text">
+                Sua opinião é fundamental para que o ZG PDF continue evoluindo. Envie sugestões e contribua para as próximas melhorias. 💡
             </p>
 
             <form id="improvement-form" action="{{ url_for('enviar_feedback') }}" method="POST">
@@ -164,18 +181,18 @@
                 </div>
 
                 <div class="modal-field">
-                    <label for="imp-message">O que você gostaria de ver aqui?</label>
+                    <label for="imp-message">Envie sua sugestão</label>
                     <textarea id="imp-message" name="message" rows="4"
-                              placeholder="Ex: ferramenta para assinar PDFs, automatizar numeração de páginas, etc."
-                              required></textarea>
+                        placeholder="O que podemos melhorar ou adicionar?" required></textarea>
                 </div>
 
                 <button type="submit" class="modal-submit-btn">
-                    Enviar sugestão
+                    Enviar
                 </button>
             </form>
         </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

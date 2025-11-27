@@ -21,13 +21,22 @@
         <div class="upload-box">
             <div id="drop-zone">
                 <div class="rotating-border"></div>
-                <p>Arraste ou clique para selecionar um arquivo PDF</p>
-                <input type="file" id="fileInput" accept="application/pdf" hidden/>
+                <p>Arraste ou clique para selecionar até 10 arquivos PDF</p>
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept="application/pdf"
+                    hidden
+                    multiple
+                />
             </div>
             <div id="pdf-preview-container" style="display: none; margin-top: 1rem;">
                 <p class="text-sm text-gray-600 mb-1">Pré-visualização:</p>
                 <canvas id="pdf-canvas" style="width: 100%; border-radius: 0.5rem; box-shadow: 0 0 10px rgba(0,0,0,0.1);"></canvas>
                 <div id="pdf-info" class="text-sm text-gray-700 mt-2"></div>
+            </div>
+            <div id="pdf-files-list" class="pdf-files-list" style="margin-top: 1rem;">
+                <!-- Itens gerados via JS -->
             </div>
         </div>
         

@@ -80,6 +80,100 @@ main {
     margin: auto;
 }
 
+/* Label do modo de conversão (unitário vs lote) */
+.conversion-mode-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* Layout para o modo LOTE: uma lista de arquivos com select individual */
+.batch-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Card de cada arquivo no lote */
+.file-convert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f7fb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Área com ícone + nome do arquivo */
+.file-convert-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 60%;
+}
+
+.file-convert-icon {
+  width: 36px;
+  height: 36px;
+}
+
+/* Nome do arquivo dentro do card */
+.file-convert-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.file-convert-ext {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* Área do select */
+.file-convert-target {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.file-convert-target label {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.file-convert-select {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #c3cfe6;
+  font-size: 0.85rem;
+  background: white;
+  min-width: 110px;
+}
+
+/* Arquivo não suportado no lote */
+.file-convert-row.unsupported {
+  opacity: 0.6;
+}
+
+.file-convert-row.unsupported .file-convert-target {
+  display: none;
+}
+
+.file-convert-unsupported-label {
+  font-size: 0.8rem;
+  color: #aa0000;
+  font-weight: 500;
+}
+
+
 .convert-option-icon {
     width: 100px;  /* maior que antes */
     height: 100px;

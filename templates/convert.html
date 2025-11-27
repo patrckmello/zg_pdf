@@ -23,7 +23,7 @@
             <div id="drop-zone">
                 <div class="rotating-border"></div>
                 <p>Arraste ou clique para selecionar um arquivo</p>
-                <input type="file" id="fileInput" hidden/>
+                <input type="file" id="fileInput" hidden multiple/>
             </div>
 
             <div id="preview-container-grid" class="preview-grid" style="display: none;">
@@ -47,10 +47,15 @@
             </div>
 
             <div class="menu-content">
-                <button class="close-btn" onclick="closeMergeMenu()">×</button>
-                <h3>Selecione a opção <br>de conversão</h3>
-                <div id="convert-options-list" class="convert-options-grid"></div>
+                <button class="close-btn">×</button>
+                <h3>Selecione como deseja converter</h3>
+                <p id="conversion-mode-label" class="conversion-mode-label">
+                </p>
+
+                <div id="convert-options-list" class="convert-options-grid">
+                </div>
             </div>
+
             <button class="start-function" id="start-convert">Iniciar Conversão</button>
         </div>
         </main>
