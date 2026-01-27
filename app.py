@@ -111,7 +111,8 @@ GS_CMD = "gswin64c" if platform.system() == "Windows" else "gs"
 if platform.system() == "Windows":
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-
+if platform.system() != "Windows":
+    os.environ.setdefault("TESSDATA_PREFIX", "/usr/share/tesseract-ocr/5/tessdata")
 # ---------------------------- Utils ----------------------------
 def save_compression_log(log_data: dict) -> None:
     """Append seguro em JSON (cria se não existir)."""
@@ -451,130 +452,161 @@ def compress_single_pdf(job, compression_type):
     }
 
 def compress_task_thread_many(current_task_id, jobs, compression_type):
-    start_time_global = time.time()
-    started_at = datetime.utcnow().isoformat() + "Z"
-    logging.info(f"Thread de compressão iniciada para a tarefa: {current_task_id} ({len(jobs)} arquivos)")
+    """
+    jobs: lista de dicts
+      {
+        "filename": str,
+        "input_path": str,
+        "output_path": str,
+        "input_size": int
+      }
 
-    all_logs = []
-    total_input_mb = 0.0
-    total_output_mb = 0.0
+    Regra:
+    - Se tiver 1 arquivo -> devolve o PDF direto (sem zip)
+    - Se tiver >1       -> zipa todos e devolve um .zip
+    """
+    start_time = time.time()
+    started_at = datetime.utcnow().isoformat() + "Z"
 
     try:
-        total_jobs = len(jobs)
-        MAX_PARALLEL = 3  # ajusta conforme o poder da máquina
+        results = []
+        total_input_mb = 0.0
+        total_output_mb = 0.0
 
-        with tasks_lock:
-            if current_task_id in tasks:
-                tasks[current_task_id]['status'] = f"Iniciando compressão de {total_jobs} arquivos..."
-                tasks[current_task_id]['percent'] = 0
+        total_files = len(jobs)
 
-        with ThreadPoolExecutor(max_workers=MAX_PARALLEL) as executor:
-            future_to_job = {
-                executor.submit(compress_single_pdf, job, compression_type): job
-                for job in jobs
-            }
+        # =========================================================
+        # CASO 1: APENAS 1 ARQUIVO → PDF DIRETO (SEM ZIP)
+        # =========================================================
+        if total_files == 1:
+            job = jobs[0]
+            res = compress_single_pdf(job, compression_type)
+            results.append(res)
 
-            done_count = 0
+            total_input_mb = res["input_mb"]
+            total_output_mb = res["output_mb"]
 
-            for future in as_completed(future_to_job):
-                job = future_to_job[future]
-                filename = job["filename"]
+            reduction_mb = res["reduction_mb"]
+            reduction_pct = res["reduction_pct"]
+            time_s = round(time.time() - start_time, 2)
 
-                try:
-                    result = future.result()
-                    all_logs.append(result)
+            with tasks_lock:
+                if current_task_id in tasks:
+                    tasks[current_task_id]["percent"] = 100
+                    tasks[current_task_id]["status"] = "Compressão concluída! Preparando download..."
+                    tasks[current_task_id]["file"] = res["output_path"]
+                    tasks[current_task_id]["summary"] = {
+                        "files_count": 1,
+                        "input_mb": total_input_mb,
+                        "output_mb": total_output_mb,
+                        "reduction_mb": reduction_mb,
+                        "reduction_pct": reduction_pct,
+                        "time_s": time_s,
+                    }
 
-                    total_input_mb += result["input_mb"]
-                    total_output_mb += result["output_mb"]
-
-                    done_count += 1
-                    percent = int((done_count / total_jobs) * 100)
-
-                    with tasks_lock:
-                        if current_task_id in tasks:
-                            tasks[current_task_id]['percent'] = min(percent, 99)
-                            tasks[current_task_id]['status'] = (
-                                f"Comprimindo arquivos... ({done_count}/{total_jobs})"
-                            )
-
-                except Exception as e:
-                    logging.error(f"Erro ao comprimir arquivo {filename} na tarefa {current_task_id}: {e}")
-                    done_count += 1
-                    with tasks_lock:
-                        if current_task_id in tasks:
-                            tasks[current_task_id]['status'] = f"Erro ao comprimir \"{filename}\". Prosseguindo com os demais..."
-                            tasks[current_task_id]['percent'] = int((done_count / total_jobs) * 100)
-
-        # terminou todos: gera ZIP
-        zip_path = os.path.join(PROCESSED_FOLDER, f"comprimidosZG_{current_task_id}.zip")
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for res in all_logs:
-                out_path = res["output_path"]
-                if os.path.exists(out_path):
-                    arcname = os.path.basename(out_path)
-                    zipf.write(out_path, arcname=arcname)
-                    try:
-                        os.remove(out_path)
-                    except Exception:
-                        pass
-
-        end_time_global = time.time()
-        time_taken_global = round(end_time_global - start_time_global, 2)
-
-        if total_input_mb > 0:
-            total_reduction_pct = round((total_input_mb - total_output_mb) / total_input_mb * 100, 2)
-        else:
-            total_reduction_pct = 0.0
-
-        with tasks_lock:
-            if current_task_id in tasks:
-                tasks[current_task_id]['percent'] = 100
-                tasks[current_task_id]['status'] = 'Compressão concluída! Preparando download...'
-                tasks[current_task_id]['file'] = zip_path
-                tasks[current_task_id]['summary'] = {
-                    'files_count': len(all_logs),
-                    'input_mb': total_input_mb,
-                    'output_mb': total_output_mb,
-                    'reduction_pct': total_reduction_pct,
-                    'time_s': time_taken_global,
-                }
-
-        # logs unitários
-        for res in all_logs:
+            # log detalhado
             log_data = {
-                'task_id': current_task_id,
-                'input_file': res["filename"],
-                'output_file': os.path.basename(res["output_path"]),
-                'compression_type': compression_type,
-                'time_taken_seconds': time_taken_global,  # ou tira se não fizer questão
-                'pages': res["pages"],
-                'input_file_size_mb': res["input_mb"],
-                'output_file_size_mb': res["output_mb"],
-                'size_reduction_mb': res["reduction_mb"],
-                'size_reduction_pct': res["reduction_pct"],
-                'status': 'Concluído!',
-                'started_at': started_at,
-                'finished_at': datetime.utcnow().isoformat() + "Z",
-                'batch_files_count': len(all_logs),       # 👈 novo
-                'is_batch': True,                         # 👈 novo
+                "task_id": current_task_id,
+                "files_count": 1,
+                "files": [{
+                    "filename": res["filename"],
+                    "input_mb": res["input_mb"],
+                    "output_mb": res["output_mb"],
+                    "reduction_mb": res["reduction_mb"],
+                    "reduction_pct": res["reduction_pct"],
+                    "pages": res["pages"],
+                }],
+                "compression_type": compression_type,
+                "total_input_mb": total_input_mb,
+                "total_output_mb": total_output_mb,
+                "total_reduction_mb": reduction_mb,
+                "total_reduction_pct": reduction_pct,
+                "time_taken_seconds": time_s,
+                "status": "Concluído (single)",
+                "started_at": started_at,
+                "finished_at": datetime.utcnow().isoformat() + "Z",
             }
             save_compression_log(log_data)
+            return
+
+        # =========================================================
+        # CASO 2: VÁRIOS ARQUIVOS → COMPRIME E DEPOIS ZIPA
+        # =========================================================
+        for idx, job in enumerate(jobs, start=1):
+            res = compress_single_pdf(job, compression_type)
+            results.append(res)
+
+            total_input_mb += res["input_mb"]
+            total_output_mb += res["output_mb"]
+
+            with tasks_lock:
+                if current_task_id in tasks:
+                    tasks[current_task_id]["percent"] = int((idx / total_files) * 90)
+                    tasks[current_task_id]["status"] = f"Comprimindo arquivo {idx} de {total_files}..."
+
+        # cria ZIP com todos os PDFs comprimidos
+        zip_name = f"comprimidosZG_{current_task_id}.zip"
+        zip_path = os.path.join(PROCESSED_FOLDER, zip_name)
+
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+            for res in results:
+                zf.write(res["output_path"], arcname=res["filename"])
+
+        # remove PDFs individuais depois de zipar
+        for res in results:
+            try:
+                os.remove(res["output_path"])
+            except Exception as e:
+                logging.warning(f"Erro ao remover PDF individual {res['output_path']}: {e}")
+
+        reduction_mb = total_input_mb - total_output_mb
+        reduction_pct = (reduction_mb / total_input_mb * 100) if total_input_mb > 0 else 0.0
+        time_s = round(time.time() - start_time, 2)
+
+        with tasks_lock:
+            if current_task_id in tasks:
+                tasks[current_task_id]["percent"] = 100
+                tasks[current_task_id]["status"] = "Compressão concluída! Preparando download..."
+                tasks[current_task_id]["file"] = zip_path
+                tasks[current_task_id]["summary"] = {
+                    "files_count": total_files,
+                    "input_mb": total_input_mb,
+                    "output_mb": total_output_mb,
+                    "reduction_mb": reduction_mb,
+                    "reduction_pct": reduction_pct,
+                    "time_s": time_s,
+                }
+
+        log_data = {
+            "task_id": current_task_id,
+            "files_count": total_files,
+            "files": [{
+                "filename": r["filename"],
+                "input_mb": r["input_mb"],
+                "output_mb": r["output_mb"],
+                "reduction_mb": r["reduction_mb"],
+                "reduction_pct": r["reduction_pct"],
+                "pages": r["pages"],
+            } for r in results],
+            "compression_type": compression_type,
+            "total_input_mb": total_input_mb,
+            "total_output_mb": total_output_mb,
+            "total_reduction_mb": reduction_mb,
+            "total_reduction_pct": reduction_pct,
+            "time_taken_seconds": time_s,
+            "status": "Concluído (multi)",
+            "started_at": started_at,
+            "finished_at": datetime.utcnow().isoformat() + "Z",
+        }
+        save_compression_log(log_data)
 
     except Exception as e:
         logging.error(f"Erro inesperado na tarefa {current_task_id}: {e}")
         with tasks_lock:
             if current_task_id in tasks:
-                tasks[current_task_id]['status'] = 'Erro interno'
-                tasks[current_task_id]['error'] = str(e)
-                tasks[current_task_id]['percent'] = -1
-    finally:
-        # garante remoção de inputs que por acaso sobraram
-        for job in jobs:
-            if os.path.exists(job["input_path"]):
-                try:
-                    os.remove(job["input_path"])
-                except Exception as e:
-                    logging.warning(f"Não foi possível remover o arquivo de entrada {job['input_path']}: {e}")
+                tasks[current_task_id]["status"] = "Erro interno"
+                tasks[current_task_id]["error"] = str(e)
+                tasks[current_task_id]["percent"] = -1
 
 # ---------------------------- Conversão ----------------------------
 def extract_text_from_pdf(input_path, lang='por'):
@@ -657,6 +689,7 @@ conversion_map = {
     'jpg': ['pdf'],
     'jpeg': ['pdf'],
     'png': ['pdf'],
+    'jfif': ['pdf'],
 }
 
 
@@ -805,7 +838,7 @@ def run_conversion(input_path: str, target_format: str) -> tuple[bytes, str]:
             else:
                 raise ValueError('Conversão não suportada.')
 
-        elif ext in ['jpg', 'jpeg', 'png']:
+        elif ext in ['jpg', 'jpeg', 'png', 'jfif']:
             if target_format == 'pdf':
                 image = Image.open(input_path).convert('RGB')
                 img_w_px, img_h_px = image.size

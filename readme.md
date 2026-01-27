@@ -113,6 +113,13 @@ O repositório está organizado da seguinte forma:
 
 
 
+## Processo de novas features
+
+- Atualizar este `readme.md` com resumo e status de cada funcionalidade entregue.
+- Registrar detalhes e log em `docs/feature-playbook.md` (backlog, decisões, datas).
+- Ajustar `requirements.txt` sempre que adicionar ou alterar dependências.
+- Manter padrões visuais existentes e garantir que o processamento continue 100% local.
+
 ## Contribuição
 
 Contribuições são bem-vindas! Se você deseja contribuir com o projeto, por favor, siga estas diretrizes:
@@ -123,4 +130,3 @@ Contribuições são bem-vindas! Se você deseja contribuir com o projeto, por f
 4.  Faça commit de suas alterações (`git commit -m 'Adiciona nova funcionalidade X'`).
 5.  Envie para a branch original (`git push origin feature/minha-nova-funcionalidade`).
 6.  Abra um Pull Request, descrevendo detalhadamente as mudanças propostas.
-

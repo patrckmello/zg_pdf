@@ -211,18 +211,12 @@ main {
   position: relative; /* para contexto */
 }
 
-/* Vamos fixar o botão no rodapé do menu lateral */
-.menu-content {
-  position: relative;
-  padding-bottom: 80px; /* espaço para o botão fixo */
-}
-
 .side-menu.blurred #start-convert {
   filter: blur(4px);
   pointer-events: none;
   user-select: none;
   transition: filter 0.3s ease;
-  position: absolute;
+  /* sem position absolute aqui */
 }
 
 /* Popup voador com borda gradient animada */
@@ -279,3 +273,19 @@ main {
   }
 }
 
+/* === Ajuste da barra lateral de conversão com scroll === */
+
+/* Torna a side-menu uma coluna que ocupa a altura da tela */
+.side-menu {
+  max-height: 100vh;        /* nunca passa da altura da tela */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Parte interna que vai rolar (título + label + lista de opções) */
+.side-menu .menu-content {
+  flex: 1 1 auto;           /* ocupa o espaço disponível */
+  overflow-y: auto;         /* AQUI habilita o scroll */
+  min-height: 0;            /* crucial pra flex não travar o overflow */
+  padding: 16px 24px 80px;  /* mantém espaço pro botão embaixo */
+}

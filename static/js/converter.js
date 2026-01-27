@@ -28,7 +28,8 @@ function getIconForFile(filename) {
         'png': `${staticAssetsPath}/image-fill.png`,
         'txt': `${staticAssetsPath}/file-txt-fill.png`,
         'csv': `${staticAssetsPath}/file-csv-fill.png`,
-        'pptx': `${staticAssetsPath}/pptx.png`
+        'pptx': `${staticAssetsPath}/pptx.png`,
+        'jfif': `${staticAssetsPath}/image-fill.png`,
     };
     return iconMap[ext] || `${staticAssetsPath}/file.png`;
 }
